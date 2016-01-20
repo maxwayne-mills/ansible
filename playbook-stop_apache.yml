@@ -1,0 +1,8 @@
+---
+- hosts: srv1
+  remote_user: cmills
+  tasks:
+    - name: Stop apache	
+      service: name=httpd state=stopped
+      become: yes
+      become_method: sudo
