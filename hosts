@@ -1,0 +1,2 @@
+srv1	ansible_port=1001	ansible_connection=ssh	ansible_user=cmills	ansible_host=74.207.231.191
+
