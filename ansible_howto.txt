@@ -1,0 +1,2 @@
+This command installs the httpd package on web server srv3
+ansible -vvv srv3.opensitesolutions.com -m apt -a "name=apache2 state=present"
