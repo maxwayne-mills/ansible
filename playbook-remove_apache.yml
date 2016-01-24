@@ -1,0 +1,8 @@
+---
+- hosts: srv3
+  remote_user: root
+  tasks:
+    - name: Remove apache	
+      service: name=httpd state=absense
+      become: yes
+      become_method: sudo
