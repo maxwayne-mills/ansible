@@ -1,0 +1,17 @@
+---
+- name: Get OS family Name
+  hosts: srv1 srv3
+  gather_facts: yes
+
+  tasks:
+  - name: Show Operating system
+    debug: msg="{{ansible_os_family}}"
+
+  - name: Record Uptime
+    shell: /usr/bin/uptime
+    register: result
+
+  - name: Display Uptime
+    debug: msg="{{result.stdout}}"
+
+   

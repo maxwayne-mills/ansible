@@ -1,0 +1,20 @@
+# Install Vagrant provider plugins
+# APril 1, 2015
+---
+- name: Install Plugins
+  hosts: devsrv
+  gather_facts: yes
+
+  tasks:
+   - name: Install Linode plugins
+     shell: vagrant plugin install vagrant-linode 
+   - name: Install AWS plugin
+     shell: vagrant plugin install vagrant-aws
+   - name: Install Digital Ocean plugin
+     shell: vagrant plugin install vagrant-digitalocean
+   - name: Install Google plugin
+     shell: vagrant plugin install vagrant-google
+   - name: Install Vagratn Git plugin
+     shell: vagrant plugin install vagrant-git
+   - name: install vagrant Fabric plugin
+     shell: vagrant plugin install vagrant-fabric
