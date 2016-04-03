@@ -6,6 +6,8 @@
     yum: name=httpd state=latest
     notify:
     - restart apache
+
+
   - name: Ensure httpd (apache) is running and enabled at boot
     service: name=httpd state=started enable=yes
   handlers:
