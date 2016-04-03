@@ -1,0 +1,8 @@
+---
+- hosts: websrv002
+  remote_user: root
+
+  vars:
+    - firewall_allowd_tcp_ports:
+      - "22"
+      - "80"
