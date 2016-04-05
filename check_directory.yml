@@ -1,0 +1,12 @@
+---
+- hosts: websrv002
+  tasks:
+  - name: Check if web directory is present
+    file: state=directory path=/var/www/html
+
+  - name: Create new directory
+    shell: 'mkdir /var/www/html/test'
+    ignore_errors: true
+
+  - name: 
+    file: state=directory path=/var/www/html/test
