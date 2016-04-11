@@ -1,0 +1,21 @@
+---
+- hosts: srv3
+  tasks:
+  - name: Add nginx repo
+    apt_repository: repo='ppa:nginx/stable' state=present
+    register: ppainstalled
+
+  - name: Install nginx 
+    apt: pkg=nginx state=latest update_cache=true
+    when: ppainstalled|success
+    notify:
+     - Start nginx
+
+  handlers:
+   - name: Start nginx
+     service: name=nginx state=started
+
+   
+
+  
+    
