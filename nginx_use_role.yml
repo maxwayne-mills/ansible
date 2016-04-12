@@ -1,0 +1,4 @@
+---
+ - hosts: srv3
+   roles:
+    - nginx
