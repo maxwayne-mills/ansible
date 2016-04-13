@@ -1,0 +1,6 @@
+---
+- hosts: srv3
+  tasks:
+  # Remove user and their home directory
+  - name: Remove user
+    user: name=cmills state=absent remove=yes
