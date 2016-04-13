@@ -7,9 +7,11 @@
   tasks:
   - name: Add user 1
     # Add a user and generate ssh key within .ssh directory located within their home directory.
-    user: name=deployuser shell=/bin/bash comment="Deployment user" generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
- # -  authorized_key: user=deployuser key="{{ ('file', '/home/oss/.ssh/id_rsa.pub') }}"
+    # can't seem to figure out how to add a key to the authorized_key file when you alread generated a key.
+    #user: name=deployuser shell=/bin/bash comment="Deployment user" generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+    user: name=deployuser comment=deployuser shell=/bin/bash comment="Admin user"
+  -  authorized_key: user=deployuser key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
 
   - name: Add user 2
-    user: name=cmills comment=cmills shell=/bin/bash comment="Admin user"
+    user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" group=root
   -  authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
