@@ -1,5 +1,5 @@
 ---
-- hosts: srv3
+- hosts: srv4
   tasks:
   - name: Add nginx repo
     apt_repository: repo='ppa:nginx/stable' state=present
@@ -12,8 +12,10 @@
      - Start nginx
 
   handlers:
-   - name: Start nginx
-     service: name=nginx state=started
+  - name: Start nginx
+    service: name=nginx state=started
+
+- include: add_user.yml
 
    
 
