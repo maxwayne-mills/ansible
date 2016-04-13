@@ -1,6 +1,9 @@
+#!/usr/bin/ansible-playbook
+
 # http://docs.ansible.com/ansible/authorized_key_module.html
+
 ---
-- hosts: srv3
+- hosts: srv4
   tasks:
   - name: Add user 1
     # Add a user and generate ssh key within .ssh directory located within their home directory.
