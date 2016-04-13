@@ -1,0 +1,5 @@
+---
+- hosts: websrv002
+  tasks:
+  - name: place a file
+    copy: src=files/index.html dest=/var/www/html validate='ls -la %s'

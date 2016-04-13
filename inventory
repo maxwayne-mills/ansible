@@ -9,6 +9,7 @@ srv2 ansible_ssh_port=1001 ansible_ssh_user=cmills ansible_ssh_private_key_file=
 
 [scaleway-webservers]
 srv3	ansible_ssh_port=22 ansible_ssh_user=root
+srv4	ansible_ssh_port=22 ansible_ssh_user=root
 
 [digitalocean-webservers]
 websrv001  ansible_ssh_user=root ansible_ssh_private_key_file=/home/oss/automation/keys/id_rsa

@@ -1,0 +1,27 @@
+---
+# tasks file for nginx
+ - name: Add Nginx Repository
+   apt_repository: repo='ppa:nginx/stable' state=present
+
+ - name: Install Nginx
+   apt: pkg=nginx state=installed update_cache=true
+   notify:
+    - Start Nginx
+
+ - name: Add H5Bp config
+   copy: src=h5bp dest=/etc/nginx owner=root group=root
+
+ - name: Dsable Default config
+   file: dest=/etc/nginx/sites-enalbed/default state=absent
+   notify:
+    - Reload Nginx
+
+ - name: Add {{ domain }} config
+   #template: src={{ domain }}.j2 dest=/etc/nginx/sites-available/{{ domain }} owner=root group=root
+   template: src={{ domain }}.j2 dest=/etc/nginx/conf.d/{{ domain }} owner=root group=root
+
+ - name: Enable {{ domain }} site config
+   file: src=/etc/nginx/sites-availble/{{ domain }} dest=/etc/nginx/sites-enabled/{{ domain }} state=link force=yes
+
+ - name: Create DocumentRoot
+   file: path=/var/www/{{ domain }} state=directory
