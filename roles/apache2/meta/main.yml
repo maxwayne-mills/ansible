@@ -153,7 +153,9 @@ galaxy_info:
   #  - etch
   #  - jessie
   #  - lenny
+  #  - sid
   #  - squeeze
+  #  - stretch
   #  - wheezy
   
   galaxy_tags: []
