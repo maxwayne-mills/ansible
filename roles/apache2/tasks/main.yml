@@ -5,10 +5,31 @@
 - name: Copy configuration Clarence Mills domain file to server
   copy: src=clarencemills.com.conf dest=/etc/apache2/sites-available/
 
+- name: Copy configuration becomeonewiththecode.com domain file to server
+  copy: src=becomeonewiththecode.com.conf dest=/etc/apache2/sites-available/
+
+- name: Create symlink for clarencemills.com
+  file: src=/etc/apache2/sites-available/clarencemills.com.conf dest=/etc/apache2/sites-enabled/clarencemills.com.conf state=link
+
+- name: Create symlink for becomeonewiththecode.com
+  file: src=/etc/apache2/sites-available/becomeonewiththecode.com.conf dest=/etc/apache2/sites-enabled/becomeonewiththecode.com.conf state=link
+
 - name: Create web Domain directory clarencemills.com
   file: path=/var/www/clarencemills.com state=directory
 
+- name: create access log
+  file: path=/var/log/apache2/clarencemills.com-error.log state=touch
+
+- name: Create error log
+  file: path=/var/log/apache2/clarencemills.com-error.log state=touch
+
 - name: Create web domain directory becomeonewiththecode.com
   file: path=/var/www/becomeonewiththecode.com state=directory
+
+- name: Create access log directory
+  file: path=/var/log/apache2/becomeonewiththecode.com-access.log state=touch
+
+- name: create error log
+  file: path=/var/log/apache2/becomeonewiththecode.com-error.log state=touch
   notify:
   - restart apache2
