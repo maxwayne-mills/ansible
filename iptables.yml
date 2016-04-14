@@ -1,5 +1,5 @@
 ---
-- hosts: websrv002
+- hosts: srv4
   remote_user: root
 
   vars:
