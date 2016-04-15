@@ -3,3 +3,4 @@
   hosts: srv4
   roles:
    - apache2
+   - mysrvsetup
