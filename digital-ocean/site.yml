@@ -1,0 +1,4 @@
+---
+  - include: droplet_management.yml
+  - include: create_accounts.yml
+# role: roles/apache2
