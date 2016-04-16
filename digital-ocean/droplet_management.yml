@@ -1,4 +1,5 @@
 # http://docs.ansible.com/ansible/digital_ocean_module.html
+# Spin up a new droplet.
 ---
 - hosts: digitalocean
   gather_facts: true
@@ -30,7 +31,7 @@
        wait_timeout: 200
      register: my_droplet
 
-   - debug: msg="ID is {{ my_droplet.droplet.id }}"
-   - debug: msg="IP is {{ my_droplet.droplet.ip_address }}"
-   - debug: msg="Hostname is {{ my_droplet.droplet.hostname }}"
-     ignore_errors: true
+   - debug: msg="ID is {{ my_droplet.droplet.id }} - IP is {{ my_droplet.droplet.ip_address }}"
+
+   - name: Add new droplet to host group
+     local_action: add_host hostname={{ my_droplet.droplet.ip_address }} groupname=launched
