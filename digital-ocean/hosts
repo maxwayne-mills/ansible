@@ -1,3 +1,7 @@
+[droplet2]
+146.185.150.223 ansible_ssh_user=root
 
 [digitalocean]
 localhost ansible_connection=local
+
+

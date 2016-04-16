@@ -1,6 +1,7 @@
 # http://docs.ansible.com/ansible/digital_ocean_module.html
 ---
 - hosts: digitalocean
+  gather_facts: true
   tasks:
    - name: Create test droplet
      digital_ocean: 
@@ -31,3 +32,5 @@
 
    - debug: msg="ID is {{ my_droplet.droplet.id }}"
    - debug: msg="IP is {{ my_droplet.droplet.ip_address }}"
+   - debug: msg="Hostname is {{ my_droplet.droplet.hostname }}"
+     ignore_errors: true
