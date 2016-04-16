@@ -8,7 +8,7 @@
        command: droplet
        name: testsrv
        #unique_name=yes
-       #ssh_key_id: 
+       #ssh_key_id:
        api_token: 6cbdb1572816b5bfab6c07309e9772ad4e030fb7df361e051ca744fa49cfc819
        size_id: 512mb
        region_id: ams2
