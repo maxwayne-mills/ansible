@@ -7,14 +7,21 @@
        state: present
        command: droplet
        name: droptlet2
+
        # The below option makes this idempotent, it will not create duplicate droplets
        # with the same name.
        unique_name: yes
-       #ssh_key_id:
+       
+       # ssh_key_ids can be obtained from the digitalocean console, it's the unique key options
+       # in brackets () beside the key name.
+       # This will add the publick key from the console to root's authorizeds_keyfile during the VM setup 
+       ssh_key_ids: 6c:3c:f2:57:ed:b6:56:56:91:d2:84:e2:06:c7:43:d6
+
        # An ID is created on instanciation of a new droplet, captured by the debug messages
        # below. Entering the field with the newly generated ID will stop creation of a new droplet
        # and will make changes if any to the droplet with the ID entered.
        #id: 13507942
+
        api_token: 6cbdb1572816b5bfab6c07309e9772ad4e030fb7df361e051ca744fa49cfc819
        size_id: 512mb
        region_id: ams2
@@ -24,5 +31,3 @@
 
    - debug: msg="ID is {{ my_droplet.droplet.id }}"
    - debug: msg="IP is {{ my_droplet.droplet.ip_address }}"
-   
-     #authorized_key: user=root key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
