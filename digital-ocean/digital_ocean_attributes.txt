@@ -1,0 +1,5 @@
+command: ansible <droplet name> -m setup -a <filter options>
+
+Filter options
+show ip information: "filter=ansible_default_ipv4"
+show ip informaiton: "filter=ansible_hostname"
