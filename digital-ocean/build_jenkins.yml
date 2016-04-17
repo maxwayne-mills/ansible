@@ -1,0 +1,24 @@
+---
+ - hosts: jenkins
+   tasks:
+
+   - name: Add apt key
+     apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+   - name: Update respository
+     apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+     ignore_errors: true
+
+   - name: update cache apt-get update
+     apt: update_cache=yes
+
+   - name: Install jenkins
+     apt: name=jenkins state=present
+     ignore_errors: true
+
+   - name: Add user 
+     user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
+
+   - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+     ignore_errors: true
+
