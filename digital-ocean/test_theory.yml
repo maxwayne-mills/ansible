@@ -1,0 +1,10 @@
+# Pass variables into the playbook
+# ansible-playbook -i ../hosts test_theory.yml -e 'hostname=srv4 dest=www.google.com'
+
+---
+ - hosts: '{{ hostname }}'
+   tasks:
+    - name: Test stuff
+      shell: 'ping -c 4 {{ dest }}'
+      register: result
+    - debug: msg='{{ result }}'
