@@ -6,7 +6,7 @@
   tasks:
    - name: Create test droplet
      digital_ocean: 
-       state: present
+       state: absent
        command: droplet
        name: droptlet2
 
