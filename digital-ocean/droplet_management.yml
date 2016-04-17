@@ -7,7 +7,7 @@
 - hosts: digitalocean
   gather_facts: true
   tasks:
-   - name: Create test droplet
+   - name: Creating droplet {{ name }}
      digital_ocean: 
        state: "{{ state }}"
        command: droplet
@@ -35,6 +35,8 @@
      register: my_droplet
 
    - debug: msg="ID is {{ my_droplet.droplet.id }} - IP is {{ my_droplet.droplet.ip_address }}"
+     ignore_errors: true
 
    - name: Add new droplet to host group
      local_action: add_host hostname={{ my_droplet.droplet.ip_address }} groupname=launched
+     ignore_errors: true
