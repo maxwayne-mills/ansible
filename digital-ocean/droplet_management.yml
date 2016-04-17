@@ -1,13 +1,15 @@
 # http://docs.ansible.com/ansible/digital_ocean_module.html
 # Spin up a new droplet.
-# Accept state {{ sense }} whether ansent or present and accetp the name of the variable {{ name }}
+# Accept state {{ state }} whether ansent or present and accetp the name of the variable {{ name }}
+# ansible-playbook droplet_management -e 'sense=present name=jenkins'
+
 ---
 - hosts: digitalocean
   gather_facts: true
   tasks:
    - name: Create test droplet
      digital_ocean: 
-       state: "{{ sense }}"
+       state: "{{ state }}"
        command: droplet
        name: "{{ name }}"
 
