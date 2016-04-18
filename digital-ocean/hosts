@@ -1,10 +1,13 @@
 [jenkins]
-162.243.220.87 	ansible_ssh_user=root
+162.243.217.105	ansible_ssh_user=root
 
 [droplet2]
 146.185.150.223 ansible_ssh_user=root
 
 [digitalocean]
+localhost ansible_connection=local
+
+[local]
 localhost ansible_connection=local
 
 

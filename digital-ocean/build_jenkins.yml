@@ -16,9 +16,22 @@
      apt: name=jenkins state=present
      ignore_errors: true
 
+   - name: Install jenkins
+     apt: name=jenkins state=present
+     ignore_errors: true
+
    - name: Add user 
      user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
 
    - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+
+   - name: Create jenkins backup directory
+     file: path=/data/jenkins/backup state=directory owner=jenkins group=jenkins
      ignore_errors: true
 
+   - name: Create restore directory
+     file: path=/var/lib/jenkins_restore state=directory owner=jenkins group=jenkins mode=775
+     ignore_errors: true
+
+   - name: copy backup to jenkins serever
+     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-15_12-00_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=755
