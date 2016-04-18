@@ -1,4 +1,3 @@
 ---
-  - include: droplet_management.yml
-  - include: create_accounts.yml
-# role: roles/apache2
+  - include: droplet_management.yml state=present name=jenkins
+  - include: build_jenkins.yml
