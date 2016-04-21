@@ -1,3 +1,5 @@
+# The variable name is passed into this playbook using -e "name=choose a name"
+
 ---
  - hosts: '{{ name }}'
    tasks:
