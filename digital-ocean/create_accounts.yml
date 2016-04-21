@@ -1,5 +1,5 @@
 ---
- - hosts: droplet2
+ - hosts: '{{ name }}'
    tasks:
    - name: Add user 1
      # Add a user and generate ssh key within .ssh directory located within their home directory.
