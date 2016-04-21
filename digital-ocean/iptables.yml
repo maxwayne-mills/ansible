@@ -1,5 +1,5 @@
 ---
- - hosts: webtest
+ - hosts: '{{ name }}'
    tasks:
     - name: add ssh access
       command: /sbin/iptables -I INPUT 1 -j ACCEPT -p tcp --destination-port 22 -i eth0
