@@ -1,0 +1,15 @@
+---
+# tasks file for fixyourip.com
+- name: Install Plugins
+  hosts: www
+  gather_facts: yes
+
+  tasks:
+   - name: Install Whois
+     apt: pkg=whois state=present update_cache=true
+   - name: Install Jwois
+     apt: pkg=jwhois state=present update_cache=true
+   - name: Install Zone Check
+     apt: pkg=zonecheck state=build-dep
+   - name: Install zonecheck dependency
+     apt: pkg=ruby-dnsruby state=present
