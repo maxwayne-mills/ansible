@@ -1,0 +1,16 @@
+---
+# tasks file for becomeonewiththecode.com
+- name: Copy configuration becomeonewiththecode.com domain file to server
+  copy: src=becomeonewiththecode.com.conf dest=/etc/apache2/sites-available/
+
+- name: Create symlink for becomeonewiththecode.com
+  file: src=/etc/apache2/sites-available/becomeonewiththecode.com.conf dest=/etc/apache2/sites-enabled/becomeonewiththecode.com.conf state=link
+
+- name: Create web domain directory becomeonewiththecode.com
+  file: path=/var/www/becomeonewiththecode.com state=directory
+
+- name: Create access log directory
+  file: path=/var/log/apache2/becomeonewiththecode.com-access.log state=touch
+
+- name: create error log
+  file: path=/var/log/apache2/becomeonewiththecode.com-error.log state=touch

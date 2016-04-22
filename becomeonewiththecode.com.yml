@@ -1,0 +1,5 @@
+---
+- hosts: '{{ name }}'
+  roles:
+   - apache2
+   - becomeonewiththecode.com

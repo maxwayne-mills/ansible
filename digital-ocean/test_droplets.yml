@@ -1,0 +1,3 @@
+---
+  - include: droplet_management.yml state=present name=webtest
+  - include: build_jenkins.yml webtest
