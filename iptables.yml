@@ -1,0 +1,17 @@
+---
+ - hosts: '{{ name }}'
+   tasks:
+    - name: add ssh access
+      command: /sbin/iptables -I INPUT 1 -j ACCEPT -p tcp --destination-port 22 -i eth0
+
+    - name: add iptable options
+      command: /sbin/iptables -I INPUT -j ACCEPT -p tcp --destination-port 80 -i eth0
+
+    - name: add access to jenkins
+      command: /sbin/iptables -I INPUT -j ACCEPT -p tcp --destination-port 8080 -i eth0
+
+    - name: Drop all other packets
+      command: /sbin/iptables -A INPUT -j DROP -p tcp -i eth0
+
+    - name: allow connection outbound from the server
+      command: iptables -P FORWARD ACCEPT
