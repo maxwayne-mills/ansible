@@ -1,10 +1,10 @@
 ---
- - hosts: jenkins
+ - hosts: '{{ name }}'
    tasks:
 
    - name: Add apt key
-     apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
-
+     #apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+     apt_key: url=http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key state=present
    - name: Update respository
      apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
      ignore_errors: true

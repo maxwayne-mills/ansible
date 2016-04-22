@@ -2,7 +2,7 @@
 162.243.217.105	ansible_ssh_user=root
 
 [webtest]
-107.170.25.141 ansible_ssh_user=root
+107.170.33.133 ansible_ssh_user=root
 
 [droplet2]
 146.185.150.223 ansible_ssh_user=root
