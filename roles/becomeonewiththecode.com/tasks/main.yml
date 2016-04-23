@@ -1,5 +1,4 @@
 ---
-# tasks file for becomeonewiththecode.com
 - name: Copy configuration becomeonewiththecode.com domain file to server
   copy: src=becomeonewiththecode.com.conf dest=/etc/apache2/sites-available/
 
@@ -9,8 +8,22 @@
 - name: Create web domain directory becomeonewiththecode.com
   file: path=/var/www/becomeonewiththecode.com state=directory
 
+- name: Copy web data
+  copy: src=index.html dest=/var/www/becomeonewiththecode.com
+
 - name: Create access log directory
   file: path=/var/log/apache2/becomeonewiththecode.com-access.log state=touch
 
 - name: create error log
   file: path=/var/log/apache2/becomeonewiththecode.com-error.log state=touch
+
+- name: remove default configuration  - disable default catch all site
+  file: path=/etc/apache2/sites-available/000-default.conf state=absent
+
+- name: Disable default site
+  shell: a2dissite 000-default
+
+- name: wait and restart
+  pause: minutes=1
+  notify:
+   - restart apache
