@@ -1,0 +1,29 @@
+---
+- name: Copy configuration becomeonewiththecode.com domain file to server
+  copy: src=toolsforthecloud.com.conf dest=/etc/apache2/sites-available/
+
+- name: Create symlink for becomeonewiththecode.com
+  file: src=/etc/apache2/sites-available/becomeonewiththecode.com.conf dest=/etc/apache2/sites-enabled/becomeonewiththecode.com.conf state=link
+
+- name: Create web domain directory becomeonewiththecode.com
+  file: path=/var/www/toolsforthecloud.com state=directory
+
+#- name: Copy web data
+#  copy: src=index.html dest=/var/www/toolsforthecloud.com
+
+- name: Create access log directory
+  file: path=/var/log/apache2/toolsforthecloud.com-access.log state=touch
+
+- name: create error log
+  file: path=/var/log/apache2/toolsforthecloud.com-error.log state=touch
+
+#- name: remove default configuration  - disable default catch all site
+#  file: path=/etc/apache2/sites-available/000-default.conf state=absent
+
+#- name: Disable default site
+#  shell: a2dissite 000-default
+
+- name: wait and restart
+  pause: minutes=1
+  notify:
+   - restart apache
