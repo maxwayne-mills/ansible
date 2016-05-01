@@ -1,3 +1,6 @@
+# Confugre jenkins
+# accepts two options passed in from the command line using
+# option -e "name=servername userstate=present or absent
 ---
  - hosts: '{{ name }}'
    tasks:
@@ -20,10 +23,19 @@
      apt: name=jenkins state=present
      ignore_errors: true
 
-   - name: Add user 
-     user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
+   - name: Account '{{ userstate }}' cmills
+     user: name=cmills shell=/bin/bash comment="Admin user" groups=root state='{{ userstate }}'
+     ignore_errors: true
 
    - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+     ignore_errors: true
+
+   - name: Account '{{userstate}}' dthornton
+     user: name=dthornton comment=dthornton shell=/bin/bash groups=root state='{{userstate}}'
+     ignore_errors: true
+
+   - authorized_key: user=dthornton key="{{ lookup('file', '/home/oss/.ssh/keys/dthornton.pub') }}"
+     ignore_errors: true
 
    - name: Create jenkins backup directory
      file: path=/data/jenkins/backup state=directory owner=jenkins group=jenkins
@@ -34,4 +46,7 @@
      ignore_errors: true
 
    - name: copy backup to jenkins serever
-     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-15_12-00_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=755
+     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-15_12-00_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
+
+   - name: copy another backup
+     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-10_15-28_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
