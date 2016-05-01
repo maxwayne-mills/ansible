@@ -5,37 +5,40 @@
  - hosts: '{{ server }}'
    tasks:
 
-   - name: Add apt key
-     #apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
-     apt_key: url=http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key state='{{ pkgstate }}'
-     ignore_errors: true
+     - name: Add apt key
+       #apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+       apt_key: url=http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key state='{{ pkgstate }}'
+       ignore_errors: true
 
-   - name: Update respository
-     apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state='{{ pkgstate }}'
-     ignore_errors: true
+     - name: Update respository
+       apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state='{{ pkgstate }}'
+       ignore_errors: true
 
-   - name: update cache apt-get update
-     apt: update_cache=yes
-     ignore_errors: true
+     - name: update cache apt-get update
+       apt: update_cache=yes
+       ignore_errors: true
 
-   - name: Install jenkins
-     apt: name=jenkins state='{{ pkgstate }}'
-     ignore_errors: true
+     - name: Install jenkins
+       apt: name=jenkins state='{{ pkgstate }}'
+       ignore_errors: true
 
-   - name: Install jenkins
-     apt: name=jenkins state='{{ pkgstate }}'
-     ignore_errors: true
+     - name: Install jenkins
+       apt: name=jenkins state='{{ pkgstate }}'
+       ignore_errors: true
 
-   - name: Create jenkins backup directory
-     file: path=/data/jenkins/backup state=directory owner=jenkins group=jenkins
-     ignore_errors: true
+     - name: Create jenkins backup directory
+       file: path=/data/jenkins/backup state=directory owner=jenkins group=jenkins
+       ignore_errors: true
 
-   - name: Create restore directory
-     file: path=/var/lib/jenkins_restore state=directory owner=jenkins group=jenkins mode=775
-     ignore_errors: true
+     - name: Create restore directory
+       file: path=/var/lib/jenkins_restore state=directory owner=jenkins group=jenkins mode=775
+       ignore_errors: true
 
-   - name: copy backup to jenkins serever
-     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-15_12-00_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
+     - name: copy backup to jenkins serever
+       copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-15_12-00_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
 
-   - name: copy another backup
-     copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-10_15-28_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
+     - name: copy another backup
+       copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-10_15-28_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
+
+ - roles:
+    - {role: common, hosts: '{{ server }}' }
