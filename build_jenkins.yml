@@ -26,20 +26,6 @@
      apt: name=jenkins state='{{ pkgstate }}'
      ignore_errors: true
 
-   - name: Account '{{ userstate }}' cmills
-     user: name=cmills shell=/bin/bash comment="Admin user" groups=root state='{{ userstate }}'
-     ignore_errors: true
-
-   - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-     ignore_errors: true
-
-   - name: Account '{{userstate}}' dthornton
-     user: name=dthornton comment=dthornton shell=/bin/bash groups=root state='{{userstate}}'
-     ignore_errors: true
-
-   - authorized_key: user=dthornton key="{{ lookup('file', '/home/oss/.ssh/keys/dthornton.pub') }}"
-     ignore_errors: true
-
    - name: Create jenkins backup directory
      file: path=/data/jenkins/backup state=directory owner=jenkins group=jenkins
      ignore_errors: true
