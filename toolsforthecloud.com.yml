@@ -1,5 +1,0 @@
----
-- hosts: '{{ name }}'
-  roles:
-   - apache2
-   - toolsforthecloud.com

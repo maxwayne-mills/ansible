@@ -1,0 +1,9 @@
+# takes two parameters as variables passed in
+# server, for the target server
+# domain, for the website to create.
+
+---
+- hosts: '{{ server }}'
+  roles:
+   - apache2
+   - '{{ domain }}'
