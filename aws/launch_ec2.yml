@@ -1,0 +1,18 @@
+---
+  - hosts: localhost
+    connection: local
+    gather_facts: no
+    vars:
+      # Region of choice
+      region: us-east-1
+    tasks:
+       - name: EC2 basic provisioning
+         local_action:
+           module: ec2
+           region: "{{ region }}"
+           key_name: test6_key
+           instance_type: t2.micro
+           image: ami-8fcee4e5
+           wait: yes
+           id: webserver-002
+           state: present

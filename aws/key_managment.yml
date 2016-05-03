@@ -1,0 +1,22 @@
+# Create or delete keys
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    # your region
+    region: us-east-1
+    keyname: test6_key
+  tasks:
+    - name: create key pair
+      local_action:
+        module: ec2_key
+        region: "{{ region }}"
+        name: "{{ keyname }}"
+        # absent means delete, present means to create
+        state: present
+      register: mykey
+    - name: write the private key to a file
+      local_action: shell echo -e "{{ item.value.private_key }}" > /home/oss/repos/aws/.ssh/"{{ keyname }}".pem && chmod 600 /home/oss/repos/aws/.ssh/"{{ keyname }}".pem      
+      with_dict: mykey   
+      when: item.value.private_key is defined
