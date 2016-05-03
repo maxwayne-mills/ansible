@@ -1,16 +1,16 @@
 ---
-# tasks file for common
-- name: Account '{{ userstate }}' cmills
-     user: name=cmills shell=/bin/bash comment="Admin user" groups=root state='{{ userstate }}'
-     ignore_errors: true
+ - hosts: '{{ server }}'
+   tasks:
+    - name: Account cmills
+      user: name=cmills shell=/bin/bash comment="Admin user" groups=root state=present
+      ignore_errors: true
 
-   - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-     ignore_errors: true
+    - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+      ignore_errors: true
 
-   - name: Account '{{userstate}}' dthornton
-     user: name=dthornton comment=dthornton shell=/bin/bash groups=root state='{{userstate}}'
-     ignore_errors: true
+    - name: Account dthornton
+      user: name=dthornton comment=dthornton shell=/bin/bash groups=root state=present
+      ignore_errors: true
 
-   - authorized_key: user=dthornton key="{{ lookup('file', '/home/oss/.ssh/keys/dthornton.pub') }}"
-     ignore_errors: true
-
+    - authorized_key: user=dthornton key="{{ lookup('file', '/home/oss/.ssh/keys/dthornton.pub') }}"
+      ignore_errors: true
