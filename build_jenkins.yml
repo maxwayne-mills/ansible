@@ -41,4 +41,4 @@
        copy: src=/home/oss/repos/jenkins/backup/BACKUPSET_2016-04-10_15-28_.zip dest=/data/jenkins/backup/ owner=jenkins group=jenkins mode=0755
 
  - roles:
-    - {role: common, hosts: '{{ server }}' }
+    - common
