@@ -1,0 +1,11 @@
+# Script updates a server passed in as a variable
+# with the -e option
+
+---
+- hosts: '{{ server }}'
+  tasks:
+  vars:
+   server: '{{ server }}'
+  roles:
+   - apache2
+   - mysrvsetup

@@ -1,6 +1,0 @@
----
-- name: Configure Apache server
-  hosts: srv4
-  roles:
-   - apache2
-   - mysrvsetup
