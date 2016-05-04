@@ -1,0 +1,119 @@
+---
+# Tasks for configuring Apache HTTP server.
+
+- include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'           # CentOS-6.5
+        - '{{ ansible_os_family }}-{{ ansible_distribution_version }}.yml'              # RedHat-6.5
+        - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'     # CentOS-6
+        - '{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'        # RedHat-6
+        - '{{ ansible_distribution }}.yml'                                              # CentOS
+        - '{{ ansible_os_family }}.yml'                                                 # RedHat
+        - 'default.yml'
+      paths: '../vars'
+
+- name: Determine if selinux is enabled
+  command: getenforce
+  register: getenforce
+  ignore_errors: true
+  changed_when: false
+
+- name: Open up permissions on httpd.
+  seboolean:
+    name: '{{item}}'
+    persistent: yes
+    state: 'true'
+  when: getenforce|success and getenforce.stdout.lower() != "disabled"
+  with_items:
+    - httpd_can_network_connect
+    # - allow_httpd_mod_auth_pam # only works on EL6
+    # - httpd_mod_auth_pam # only works on EL7
+    # - httpd_setrlimit
+
+- name: enable mod_ssl (Ubuntu specific)
+  command: a2enmod ssl
+  when: ansible_os_family == "Debian"
+  notify:
+    - restart httpd
+    - restart apache2
+
+- name: enable mod_rewrite (Ubuntu specific)
+  command: a2enmod rewrite
+  when: ansible_os_family == "Debian"
+  notify:
+    - restart httpd
+    - restart apache2
+
+- name: create self signed SSL certificates
+  command: openssl req -x509 -nodes -sha256 -days 99999 -newkey rsa:2048 -keyout /etc/tower/tower.key -out /etc/tower/tower.cert -subj "/C=US/ST=NC/L=Raleigh/O=Ansible/CN=www.ansible.com"
+  args:
+    creates: /etc/tower/tower.cert
+  notify:
+    - restart httpd
+    - restart apache2
+
+- name: Configure file permissions on certificate file.
+  file:
+    group: '{{ aw_group }}'
+    mode: 0600
+    path: /etc/tower/tower.cert
+    owner: '{{ aw_user }}'
+  notify:
+    - restart httpd
+    - restart apache2
+
+- name: Configure file permissions on key file.
+  file:
+    group: '{{ aw_group }}'
+    mode: 0600
+    path: /etc/tower/tower.key
+    owner: '{{ aw_user }}'
+  notify:
+    - restart httpd
+    - restart apache2
+
+- name: enable apache munin monitoring
+  file:
+    src: /usr/share/munin/plugins/apache_processes
+    dest: /etc/munin/plugins/apache_processes
+    state: link
+
+- name: disable postfix mailqueue monitoring
+  file:
+      path: /etc/munin/plugins/postfix_mailqueue
+      state: absent
+
+- name: disable postfix mailvolume monitoring
+  file:
+    path: /etc/munin/plugins/postfix_mailvolume
+    state: absent
+
+- name: set default munin htpasswd
+  command: htpasswd -c -b .munin_htpasswd admin '{{ munin_password }}'
+  args:
+    chdir: '{{ aw_home }}'
+    creates: '.munin_htpasswd'
+  when: munin_password is defined
+
+- name: update munin htpasswd file permissions
+  file:
+    path: '{{ aw_home }}/.munin_htpasswd'
+    owner: '{{aw_user}}'
+    group: '{{aw_group}}'
+    mode: '0644'
+
+- name: start httpd and configure to startup automatically
+  service:
+    name: '{{ httpd_init_name }}'
+    state: started
+    enabled: yes
+
+- name: restart and enable munin
+  service:
+    name: munin-node
+    state: restarted
+    enabled: yes
+  notify:
+    - restart httpd
+    - restart apache2

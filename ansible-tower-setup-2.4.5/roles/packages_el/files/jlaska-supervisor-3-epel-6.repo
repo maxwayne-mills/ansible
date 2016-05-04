@@ -1,0 +1,8 @@
+[jlaska-supervisor-3]
+name=Copr repo for supervisor-3 owned by jlaska
+baseurl=https://copr-be.cloud.fedoraproject.org/results/jlaska/supervisor-3/epel-6-$basearch/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/jlaska-supervisor-3-epel-6.gpg
+enabled=1
+enabled_metadata=1

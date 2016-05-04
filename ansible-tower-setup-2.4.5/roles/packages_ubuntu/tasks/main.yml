@@ -1,0 +1,96 @@
+---
+# Tasks to install required packages for Tower
+
+- include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'           # Ubuntu-12.04, Ubuntu-14.04
+        - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'     # Ubuntu-12, Ubuntu-14
+        - '{{ ansible_distribution }}.yml'                                              # Ubuntu
+        - 'default.yml'
+      paths: '../vars'
+
+- name: Install ubuntu Tower apt repository.
+  template:
+    src: apt_repo.j2
+    dest: /etc/apt/sources.list.d/ansible_tower.list
+  register: apt_repo
+
+- name: Remove Django if installed via. apt.
+  apt:
+    name: python-django
+    state: absent
+
+- name: install apt repository keys
+  apt_key:
+    id: '{{ item.id|default(omit) }}'
+    keyserver: '{{ item.keyserver|default(omit) }}'
+    url: '{{ item.url|default(omit) }}'
+    data: '{{ item.data|default(omit) }}'
+  when: apt_keys is defined
+  with_items: apt_keys
+
+- name: Install apt repositories
+  apt_repository:
+    repo: '{{ item }}'
+  when: apt_repos is defined
+  with_items: apt_repos
+
+- name: Install playbook dependencies
+  apt:
+    name: '{{ item }}'
+    state: installed
+  with_items: ubuntu_dependencies
+
+- name: A secret key may already exist; test if it does.
+  stat:
+    path: /etc/tower/SECRET_KEY
+  register: secret_key
+
+- name: If a secret key already exists, read it into memory.
+  slurp:
+    src: /etc/tower/SECRET_KEY
+  register: sk_content
+  when: secret_key.stat.exists
+
+  # NOTE: The 'apt' module doesn't support installing packages with a wildcard
+  # ('*').  Refer to https://github.com/ansible/ansible-modules-core/pull/28.
+  # A fix is included in ansible-1.8. Older versions of ansible will call
+  # 'apt-get' directly.
+- name: Install Tower package with the apt module.
+  apt:
+    name: '{{ tower_package_deb }}'
+    update_cache: yes
+    state: present
+    force: '{{ not gpgcheck|bool }}'
+  when: ansible_version is defined and ansible_version.full|version_compare('1.8', '>=')
+  register: apt_install
+
+- name: Update apt cache when using the apt-get command
+  apt:
+    update_cache: yes
+  when: apt_install|skipped
+
+- name: Install Tower package with the apt-get command.
+  command: "apt-get {{ (not gpgcheck|bool) and '--allow-unauthenticated' or '' }} -y install '{{tower_package_deb}}'"
+  changed_when: "'0 upgraded, 0 newly installed' not in result.stdout"
+  register: result
+  when: apt_install|skipped
+
+- name: Restore the secret key.
+  copy:
+    content: "{{ sk_content.content.decode('base64') }}"
+    dest: /etc/tower/SECRET_KEY
+    force: yes
+  when: secret_key.stat.exists
+
+# The 'path' parameter below works around an open ansible issue (https://github.com/ansible/ansible/issues/10190)
+- name: Remove Tower apt repository configuration.
+  file:
+    path: '{{ apt_repo.path|default(apt_repo.dest) }}'
+    state: absent
+  when: apt_repo is defined
+
+- name: Update apt cache
+  apt:
+    update_cache: yes

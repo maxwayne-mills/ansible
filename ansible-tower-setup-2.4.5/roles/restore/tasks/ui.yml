@@ -1,0 +1,11 @@
+---
+- name: Ensure that /var/lib/awx/public/static exists.
+  file:
+    group: root
+    mode: 0755
+    owner: root
+    path: "{{ aw_home }}/public/static"
+    state: directory
+
+- name: Restore custom ui files
+  shell: rsync -aq {{ backup_dir.rstrip("/") }}/restore/ui/ {{ aw_home }}/public/

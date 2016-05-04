@@ -1,0 +1,10 @@
+---
+- name: Remove the backup directory.
+  file:
+    path: '{{ backup_dir.rstrip("/") }}/{{ now }}/'
+    state: absent
+
+- name: Remove the backup tarball.
+  file:
+    path: '{{ backup_dir.rstrip("/") }}/tower-backup-{{ now }}.tar.gz'
+    state: absent

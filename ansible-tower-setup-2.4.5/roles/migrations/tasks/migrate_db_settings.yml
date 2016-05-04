@@ -1,0 +1,21 @@
+---
+- name: Place a scaffolding script that knows how to migrate database settings.
+  copy:
+    dest: /etc/tower/migrate_db_settings.py
+    group: root
+    mode: 0644
+    owner: root
+    src: migrate_db_settings.py
+
+- name: Create a separate postgres.py settings file in conf.d.
+  shell: python /etc/tower/migrate_db_settings.py
+  sudo: True
+  sudo_user: '{{ aw_user }}'
+  args:
+    executable: /bin/bash
+  changed_when: True
+
+- name: Remove the scaffolding script.
+  file:
+    dest: /etc/tower/migrate_db_settings.py
+    state: absent

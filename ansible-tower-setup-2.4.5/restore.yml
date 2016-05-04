@@ -1,0 +1,5 @@
+---
+- hosts: primary
+  gather_facts: yes
+  roles:
+    - restore

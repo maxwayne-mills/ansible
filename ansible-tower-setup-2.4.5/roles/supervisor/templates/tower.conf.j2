@@ -1,0 +1,69 @@
+[supervisord]
+umask = 022
+
+[program:awx-celeryd]
+command = /usr/bin/tower-manage celeryd -B -l debug --autoscale={{celery_autoscale}} -Ofair -s {{ aw_home }}/beat.db
+directory = {{ aw_home }}
+user = {{ aw_user }}
+autostart = true
+autorestart = true
+stopwaitsecs = 5
+redirect_stderr=true
+stdout_logfile = /var/log/supervisor/awx-celeryd.log
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 10
+
+[program:awx-callback-receiver]
+command = /usr/bin/tower-manage run_callback_receiver
+directory = {{ aw_home }}
+user = {{ aw_user }}
+autostart = true
+autorestart = true
+stopwaitsecs = 5
+redirect_stderr=true
+stdout_logfile = /var/log/supervisor/awx-callback-receiver.log
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 10
+
+[program:awx-task-system]
+command = /usr/bin/tower-manage run_task_system
+directory = {{ aw_home }}
+user = {{ aw_user }}
+autostart = true
+autorestart = true
+stopwaitsecs = 5
+redirect_stderr=true
+stdout_logfile = /var/log/supervisor/awx-task-manager.log
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 10
+
+[program:awx-socketio-service]
+command = /usr/bin/tower-manage run_socketio_service
+directory = {{ aw_home }}
+user = {{ aw_user }}
+autostart = true
+autorestart = true
+stopwaitsecs = 5
+redirect_stderr=true
+stdout_logfile = /var/log/supervisor/awx-socketio-service.log
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 10
+
+[program:awx-fact-cache-receiver]
+command = /usr/bin/tower-manage run_fact_cache_receiver
+directory = {{ aw_home }}
+user = {{ aw_user }}
+autostart = true
+autorestart = true
+stopwaitsecs = 5
+redirect_stderr=true
+stdout_logfile = /var/log/supervisor/awx-fact-cache-receiver.log
+stdout_logfile_maxbytes = 10MB
+stdout_logfile_backups = 10
+
+# NOTE: This is useful if the socket service encounters a problem
+#       where it consumes too much memory.  You will need to install
+#       superlance:   pip install superlance
+# [eventlistener:memmon]
+# command=memmon -p awx-socketio-service=200MB
+# events=TICK_60

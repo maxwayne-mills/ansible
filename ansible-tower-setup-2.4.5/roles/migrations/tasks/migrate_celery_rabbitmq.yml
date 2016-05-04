@@ -1,0 +1,7 @@
+---
+# We do not actually need to migrate the celery configuration; we simply
+# need to remove it.
+- name: Remove the celeryd configuration.
+  file:
+    dest: /etc/tower/conf.d/celeryd.py
+    state: absent

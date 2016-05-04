@@ -1,0 +1,6 @@
+---
+- include: install.yml
+  when: primacy == 'primary' and database == 'internal'
+
+- include: conf.yml
+  when: primacy == 'primary' and database == 'internal'

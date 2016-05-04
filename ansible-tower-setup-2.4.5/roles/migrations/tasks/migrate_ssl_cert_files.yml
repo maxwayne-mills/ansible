@@ -1,0 +1,20 @@
+---
+- name: Move awx.cert and awx.key to tower.cert and tower.key.
+  shell: mv /etc/tower/awx.{{ item }} /etc/tower/tower.{{ item }}
+  args:
+    creates: /etc/tower/tower.{{ item }}
+  with_items:
+    - cert
+    - key
+
+- name: Update awx-http-443.conf to use the new filenames.
+  lineinfile:
+    dest: /etc/{{ 'apache2/conf.d' if ansible_distribution.lower() == 'ubuntu' else 'httpd/conf.d' }}/awx-httpd-443.conf
+    line: '  {{ item.key }} /etc/tower/tower.{{ item.ext }}'
+    regexp: '\s+{{ item.key }}\s+/etc/tower/awx\.{{ item.ext }}'
+    state: present
+  with_items:
+    - ext: cert
+      key: SSLCertificateFile
+    - ext: key
+      key: SSLCertificateKeyFile

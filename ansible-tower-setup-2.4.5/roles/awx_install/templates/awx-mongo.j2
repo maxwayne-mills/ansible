@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+# This file is placed by the Ansible Tower installer.  Do not modify it.
+
+Cmnd_Alias MONGOD_START = /sbin/service mongod start, /usr/sbin/service mongod start, /usr/bin/service mongod start
+Cmnd_Alias MONGOD_STOP = /sbin/service mongod stop, /usr/sbin/service mongod stop, /usr/bin/service mongod stop
+awx ALL=(ALL) NOPASSWD: MONGOD_START
+awx ALL=(ALL) NOPASSWD: MONGOD_STOP
+Defaults!MONGOD_START !requiretty
+Defaults!MONGOD_STOP !requiretty
+
+Cmnd_Alias MONGOD_SHUTDOWN = /usr/bin/mongod --shutdown -f /etc/mongod.conf
+awx ALL=(ALL) NOPASSWD: MONGOD_SHUTDOWN
+Defaults!MONGOD_SHUTDOWN !requiretty

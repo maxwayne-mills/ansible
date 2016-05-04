@@ -1,0 +1,11 @@
+---
+- name: Ensure that aw_home projects directory exists.
+  file:
+    group: awx
+    mode: 0755
+    owner: awx
+    path: "{{ aw_home }}/projects"
+    state: directory
+
+- name: Restore manual projects
+  shell: rsync -aq {{ backup_dir.rstrip("/") }}/restore/projects/ {{aw_home}}/projects/

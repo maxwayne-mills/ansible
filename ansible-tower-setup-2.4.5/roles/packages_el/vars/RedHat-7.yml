@@ -1,0 +1,32 @@
+---
+
+el_dependencies: '{{ el7_dependencies }}'
+
+yum_online_repo_files:
+  - 'epel-7.repo'
+  - 'pgdg-94-centos.repo'
+  - 'mongodb-org.repo'
+  - 'jlaska-proot-epel-7.repo'
+
+yum_repo_keys:
+  - '10gen-gpg-key.asc'
+  - 'RPM-GPG-KEY-EPEL-7'
+  - 'RPM-GPG-KEY-PGDG-94'
+  - 'RPM-GPG-KEY-ansible-release'
+  - 'jlaska-proot-epel.gpg'
+
+pg_release_url: http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+tower_bundle_file: tower_bundle_el7.j2
+
+# List of RHUI (RH Update Infrastructure) repositories to enable
+redhat_rhui_repos:
+    - rhui-REGION-rhel-server-optional
+    - rhui-REGION-rhel-server-extras
+
+# List of RHSM (RH Subscription Manager) repositories to enable
+redhat_rhsm_repos:
+    - rhel-7-server-extras-rpms
+    - rhel-7-server-optional-rpms
+    # - 'rhel-{{ ansible_distribution_major_version }}-server-extras-rpms'
+    # - 'rhel-{{ ansible_distribution_major_version }}-server-optional-rpms'
+

@@ -1,0 +1,163 @@
+---
+# Migrations.
+# The purpose of migrations is to handle a case where we made a change
+# to how we expect Tower to be configured, and upgrading Tower needs
+# to move the Tower instance to the new state.
+#
+# Some migration tasks may be very simple, and others very complex; in order
+# to maintain readability, *this* file should maintain a strict pattern
+# of "condition, include, condition, include, condition, include...".
+#
+# Essentially, this file should set up a condition to check to see if a given
+# migration needs to be done, and then include another task file that does
+# it, regardless of whether the number of steps is 1 or 25.
+
+
+# -----------------------------------------------------------------------------
+# If /etc/awx/ is present, its contents must be migrated to /etc/tower/
+# Introduced in: Tower 2.1
+# -----------------------------------------------------------------------------
+- name: Check to see if /etc/awx/ exists (Tower < 2.1).
+  stat:
+    follow: no
+    path: /etc/awx/
+  register: result
+
+- include: migrate_directory.yml
+  vars:
+    src: /etc/awx/
+    dest: /etc/tower/
+  when: result.stat.exists
+
+- include: migrate_conf.yml
+  when: result.stat.exists
+
+
+# -----------------------------------------------------------------------------
+# If /var/log/awx/ is present, its contents must be migrated to
+# /var/log/tower/.
+# Introduced in: Tower 2.1
+# -----------------------------------------------------------------------------
+- name: Check to see if /var/log/awx/ exists (Tower < 2.1).
+  stat:
+    follow: no
+    path: /var/log/awx/
+  register: result
+
+- include: migrate_directory.yml
+  vars:
+    src: /var/log/awx/
+    dest: /var/log/tower/
+  when: result.stat.exists
+  notify:
+    - restart httpd
+    - restart apache2
+
+
+# -----------------------------------------------------------------------------
+# If /etc/tower/settings.py contains DATABASES, then the database data should
+# be split out into a separate file living in /etc/tower/conf.d/.
+# Introduced in: Tower 2.1
+# -----------------------------------------------------------------------------
+- name: Check to see if DATABASES is defined in the main settings file.
+  shell: grep "DATABASES = {" /etc/tower/settings.py
+  args:
+    executable: /bin/bash
+  changed_when: False
+  ignore_errors: yes
+  register: result
+
+- include: migrate_db_settings.yml
+  when: result.rc == 0
+
+
+# -----------------------------------------------------------------------------
+# If /etc/tower/conf.d/celeryd.py is configured for RabbitMQ, we need to
+# remove it entirely.
+# Introduced in: Tower 2.1
+# -----------------------------------------------------------------------------
+- name: Check to see if celery is already configured for RabbitMQ.
+  shell: grep "amqp://" /etc/tower/conf.d/celeryd.py
+  args:
+    executable: /bin/bash
+  changed_when: False
+  ignore_errors: yes
+  register: result
+
+- include: migrate_celery_rabbitmq.yml
+  when: result.rc == 0
+
+
+# -----------------------------------------------------------------------------
+# If the awx.cert and awx.key SSL keys exist, move them to tower.cert and
+# tower.key.
+# Introduced in: Tower 2.2
+# -----------------------------------------------------------------------------
+- name: Check to see if the old awx SSL files exist.
+  stat:
+    path: /etc/tower/awx.cert
+  register: result
+
+- include: migrate_ssl_cert_files.yml
+  when: result.stat.exists
+
+
+# -----------------------------------------------------------------------------
+# If /etc/tower/settings.py contains an LDAP import, then the LDAP config
+# should be split out into a separate file living in /etc/tower/conf.d/.
+# Introduced in: Tower 2.2
+# -----------------------------------------------------------------------------
+- name: Check to see if LDAP is defined in the main settings file.
+  shell: grep "import ldap" /etc/tower/settings.py
+  args:
+    executable: /bin/bash
+  changed_when: False
+  ignore_errors: yes
+  register: result
+
+- include: migrate_ldap_settings.yml
+  when: result.rc == 0
+
+
+# -----------------------------------------------------------------------------
+# If PostgreSQL is installed and is on a version that is not 9.4,
+# migrate to PostgreSQL 9.4.
+# Introduced in: Tower 2.2
+# TODO: Investigate ansible version comparison logic see packages_ubuntu
+# -----------------------------------------------------------------------------
+- name: Check to see if PostgreSQL is installed and not on 9.4.
+  shell: psql --version
+  args:
+    executable: /bin/bash
+  changed_when: False
+  ignore_errors: yes
+  register: result
+
+- include: migrate_postgres.yml
+  when: result.rc == 0 and '9.4' not in result.stdout
+
+# -----------------------------------------------------------------------------
+# Tower < 2.3 did not use a unified supervisor version
+# this aids in migration to 3.0 across all distros and allows utilizing a unified
+# config file
+# -----------------------------------------------------------------------------
+
+- name: Check Tower version for supervisor configuration
+  shell: cat /var/lib/awx/.tower_version
+  changed_when: False
+  ignore_errors: yes
+  register: result
+
+- include: migrate_supervisor.yml
+  vars:
+    tower_version: '{{ result.stdout }}'
+  when: result.rc == 0 and result.stdout|version_compare('2.3', '<')
+
+# -----------------------------------------------------------------------------
+# Make sure the old ansible-tower service script doesn't exist anymore
+# -----------------------------------------------------------------------------
+- name: Remove old ansible-tower service script
+  file:
+    path: /etc/init.d/ansible-tower
+    state: absent
+  ignore_errors: yes

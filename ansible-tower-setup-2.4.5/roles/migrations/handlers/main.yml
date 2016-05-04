@@ -1,0 +1,10 @@
+---
+- name: Remove /etc/awx/ symlink.
+  file:
+    path: /etc/awx
+    state: absent
+
+- name: Remove /var/log/awx/ symlink.
+  file:
+    path: /var/log/awx
+    state: absent

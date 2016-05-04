@@ -1,0 +1,57 @@
+---
+# Tasks for configuring PostgreSQL server.
+
+- include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'           # CentOS-6.5
+        - '{{ ansible_os_family }}-{{ ansible_distribution_version }}.yml'              # RedHat-6.5
+        - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'     # CentOS-6
+        - '{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'        # RedHat-6
+        - '{{ ansible_distribution }}.yml'                                              # CentOS
+        - '{{ ansible_os_family }}.yml'                                                 # RedHat
+        - 'default.yml'
+      paths: '../vars'
+
+- name: init postgresql (el-only)
+  command: '{{ pg_initdb_command }}'
+  args:
+    creates: /var/lib/pgsql/9.4/data/PG_VERSION
+  when: ansible_os_family == "RedHat"
+
+- name: Make sure PostgreSQL is started
+  service:
+    name: '{{ pg_init_name }}'
+    state: started
+  register: postgresql_start
+
+- name: Wait for PostgreSQL to start if it wasnt
+  wait_for:
+    host: localhost
+    port: 5432
+  when: postgresql_start|changed
+
+- name: Check for the presence of a database backup that needs to be restored
+  stat:
+    path: /var/pg_backups/tower/tower-backup.db
+  register: tower_db_backup
+
+- name: Restore database backup if we created a dump in the migrate_postgres role
+  shell: psql < /var/pg_backups/tower/tower-backup.db
+  args:
+    executable: /bin/bash
+  sudo_user: postgres
+  when: tower_db_backup.stat.exists
+
+- name: Remove the Postgres data backup
+  file:
+    path: /var/pg_backups/tower/tower-backup.db
+    state: absent
+  when: tower_db_backup.stat.exists
+
+- name: Remove the Postgres data backup directory
+  file:
+    path: /var/pg_backups/tower/
+    state: absent
+  when: tower_db_backup.stat.exists
+  

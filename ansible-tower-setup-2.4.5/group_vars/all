@@ -1,0 +1,50 @@
+---
+# Variables applicable to all hosts
+
+# ***** DO NOT CHANGE. TOWER SETUP IS NOW CONFIGURED BY RUNNING 'configure'. ****
+
+# Optional variables defined in 'setup/roles/awx_install/defaults/main.yml'
+# =========================================================================
+
+# aw_repo_url: "http://releases.ansible.com/ansible-tower"
+
+# Unprivileged User Account (for now, don't change this username)
+# aw_user: awx
+# aw_group: awx
+# aw_home: /var/lib/awx
+
+# Specify the package details
+tower_package_name: 'ansible-tower'
+tower_package_version: '2.4.5'
+tower_package_release: '1'
+
+# Django Options
+# admin_username: admin
+# admin_email: admin@example.com
+
+# Logging Options
+# log_level: ERROR
+# log_rotate_size: 5242880
+# log_backup_count: 5
+
+# Apache Options
+# these addresses should match the external name of your server as you
+# are going to access them from other machines
+
+# httpd_server_name: localhost
+# httpd_server_aliases:
+#  - localhost
+#  - 127.0.0.1
+
+# Optional variables defined in 'setup/roles/postgres/defaults/main.yml'
+# ======================================================================
+
+# pg_username: awx
+# pg_database: awx
+
+# Optional variables defined in 'setup/roles/supervisor/defaults/main.yml'
+# ========================================================================
+
+# Celery Settings
+# This takes the form of: max,min
+# celery_autoscale: 50,4

@@ -1,0 +1,12 @@
+---
+database: internal
+
+# PostgreSQL Credentials
+pg_username: awx
+pg_database: awx
+pg_host: ''
+pg_port: 5432
+
+# pg_password must be defined; we will fail out if it is not.
+# It is defined in group_vars/all
+# pg_password: awx

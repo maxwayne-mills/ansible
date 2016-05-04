@@ -1,0 +1,11 @@
+---
+- name: Create a directory for UI customizations
+  file:
+    path: '{{ backup_dir.rstrip("/") }}/{{ now }}/ui/'
+    group: root
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Copy specific ui files from static
+  shell: rsync --include="/static/" --include="/static/assets/" --include="/static/assets/custom_console_logo.png" --include="/static/local_settings.json" --exclude="*" -auq {{ aw_home }}/public/ {{ backup_dir.rstrip("/") }}/{{ now }}/ui/

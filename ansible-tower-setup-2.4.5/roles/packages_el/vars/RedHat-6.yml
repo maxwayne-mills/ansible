@@ -1,0 +1,23 @@
+---
+
+el_dependencies: '{{ el6_dependencies }}'
+
+yum_online_repo_files:
+  - 'epel-6.repo'
+  - 'pgdg-94-centos.repo'
+  - 'mongodb-org.repo'
+  - 'jlaska-supervisor-3-epel-6.repo'
+  - 'jlaska-redis-28-epel-6.repo'
+  - 'jlaska-proot-epel-6.repo'
+
+yum_repo_keys:
+  - '10gen-gpg-key.asc'
+  - 'RPM-GPG-KEY-EPEL-6'
+  - 'RPM-GPG-KEY-PGDG-94'
+  - 'RPM-GPG-KEY-ansible-release'
+  - 'jlaska-supervisor-3-epel-6.gpg'
+  - 'jlaska-redis-28-epel-6.gpg'
+  - 'jlaska-proot-epel.gpg'
+
+pg_release_url: http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+tower_bundle_file: tower_bundle_el6.j2

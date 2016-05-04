@@ -1,0 +1,16 @@
+---
+- name: Remove the restore directory.
+  file:
+    path: '{{ backup_dir.rstrip("/") }}/restore/'
+    state: absent
+
+- name: start apache.
+  service:
+    name: '{% if ansible_distribution.lower() == "ubuntu" %}apache2{% else %}httpd{% endif %}'
+    state: started
+
+- name: start supervisord.
+  service:
+    name: '{% if ansible_distribution.lower() == "ubuntu" %}supervisor{% else %}supervisord{% endif %}'
+    state: started
+

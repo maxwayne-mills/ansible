@@ -1,0 +1,19 @@
+---
+- name: Create a directory for manual projects.
+  file:
+    path: '{{ backup_dir.rstrip("/") }}/{{ now }}/projects/'
+    group: root
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Build project exclusion list
+  shell: cd {{aw_home}}/projects; find . -type d -regex '.*_[0-9]+__.*' | sed 's/\.\///' > /tmp/tower-backup-exclusions
+
+- name: Copy project directories from aw_home
+  shell: rsync --exclude-from=/tmp/tower-backup-exclusions -auq {{ aw_home }}/projects/ {{ backup_dir.rstrip("/") }}/{{ now }}/projects/
+
+- name: Remove project exclusion list
+  file:
+    path: /tmp/tower-backup-exclusions
+    state: absent

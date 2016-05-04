@@ -1,0 +1,13 @@
+---
+- name: Compress the backup data.
+  shell: tar cvfz ../tower-backup-{{ now }}.tar.gz .
+  args:
+    chdir: '{{ backup_dir.rstrip("/") }}/{{ now }}/'
+  notify: Remove the backup tarball.
+
+- name: Download the database dump.
+  fetch:
+    dest: '{{ backup_dest }}'
+    fail_on_missing: yes
+    flat: yes
+    src: '{{ backup_dir.rstrip("/") }}/tower-backup-{{ now }}.tar.gz'

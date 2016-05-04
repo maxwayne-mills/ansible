@@ -1,0 +1,69 @@
+---
+- name: Update postgresql authentication settings
+  template:
+    dest: '{{ pg_hba_location }}'
+    owner: postgres
+    src: pg_hba.conf.j2
+  register: pg_hba_conf
+
+- name: Update unix_socket_directories in postgresql.conf
+  lineinfile:
+    dest: '{{ pg_conf_location }}'
+    regexp: '^#?\s*unix_socket_directories.*'
+    line: "unix_socket_directories = '{{ pg_run_dir }}, /tmp'"
+    state: present
+  register: pg_conf
+
+- name: Create unix socket directory
+  file:
+    path: '{{ pg_run_dir }}'
+    state: directory
+    owner: 'postgres'
+    group: 'postgres'
+    mode: 02775
+    setype: 'postgresql_var_run_t'
+
+- name: Configure postgresql tmpfiles.d
+  template:
+    src: 'postgresql.tmpfiles.d.j2'
+    dest: '/usr/lib/tmpfiles.d/postgresql.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    setype: 'lib_t'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: restart postgresql when authentication settings changed
+  service: name='{{ pg_init_name }}' state=restarted
+  when: pg_hba_conf|changed or pg_conf|changed
+  register: postgresql_restart
+
+- name: wait for postgresql restart
+  wait_for:
+    host: localhost
+    port: 5432
+  when: postgresql_restart|changed
+
+- name: configure postgresql to start automatically
+  service: name='{{ pg_init_name }}' enabled=yes
+
+- name: Initialize the postgresql user for awx
+  postgresql_user:
+    name: '{{pg_username}}'
+  sudo: True
+  sudo_user: postgres
+  register: create_pg_user
+
+- name: set the password for the postgres user
+  postgresql_user:
+    name: '{{pg_username}}'
+    password: "{{pg_password}}"
+  sudo: True
+  sudo_user: postgres
+  when: create_pg_user.changed
+
+- name: create the postgresql database for awx
+  postgresql_db: name={{pg_database}} owner={{pg_username}} state=present login_user=postgres
+  sudo: True
+  sudo_user: postgres
+

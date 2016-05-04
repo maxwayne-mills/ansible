@@ -1,0 +1,19 @@
+---
+- name: Update awx-http-443.conf to use the /etc/tower/ location for the cert.
+  lineinfile:
+    dest: /etc/{{ 'apache2/conf.d' if ansible_distribution.lower() == 'ubuntu' else 'httpd/conf.d' }}/awx-httpd-443.conf
+    line: '  {{ item.key }} /etc/tower/{{ item.filename }}'
+    regexp: '\s+{{ item.key }}\s+/etc/.*/{{ item.filename }}'
+    state: present
+  with_items:
+    - key: SSLCertificateFile
+      filename: awx.cert
+    - key: SSLCertificateKeyFile
+      filename: awx.key
+
+- name: Update the settings.py file to point to the new SECRET_KEY.
+  lineinfile:
+    dest: /etc/tower/settings.py
+    line: "SECRET_KEY = file('/etc/tower/SECRET_KEY', 'rb').read().strip()"
+    regexp: /etc/.*/SECRET_KEY
+    state: present

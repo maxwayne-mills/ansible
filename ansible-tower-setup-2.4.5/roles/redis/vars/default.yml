@@ -1,0 +1,5 @@
+---
+redis_conf_path: /etc/redis
+redis_conf_fragments: /etc/redis/fragments
+redis_conf_filename: redis.conf
+redis_service_name: redis-server

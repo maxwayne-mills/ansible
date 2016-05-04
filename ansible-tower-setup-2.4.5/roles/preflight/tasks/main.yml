@@ -1,0 +1,35 @@
+---
+- name: Preflight check - Fail if this machine lacks sufficient RAM.
+  fail:
+    msg: This machine does not have sufficient RAM to run Ansible Tower.
+  when: ansible_memtotal_mb < required_ram|int
+
+- name: Preflight check - Get umask
+  shell: umask
+  register: umask
+  changed_when: False
+
+- name: Preflight check - Does the system have a standard umask?
+  fail:
+    msg: 'The umask of the system ({{ umask.stdout.strip() }}) prevents successful installation. We suggest a standard umask such as 0022.'
+  when: umask.stdout.strip()[-2:] not in ('00', '02', '20', '22')
+
+- name: Determine which mountpoint /var exists on
+  shell: "df /var | tail -n1 | awk '{print $NF}'"
+  register: var_partition
+  changed_when: False
+
+- name: Preflight check - Does /var meet minimum disk space requirement
+  fail:
+    msg: 'The file system mounted at {{ item.mount }} does not meet minimum disk space requirement: {{ item.size_available }} < {{ minimum_var_space }}'
+  when: item.mount == var_partition.stdout and item.size_available < minimum_var_space|int
+  with_items: ansible_mounts
+
+- name: Preflight check - Get /var/log permissions
+  stat: path=/var/log
+  register: vl_st
+
+- name: Preflight check - Does /var/log have appropriate permissions?
+  fail:
+    msg: 'The permissions on /var/log ({{ vl_st.stat.mode }}) prevent successful installation. /var/log must be world-readable.'
+  when: not vl_st.stat.roth

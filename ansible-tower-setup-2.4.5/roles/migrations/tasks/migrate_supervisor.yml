@@ -1,0 +1,25 @@
+---
+- name: Remove old AWX supervisor configuration for Red Hat 6 if we are upgrading from 2.2 (or older)
+  file:
+    path: /etc/supervisord.conf
+    state: absent
+  when: ansible_os_family.lower() == 'redhat' and ansible_distribution_major_version == '6' and tower_version|version_compare('2.2', '<')
+
+- name: Remove old AWX supervisor configuration for Red Hat 7
+  file:
+    path: /etc/supervisord.d/awx.ini
+    state: absent
+  when: ansible_os_family.lower() == 'redhat' and ansible_distribution_major_version == '7'
+
+- name: Remove old AWX supervisor configuration for Ubuntu
+  file:
+    path: /etc/supervisor/conf.d/awx.conf
+    state: absent
+  when: ansible_os_family.lower() == 'debian'
+
+- name: Remove old superflous AWX configuration for Ubuntu
+  file:
+    path: /etc/supervisor/conf.d/awx_supervisor.conf
+    state: absent
+  when: ansible_os_family.lower() == 'debian'
+

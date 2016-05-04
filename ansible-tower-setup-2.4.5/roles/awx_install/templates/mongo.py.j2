@@ -1,0 +1,21 @@
+# Ansible Tower mongo settings.
+
+{% if database == 'internal' %}
+MONGO_HOST = '127.0.0.1'
+MONGO_PORT = 27017
+MONGO_DB = 'system_tracking'
+MONGO_USERNAME = None
+MONGO_PASSWORD = None
+{% elif mongo_host is defined and mongo_database is defined %}
+MONGO_HOST = '{{ mongo_host }}'
+MONGO_PORT = {{ mongo_port|default(27017) }}
+MONGO_DB = '{{ mongo_database }}'
+MONGO_USERNAME = '{{ mongo_username|default(None) }}'
+MONGO_PASSWORD = '{{ mongo_password|default(None) }}'
+{% else %}
+MONGO_HOST = NotImplemented
+MONGO_PORT = NotImplemented
+MONGO_DB = NotImplemented
+MONGO_USERNAME = NotImplemented
+MONGO_PASSWORD = NotImplemented
+{% endif %}

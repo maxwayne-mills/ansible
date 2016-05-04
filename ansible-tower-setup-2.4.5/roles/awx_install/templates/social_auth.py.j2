@@ -1,0 +1,263 @@
+###############################################################################
+# SOCIAL AUTHENTICATION SETTINGS
+###############################################################################
+
+# Ansible Tower can be configured to centrally use OAuth2 or SAML as a source
+# for authentication information.
+
+# Google OAuth2
+# -------------
+
+# Create a project at https://console.developers.google.com/ and obtain an
+# OAuth2 key and secret for a web application.  Provide the following callback
+# URL for your application, replacing tower.example.com with the FQDN to your
+# Tower server:
+# 
+#     https://tower.example.com/sso/complete/google-oauth2/
+# 
+# Ensure that the Google+ API is enabled.
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+# Uncomment the line below to restrict the domains who are allowed to login
+# using Google OAuth2.
+
+#SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ['example.com']
+
+# Uncomment the line below when only allowing a single domain to authenticate
+# using Google OAuth2; Google will not display any other accounts if the user
+# is logged in with multiple Google accounts.
+
+#SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'hd': 'example.com'}
+
+# Refer to Python Social Auth documentation for advanced settings:
+#
+#     https://python-social-auth.readthedocs.org/en/latest/backends/google.html#google-oauth2
+
+# Github OAuth2
+# -------------
+
+# Create a developer application at https://github.com/settings/developers and
+# obtain an OAuth2 key (Client ID) and secret (Client Secret).  Provide the
+# following callback URL for your application, replacing tower.example.com
+# with the FQDN to your Tower server:
+#
+#     https://tower.example.com/sso/complete/github/
+
+SOCIAL_AUTH_GITHUB_KEY = ''
+SOCIAL_AUTH_GITHUB_SECRET = ''
+
+# Create an organization-owned application at
+# https://github.com/organizations/<yourorg>/settings/applications and obtain
+# an OAuth2 key (Client ID) and secret (Client Secret).  Provide the
+# following callback URL for your application, replacing tower.example.com
+# with the FQDN to your Tower server:
+#
+#     https://tower.example.com/sso/complete/github-org/
+
+SOCIAL_AUTH_GITHUB_ORG_KEY = ''
+SOCIAL_AUTH_GITHUB_ORG_SECRET = ''
+SOCIAL_AUTH_GITHUB_ORG_NAME = ''
+
+# Create an organization-owned application at
+# https://github.com/organizations/<yourorg>/settings/applications and obtain
+# an OAuth2 key (Client ID) and secret (Client Secret).  Provide the
+# following callback URL for your application, replacing tower.example.com
+# with the FQDN to your Tower server:
+#
+#     https://tower.example.com/sso/complete/github-team/
+#
+# Find the numeric team ID using the Github API:
+#
+#     http://fabian-kostadinov.github.io/2015/01/16/how-to-find-a-github-team-id/
+
+SOCIAL_AUTH_GITHUB_TEAM_KEY = ''
+SOCIAL_AUTH_GITHUB_TEAM_SECRET = ''
+SOCIAL_AUTH_GITHUB_TEAM_ID = ''
+
+# Refer to Python Social Auth documentation for advanced settings:
+#
+#     https://python-social-auth.readthedocs.org/en/latest/backends/github.html
+#
+
+# SAML Service Provider
+# ---------------------
+
+# Set to a URL for a domain name you own (does not need to be a valid URL;
+# only used as a unique ID).
+
+SOCIAL_AUTH_SAML_SP_ENTITY_ID = 'https://tower.example.com'
+
+# Create a keypair for Tower to use as a service provider (SP) and include the
+# certificate and private key contents here.
+
+SOCIAL_AUTH_SAML_SP_PUBLIC_CERT = ''
+SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = ''
+
+# Configure the following settings with information about your app and contact
+# information.
+
+SOCIAL_AUTH_SAML_ORG_INFO = {
+    'en-US': {
+        'name': 'example',
+        'displayname': 'Example',
+        'url': 'http://www.example.com',
+    },
+}
+SOCIAL_AUTH_SAML_TECHNICAL_CONTACT = {
+    'givenName': 'Some User',
+    'emailAddress': 'suser@example.com',
+}
+SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
+    'givenName': 'Some User',
+    'emailAddress': 'suser@example.com',
+}
+
+# Configure the entity ID, SSO URL and certificate for each identity provider
+# (IdP) in use.  Multiple SAML IdPs are supported.
+
+# Some IdPs may provide user data using attribute names that differ from the
+# default OIDs (https://github.com/omab/python-social-auth/blob/master/social/backends/saml.py#L16).
+# Attribute names may be overridden for each IdP as shown below.
+
+SOCIAL_AUTH_SAML_ENABLED_IDPS = {
+    #'myidp': {
+    #    'entity_id': 'https://idp.example.com',
+    #    'url': 'https://myidp.example.com/sso',
+    #    'x509cert': '',
+    #},
+    #'onelogin': {
+    #    'entity_id': 'https://app.onelogin.com/saml/metadata/123456',
+    #    'url': 'https://example.onelogin.com/trust/saml2/http-post/sso/123456',
+    #    'x509cert': '',
+    #    'attr_user_permanent_id': 'name_id',
+    #    'attr_first_name': 'User.FirstName',
+    #    'attr_last_name': 'User.LastName',
+    #    'attr_username': 'User.email',
+    #    'attr_email': 'User.email',
+    #},
+}
+
+# Once configuration is complete, you will need to register your SP with each
+# IdP.  Provide the entity ID and the following callback URL for your
+# application, replacing tower.example.com with the FQDN to your Tower server:
+#
+#     https://tower.example.com/sso/complete/saml/
+#
+# If your IdP allows uploading an XML metadata file, you can download one from
+# your Tower installation customized with the settings above:
+#
+#     https://tower.example.com/sso/metadata/saml/
+
+# Organiztion and Team Mapping
+# ----------------------------
+
+# Mapping to organization admins/users from social auth accounts. This setting
+# controls which users are placed into which Tower organizations based on
+# their username and email address.  Dictionary keys are organization names.
+# organizations will be created if not present if the license allows for
+# multiple organizations, otherwise the single default organization is used
+# regardless of the key.  Values are dictionaries defining the options for
+# each organization's membership.  For each organization it is possible to
+# specify which users are automatically users of the organization and also
+# which users can administer the organization. 
+#
+# - admins: None, True/False, string or list/tuple of strings.
+#   If None, organization admins will not be updated.
+#   If True, all users using social auth will automatically be added as admins
+#   of the organization.
+#   If False, no social auth users will be automatically added as admins of
+#   the organiation.
+#   If a string or list of strings, specifies the usernames and emails for
+#   users who will be added to the organization.  Compiled regular expressions
+#   may also be used instead of string literals.
+# - remove_admins: True/False. Defaults to False.
+#   If True, a user who does not match will be removed from the organization's
+#   administrative list.
+# - users: None, True/False, string or list/tuple of strings. Same rules apply
+#   as for admins.
+# - remove_users: True/False. Defaults to False. Same rules as apply for remove_admins
+
+SOCIAL_AUTH_ORGANIZATION_MAP = {
+    # Add all users to the default organization.
+    'Default': {
+        'users': True,
+    },
+    #'Test Org': {
+    #    'admins': ['admin@example.com'],
+    #    'users': True,
+    #},
+    #'Test Org 2': {
+    #    'admins': ['admin@example.com', re.compile(r'^tower-[^@]+*?@.*$],
+    #    'users': re.compile(r'^[^@].*?@example\.com$'),
+    #},
+}
+
+# Organization mappings may be specified separately for each social auth
+# backend.  If defined, these configurations will take precedence over the
+# global configuration above.
+
+#SOCIAL_AUTH_GOOGLE_OAUTH2_ORGANIZATION_MAP = {}
+#SOCIAL_AUTH_GITHUB_ORGANIZATION_MAP = {}
+#SOCIAL_AUTH_GITHUB_ORG_ORGANIZATION_MAP = {}
+#SOCIAL_AUTH_GITHUB_TEAM_ORGANIZATION_MAP = {}
+#SOCIAL_AUTH_SAML_ORGANIZATION_MAP = {}
+
+# Mapping of team members (users) from social auth accounts. Keys are team
+# names (will be created if not present). Values are dictionaries of options
+# for each team's membership, where each can contain the following parameters:
+# - organization: string. The name of the organization to which the team
+#   belongs.  The team will be created if the combination of organization and
+#   team name does not exist.  The organization will first be created if it
+#   does not exist.  If the license does not allow for multiple organizations,
+#   the team will always be assigned to the single default organization.
+# - users: None, True/False, string or list/tuple of strings.
+#   If None, team members will not be updated.
+#   If True/False, all social auth users will be added/removed as team
+#   members.
+#   If a string or list of strings, specifies expressions used to match users.
+#   User will be added as a team member if the username or email matches.
+#   Compiled regular expressions may also be used instead of string literals.
+# - remove: True/False. Defaults to False. If True, a user who does not match
+#   the rules above will be removed from the team.
+
+SOCIAL_AUTH_TEAM_MAP = {
+    #'My Team': {
+    #    'organization': 'Test Org',
+    #    'users': ['re.compile(r'^[^@]+?@test\.example\.com$')'],
+    #    'remove': True,
+    #},
+    #'Other Team': {
+    #    'organization': 'Test Org 2',
+    #    'users': re.compile(r'^[^@]+?@test2\.example\.com$'),
+    #    'remove': False,
+    #},
+}
+
+# Team mappings may be specified separately for each social auth backend.  If
+# defined, these configurations will take precedence over the the global
+# configuration above.
+
+#SOCIAL_AUTH_GOOGLE_OAUTH2_TEAM_MAP = {}
+#SOCIAL_AUTH_GITHUB_TEAM_MAP = {}
+#SOCIAL_AUTH_GITHUB_ORG_TEAM_MAP = {}
+#SOCIAL_AUTH_GITHUB_TEAM_TEAM_MAP = {}
+#SOCIAL_AUTH_SAML_TEAM_MAP = {}
+
+# Uncomment the line below (i.e. set SOCIAL_AUTH_USER_FIELDS to an empty list)
+# to prevent new user accounts from being created.  Only users who have
+# previously logged in using social auth or have a user account with a matching
+# email address will be able to login.
+
+#SOCIAL_AUTH_USER_FIELDS = []
+
+# It is also possible to add custom functions to the social auth pipeline for
+# more advanced organization and team mapping.  Use at your own risk.
+
+#def custom_social_auth_pipeline_function(backend, details, user=None, *args, **kwargs):
+#    print 'custom:', backend, details, user, args, kwargs
+
+#SOCIAL_AUTH_PIPELINE += (
+#    'awx.settings.production.custom_social_auth_pipeline_function',
+#)

@@ -1,0 +1,13 @@
+---
+apt_keys:
+    - url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+    - keyserver: 'keyserver.ubuntu.com'
+      id: '7F0CEB10'
+    - url: 'https://releases.ansible.com/keys/442667A9.asc'
+
+apt_repos:
+    - 'ppa:ansible/ansible'
+    - 'ppa:jal233/proot'
+    # - 'ppa:chris-lea/zeromq'
+    - 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
+    - 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'

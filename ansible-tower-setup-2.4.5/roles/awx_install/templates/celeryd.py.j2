@@ -1,0 +1,2 @@
+# Ansible Tower settings for celeryd, using Redis as of 2.1.
+BROKER_URL = 'redis://{% if redis_password %}:{{ redis_password }}@{% endif %}{{ redis_host }}:{{ redis_port }}/0'
