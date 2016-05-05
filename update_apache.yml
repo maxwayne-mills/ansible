@@ -7,7 +7,6 @@
     with_items:
      - apache2
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
     notify:
     - restart apache
 
@@ -16,10 +15,8 @@
     with_items:
      - httpd
     when: ansible_distribution == 'CentOS' or ansible_distribution == 'RHEL'
-
     notify:
     - restart httpd
-
 
   handlers:
   - name: restart apache
