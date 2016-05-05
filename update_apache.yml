@@ -9,7 +9,7 @@
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     notify:
-    - restart httpd
+    - restart apache
 
   - name: Update apache to the latest when on Centos related OS
     yum: pkg={{ item }} state=latest
@@ -18,7 +18,7 @@
     when: ansible_distribution == 'CentOS' or ansible_distribution == 'RHEL'
 
     notify:
-    - restart apache
+    - restart httpd
 
 
   handlers:
