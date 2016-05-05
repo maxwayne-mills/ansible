@@ -1,6 +1,8 @@
 # takes two parameters as variables passed in
-# server, for the target server
-# domain, for the website to create.
+# server, for the target server, this server needs to be either defined within
+# the hosts file or resolveable via DNS.
+# domain, for the website to create, the domain will be a role
+# and needs to be already confgiured as a role.
 
 ---
 - hosts: '{{ server }}'
