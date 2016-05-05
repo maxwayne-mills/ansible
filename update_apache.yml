@@ -8,6 +8,9 @@
      - apache2
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
+    notify:
+    - restart httpd
+
   - name: Update apache to the latest when on Centos related OS
     yum: pkg={{ item }} state=latest
     with_items:
@@ -21,8 +24,6 @@
   handlers:
   - name: restart apache
     service: name=apache2 state=restarted
-    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: restart httpd
     service: name=httpd state=restarted
-    when: ansible_distribution == 'Dentos' or ansible_distribution == 'Red Hat Enterprise Linux'
