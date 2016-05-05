@@ -1,3 +1,4 @@
+# This playbook is superseded by create_domain.yml playbook
 ---
 - hosts: '{{ name }}'
   roles:
