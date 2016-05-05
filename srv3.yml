@@ -1,14 +1,28 @@
 ---
-- hosts: srv3
+- hosts: '{{ server }}'
   tasks:
-  - name: Update httpd (apache) to the latest version
-    apt: name=apache2 state=latest
+
+  - name: Update apache to the latest version when on Debian based systems
+    apt: pkg={{ item }} state=latest
+    with_items:
+     - apache2
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Update apache to the latest when on Centos related OS
+    yum: pkg={{ item }} state=latest
+    with_items:
+     - httpd
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'RHEL'
+
     notify:
     - restart apache
 
 
-  - name: Ensure httpd (apache) is running and enabled at boot
-    service: name=apache2 state=started enabled=yes
   handlers:
   - name: restart apache
     service: name=apache2 state=restarted
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: restart httpd
+    service: name=httpd state=restarted
+    when: ansible_distribution == 'Dentos' or ansible_distribution == 'Red Hat Enterprise Linux'
