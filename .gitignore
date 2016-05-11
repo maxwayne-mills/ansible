@@ -3,4 +3,3 @@
 \.settings
 *.retry
 add-publickey-to-digitalocean.yml
-droplet_management.yml
