@@ -1,5 +1,7 @@
 # Create,delete Digital ocean droplets
 # http://docs.ansible.com/ansible/digital_ocean_module.html
+# Variables: servername, state, drop_id, token
+# If spinning up a new droplet use "localhost" as the servername and define the name within the inventory file.
 ---
 - hosts: digitalocean
   tasks:
@@ -24,7 +26,7 @@
        id: "{{droplet_id}}"
 
        name: "{{servername}}"
-       api_token: 257b1355f0df9f092e7a42db597f85cfafcc6dbc1ac27184a280e77ba64c5556
+       api_token: "{{token}}"
        size_id: 512mb
        region_id: nyc2
        image_id: ubuntu-14-04-x64
@@ -33,3 +35,4 @@
 
    - debug: msg="ID is {{ my_droplet.droplet.id }}"
    - debug: msg="IP is {{ my_droplet.droplet.ip_address }}"
+   - debug: msg="IP is {{ my_droplet.droplet.name }}"
