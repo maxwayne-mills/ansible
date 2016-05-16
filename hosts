@@ -14,6 +14,7 @@ srv2
 [scaleway]
 srv3	ansible_ssh_port=22 ansible_ssh_user=root
 srv4	ansible_ssh_port=22 ansible_ssh_user=root
+srv5	ansible_ssh_port=22 ansible_ssh_user=root
 
 [digitalocean-webservers]
 
