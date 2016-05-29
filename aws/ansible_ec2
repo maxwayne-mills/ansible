@@ -1,0 +1,9 @@
+tasks:
+ - name: search for the latest rhel 7 ami
+    ec2_ami_find:
+      region: us-east-1
+      owner: "owner number"
+      namw: "name of os" example "RHEL-7.2*"
+    register: find_results
+    
+  - debug: var=find_results
