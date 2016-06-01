@@ -30,6 +30,7 @@
        size_id: 512mb
        region_id: nyc2
        image_id: ubuntu-14-04-x64
+       #image_id: centos-7-2-x64
        wait_timeout: 200
      register: my_droplet
 
