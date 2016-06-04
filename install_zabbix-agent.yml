@@ -1,0 +1,9 @@
+---
+- hosts: '{{server}}'
+  tasks:
+    - name: Download zabbix agent
+      get_url: url=http://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.4-1+precise_amd64.deb dest=/tmp mode=644
+
+    - name: Install zabbix agent
+      command: dpkg -i /tmp/zabbix-agent_2.2.4-1+precise_amd64.deb
+      ignore_alerts: yes

@@ -1,0 +1,21 @@
+---
+  - name: Install Zabbix PPA within /etc/apt/sources.list
+    blockinfile:
+      dest: /etc/apt/sources.list
+      block: |
+        # Zabbix Application PPA
+        deb http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main
+        deb-src http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main
+
+  - name: Install Zabbix repository keys
+    apt_key: keyserver=keyserver.ubuntu.com id=C407E17D5F76A32B state=present
+
+  - name: Update packages
+    apt: update_cache=yes
+
+  - name: Install zabbix packages
+    apt: pkg={{item}}
+    with_items:
+      - zabbix-server-mysql
+      - php5-mysql
+      - zabbix-frontend-php
