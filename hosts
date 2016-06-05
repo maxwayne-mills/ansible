@@ -1,7 +1,8 @@
 # Each host needs to be in DNS or explicitly defined in
 # your local /etc/hosts file to avoid dns resolution problems.
 
-devsrv  ansible_ssh_user=root ansible_ssh_private_key_file=/home/oss/automation/keys/id_rsa
+[ops]
+162.243.33.174	ansible_ssh_user=root ansible_ssh_private_key_dile=/home/oss/.ssh/id_rsa
 
 [linode-webservers]
 srv1 ansible_ssh_port=1001 ansible_ssh_user=cmills ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_sudo=yes
@@ -9,7 +10,6 @@ srv2 ansible_ssh_port=1001 ansible_ssh_user=cmills ansible_ssh_private_key_file=
 
 [linode]
 srv1
-srv2
 
 [scaleway]
 srv3	ansible_ssh_port=22 ansible_ssh_user=root
