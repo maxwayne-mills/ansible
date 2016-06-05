@@ -2,3 +2,4 @@
 - hosts: '{{servername}}'
   roles:
   - zabbix
+  - common
