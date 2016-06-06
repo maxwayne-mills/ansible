@@ -2,6 +2,7 @@
   - name: Install Zabbix PPA within APT package list /etc/apt/sources.list
     blockinfile:
       dest: /etc/apt/sources.list
+      # Add the following lines of code to the bottom of the file
       block: |
         # Zabbix Application PPA
         deb http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main
@@ -38,12 +39,6 @@
     # Temporarily ignore errors installing this applications.
     ignore_errors: yes
 
-# Configure Zabbix server
-#  - name: Check existence of zabbix configuration file
-#    stat: path=/etc/zabbix/zabbix.conf
-#    register: st
-#    debug: msg="st"
-
   - name: Copy zabbix virtualhost configuration file to web server
     copy: src=zabbix.conf dest=/etc/apache2/conf-available/
 
@@ -52,6 +47,19 @@
 
   - name: Check and create zabbix web directory
     file: path=/var/www/zabbix state=directory mode=0755
+
+## Configure PHP configuration file
+  - name: Adjust PHP Max size to 16M
+    lineinfile: dest=/etc/php5/apache2/php.ini state=present regexp="post_max_size = 8M" line="post_max_size = 16M"
+
+  - name: Adjust PHP configuration Max execution time to 300
+    lineinfile: dest=/etc/php5/apache2/php.ini state=present regexp="max_execution_time = 30" line="max_execution_time = 300"
+
+  - name: Adjust PHP configuration Max input time to 300
+    lineinfile: dest=/etc/php5/apache2/php.ini state=present regexp="max_input_time = 60" line="max_input_time = 300"
+
+  - name: Adjust PHP configuration Time zone
+    lineinfile: dest=/etc/php5/apache2/php.ini state=present insertafter=";date.timezone =" line="date.timezone = UTC"
 
   - name: Restart Apache2
     service: name=apache2 state=restarted
