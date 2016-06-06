@@ -30,15 +30,20 @@
       - php5
       - php5-cli
 
+  - name: Install ansible remote apps to be able to perform remote database commands
+    apt: pkg={{item}}
+    with_items:
+      - python-mysqldb
+
   - name: Install Mariadb repository
     apt_repository: repo='deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/10.0/ubuntu trusty main' state=present
   - name: Add repository key to the system
     apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
   - name: Install MariaDB Server
     apt: name=mariadb-server state=latest update_cache=yes
-    # Temporarily ignore errors installing this applications.
     ignore_errors: yes
 
+## Configure Apache2 for Zabbix
   - name: Copy zabbix virtualhost configuration file to web server
     copy: src=zabbix.conf dest=/etc/apache2/conf-available/
 
@@ -48,7 +53,10 @@
   - name: Check and create zabbix web directory
     file: path=/var/www/zabbix state=directory mode=0755
 
-## Configure PHP configuration file
+  - name: Copy Zabbix php configuration file
+    copy: src=zabbix.conf.php dest=/etc/zabbix/
+
+## Configure PHP configuration file for zabbix pre-requisites
   - name: Adjust PHP Max size to 16M
     lineinfile: dest=/etc/php5/apache2/php.ini state=present regexp="post_max_size = 8M" line="post_max_size = 16M"
 
@@ -63,3 +71,10 @@
 
   - name: Restart Apache2
     service: name=apache2 state=restarted
+
+# Configure Mysql with zabbix configuration options
+  - name: Create Database zabbix
+    mysql_db: name=zabbix state=present
+
+  - name: Create mysql zabbix user
+    mysql_user: name=zabbix password=qm7BD01alpCE priv=zabbix.*:ALL,GRANT state=present
