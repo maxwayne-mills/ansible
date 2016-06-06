@@ -85,15 +85,30 @@
 
 # Zabbix mysql schema's are located /usr/share/zabbix-server-mysql/ on Debian based systems.
 # copy=no must be added if the archived files is on the remote end.
-  - name: unzip Zabbix arcive schema to Database
-    unarchive: src=/usr/share/zabbix-server-mysql/schema.sql.gz dest=/usr/share/ copy=no
+#  - name: unzip Zabbix arcive schema to Database
+#    unarchive: src=/usr/share/zabbix-server-mysql/schema.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
+#    register: ans
 
-  - name: unzip zabbix images archive to Database
-    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/ copy=no
+#  - name: unzip zabbix images archive to Database
+#    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
 
-  - name: unzip zabbix data archive to Database
-    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/ copy=no
-
+#  - name: unzip zabbix data archive to Database
+#    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
 
   - name: Restart Apache2
     service: name=apache2 state=restarted
+
+# In order for zabbix to start on  automatically Unbuntu
+# Change /etc/default/zabbix-server option START=no to START=yes
+  - name: Change Zabbix start up file /etc/init.d/zabbix-server option to yes
+    lineinfile: dest=/etc/default/zabbix-server regexp="START=no" line="START=yes"
+    register: change
+
+  - name: Enable Zabbix to listen on port 10051
+    lineinfile: dest=/etc/zabbix/zabbix_server.conf insertafter="ListenPort=10051" line="ListenPort=10051"
+
+  - name: Add pass to zabbix configration file
+    lineinfile: dest=/etc/zabbix/zabbix_server.conf insertafter="DBPassword=" line="DBPassword=qm7BD01alpCE"
+
+  - name: Start Zabbix server
+    service: name=zabbix-server state=started
