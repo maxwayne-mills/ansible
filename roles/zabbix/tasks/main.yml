@@ -1,5 +1,5 @@
 ---
-  - name: Install Zabbix PPA within /etc/apt/sources.list
+  - name: Install Zabbix PPA within APT package list /etc/apt/sources.list
     blockinfile:
       dest: /etc/apt/sources.list
       block: |
@@ -12,6 +12,7 @@
 
   - name: Update packages
     apt: update_cache=yes
+    register: log_output
 
   - name: Install zabbix packages
     apt: pkg={{item}}
@@ -19,3 +20,38 @@
       - zabbix-server-mysql
       - php5-mysql
       - zabbix-frontend-php
+
+  - name: Install Apache2
+    apt: pkg={{item}}
+    with_items:
+      - apache2
+      - libapache2-mod-php5
+      - php5
+      - php5-cli
+
+  - name: Install Mariadb repository
+    apt_repository: repo='deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/10.0/ubuntu trusty main' state=present
+  - name: Add repository key to the system
+    apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
+  - name: Install MariaDB Server
+    apt: name=mariadb-server state=latest update_cache=yes
+    # Temporarily ignore errors installing this applications.
+    ignore_errors: yes
+
+# Configure Zabbix server
+#  - name: Check existence of zabbix configuration file
+#    stat: path=/etc/zabbix/zabbix.conf
+#    register: st
+#    debug: msg="st"
+
+  - name: Copy zabbix virtualhost configuration file to web server
+    copy: src=zabbix.conf dest=/etc/apache2/conf-available/
+
+  - name: Copy zabbix virtualhost configuration file to web server
+    copy: src=zabbix.conf dest=/etc/apache2/sites-enabled/
+
+  - name: Check and create zabbix web directory
+    file: path=/var/www/zabbix state=directory mode=0755
+
+  - name: Restart Apache2
+    service: name=apache2 state=restarted
