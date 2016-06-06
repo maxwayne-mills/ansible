@@ -7,9 +7,11 @@
         # Zabbix Application PPA
         deb http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main
         deb-src http://ppa.launchpad.net/tbfr/zabbix/ubuntu precise main
+    register: log_output
 
   - name: Install Zabbix repository keys
     apt_key: keyserver=keyserver.ubuntu.com id=C407E17D5F76A32B state=present
+    register: log_output
 
   - name: Update packages
     apt: update_cache=yes
@@ -35,10 +37,15 @@
     with_items:
       - python-mysqldb
 
+# Mariadb repoository and keys need to be insalled after zabbix packages are installed, causes errors if installed prior to insall mariadb.
   - name: Install Mariadb repository
     apt_repository: repo='deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/10.0/ubuntu trusty main' state=present
-  - name: Add repository key to the system
+    register: log_output
+
+  - name: Add Mariadb repository key to the system
     apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
+    register: log_output
+
   - name: Install MariaDB Server
     apt: name=mariadb-server state=latest update_cache=yes
     ignore_errors: yes
@@ -69,12 +76,24 @@
   - name: Adjust PHP configuration Time zone
     lineinfile: dest=/etc/php5/apache2/php.ini state=present insertafter=";date.timezone =" line="date.timezone = UTC"
 
-  - name: Restart Apache2
-    service: name=apache2 state=restarted
-
 # Configure Mysql with zabbix configuration options
   - name: Create Database zabbix
     mysql_db: name=zabbix state=present
 
   - name: Create mysql zabbix user
     mysql_user: name=zabbix password=qm7BD01alpCE priv=zabbix.*:ALL,GRANT state=present
+
+# Zabbix mysql schema's are located /usr/share/zabbix-server-mysql/ on Debian based systems.
+# copy=no must be added if the archived files is on the remote end.
+  - name: unzip Zabbix arcive schema to Database
+    unarchive: src=/usr/share/zabbix-server-mysql/schema.sql.gz dest=/usr/share/ copy=no
+
+  - name: unzip zabbix images archive to Database
+    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/ copy=no
+
+  - name: unzip zabbix data archive to Database
+    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/ copy=no
+
+
+  - name: Restart Apache2
+    service: name=apache2 state=restarted
