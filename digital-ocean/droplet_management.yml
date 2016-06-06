@@ -34,6 +34,8 @@
        wait_timeout: 200
      register: my_droplet
 
-   - debug: msg="ID is {{ my_droplet.droplet.id }}"
-   - debug: msg="IP is {{ my_droplet.droplet.ip_address }}"
-   - debug: msg="IP is {{ my_droplet.droplet.name }}"
+   - debug: msg="ID {{ my_droplet.droplet.id }}"
+   - debug: msg="IP {{ my_droplet.droplet.ip_address }}"
+   - debug: msg="Hostname {{ my_droplet.droplet.name }}"
+
+     #add_host: name="{{my_droplet.droplet.ip_address:my_droplet.droplet.name}}"
