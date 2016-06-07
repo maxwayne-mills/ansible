@@ -1,13 +1,12 @@
 ---
 - name: install ntp
   yum: name=stp state=present
-  
+
  - name: Configure ntp file
    template: src=ntp.conf.j2 dest=/etc/ntp.conf
    notify: restart ntp
  - name: start the ntp service
   service: name=ntpd state=started enabled=yes
   
-  
-  - name: copy code from the repo 
+  - name: copy code from the repo
    git: repo={{repository}} det=var/www/html
