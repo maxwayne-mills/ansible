@@ -6,4 +6,4 @@
 
     - name: Install zabbix agent
       command: dpkg -i /tmp/zabbix-agent_2.2.4-1+precise_amd64.deb
-      ignore_alerts: yes
+      ignore_errors: yes
