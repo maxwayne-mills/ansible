@@ -83,17 +83,30 @@
   - name: Create mysql zabbix user
     mysql_user: name=zabbix password=qm7BD01alpCE priv=zabbix.*:ALL,GRANT state=present
 
-# Zabbix mysql schema's are located /usr/share/zabbix-server-mysql/ on Debian based systems.
-# copy=no must be added if the archived files is on the remote end.
-#  - name: unzip Zabbix arcive schema to Database
-#    unarchive: src=/usr/share/zabbix-server-mysql/schema.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
-#    register: ans
+## Unzip zabbix databases
+  - name: Unzip schem databases
+    command: gunzip /usr/share/zabbix-server-mysql/schema.sql.gz
+    ignore_errors: yes
 
-#  - name: unzip zabbix images archive to Database
-#    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
+  - name: Unzip schem databases
+    command: gunzip /usr/share/zabbix-server-mysql/images.sql.gz
+    ignore_errors: yes
 
-#  - name: unzip zabbix data archive to Database
-#    unarchive: src=/usr/share/zabbix-server-mysql/images.sql.gz dest=/usr/share/zabbix-server-mysql/ copy=no
+  - name: Unzip schem databases
+    command: gunzip /usr/share/zabbix-server-mysql/data.sql.gz
+    ignore_errors: yes
+
+  - name: Import zabbix schema into zabbix database.
+    mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/schema.sql
+    ignore_errors: yes
+
+  - name: Import zabbix images into zabbix Database
+    mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/images.sql
+    ignore_errors: yes
+
+  - name: Import zabbix data sql file into zabbix database.
+    mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/data.sql
+    ignore_errors: yes
 
   - name: Restart Apache2
     service: name=apache2 state=restarted
