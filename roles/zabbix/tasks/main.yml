@@ -16,7 +16,7 @@
     register: log_output
 
   - name: Update packages
-    apt: update_cache=yes
+    apt: update_cache=yes cache_valid_time=120
     register: log_output
 
   - name: Install zabbix packages
@@ -33,24 +33,6 @@
       - libapache2-mod-php5
       - php5
       - php5-cli
-
-  - name: Install ansible remote apps to be able to perform remote database commands
-    apt: pkg={{item}}
-    with_items:
-      - python-mysqldb
-
-# Mariadb repoository and keys need to be insalled after zabbix packages are installed, causes errors if installed prior to insall mariadb.
-  - name: Install Mariadb repository
-    apt_repository: repo='deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/10.0/ubuntu trusty main' state=present
-    register: log_output
-
-  - name: Add Mariadb repository key to the system
-    apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
-    register: log_output
-
-  - name: Install MariaDB Server
-    apt: name=mariadb-server state=latest update_cache=yes
-    ignore_errors: yes
 
 ## Configure Apache2 for Zabbix
   - name: Copy zabbix virtualhost configuration file to web server
@@ -77,6 +59,26 @@
 
   - name: Adjust PHP configuration Time zone
     lineinfile: dest=/etc/php5/apache2/php.ini state=present insertafter=";date.timezone =" line="date.timezone = UTC"
+    notify:
+      - restart apache2
+
+# Mariadb repoository and keys need to be insalled after zabbix packages are installed, causes errors if installed prior to insall mariadb.
+  - name: Install ansible remote apps to be able to perform remote database commands
+    apt: pkg={{item}}
+    with_items:
+      - python-mysqldb
+
+  - name: Add Mariadb repository key to the system
+    apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
+    register: log_output
+
+  - name: Install Mariadb repository
+    apt_repository: repo='deb http://ftp.igh.cnrs.fr/pub/mariadb/repo/10.0/ubuntu trusty main' state=present
+    register: log_output
+
+  - name: Install MariaDB Server
+    apt: name=mariadb-server state=latest update_cache=yes cache_valid_time=120
+    ignore_errors: yes
 
 ## MYSQL database installations steps are taken from /usr/share/doc/zabbix-server-mysql/README.debian   ###
 ###                                                                                                     ###
@@ -112,8 +114,6 @@
   - name: Import zabbix data schema sql file into zabbix database.
     mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/data.sql
     ignore_errors: yes
-    notify:
-    - restart apache2
 
 # In order for zabbix to start automatically on Unbuntu
 # Change /etc/default/zabbix-server option START=no to START=yes
@@ -127,5 +127,14 @@
 ## Recommended to change the password below
   - name: Add zabbix password to zabbix configration file
     lineinfile: dest=/etc/zabbix/zabbix_server.conf state=present insertafter="DBPassword=" line="DBPassword=qm7BD01alpCE"
+
+  - name: Start zabbix application service
+    command: cat /etc/default/zabbix-server
+    ## Handlers are case sensitive
     notify:
-    - start zabbix server
+    - Start Zabbix
+
+  - name: Re load HTTPD configuration
+    command: cat /etc/resolv.conf
+    notify:
+    - Reload Apache2
