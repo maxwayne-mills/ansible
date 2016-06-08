@@ -1,7 +1,8 @@
 ---
 # handlers file for zabbix
-- name: Start Zabbix server
+- name: Start Zabbix
+  #service: name=zabbix-server state=started
   service: name=zabbix-server state=started
 
-- name: Restart Apache2
-  service: name=apache2 state=restarted
+- name: Reload Apache2
+  service: name=apache2 state=reloaded
