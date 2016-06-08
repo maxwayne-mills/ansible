@@ -1,5 +1,7 @@
+## This playbook will install on Debian based systems
+
 ---
-  - name: Install Zabbix PPA within APT package list /etc/apt/sources.list
+  - name: Install Zabbix PPA in APT package list /etc/apt/sources.list
     blockinfile:
       dest: /etc/apt/sources.list
       # Add the following lines of code to the bottom of the file
@@ -76,6 +78,9 @@
   - name: Adjust PHP configuration Time zone
     lineinfile: dest=/etc/php5/apache2/php.ini state=present insertafter=";date.timezone =" line="date.timezone = UTC"
 
+## MYSQL database installations steps are taken from /usr/share/doc/zabbix-server-mysql/README.debian   ###
+###                                                                                                     ###
+
 # Configure Mysql with zabbix configuration options
   - name: Create Mysql database zabbix
     mysql_db: name=zabbix state=present
@@ -100,29 +105,27 @@
     mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/schema.sql
     ignore_errors: yes
 
-  - name: Import zabbix images file into zabbix Database
+  - name: Import zabbix images schema file into zabbix Database
     mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/images.sql
     ignore_errors: yes
 
-  - name: Import zabbix data sql file into zabbix database.
+  - name: Import zabbix data schema sql file into zabbix database.
     mysql_db: state=import name=zabbix target=/usr/share/zabbix-server-mysql/data.sql
     ignore_errors: yes
-
-  - name: Restart Apache2
-    service: name=apache2 state=restarted
+    notify:
+    - restart apache2
 
 # In order for zabbix to start automatically on Unbuntu
 # Change /etc/default/zabbix-server option START=no to START=yes
-  - name: Change Zabbix start up file /etc/init.d/zabbix-server option to yes
-    lineinfile: dest=/etc/default/zabbix-server regexp="START=no" line="START=yes"
+  - name: Change Zabbix start up file /etc/default/zabbix-server option to yes
+    lineinfile: dest=/etc/default/zabbix-server state=present regexp="START=no" line="START=yes"
     register: change
 
   - name: Enable Zabbix to listen on port 10051
-    lineinfile: dest=/etc/zabbix/zabbix_server.conf insertafter="ListenPort=10051" line="ListenPort=10051"
+    lineinfile: dest=/etc/zabbix/zabbix_server.conf state=present insertafter="ListenPort=10051" line="ListenPort=10051"
 
 ## Recommended to change the password below
   - name: Add zabbix password to zabbix configration file
-    lineinfile: dest=/etc/zabbix/zabbix_server.conf insertafter="DBPassword=" line="DBPassword=qm7BD01alpCE"
-
-  - name: Start Zabbix server
-    service: name=zabbix-server state=started
+    lineinfile: dest=/etc/zabbix/zabbix_server.conf state=present insertafter="DBPassword=" line="DBPassword=qm7BD01alpCE"
+    notify:
+    - start zabbix server
