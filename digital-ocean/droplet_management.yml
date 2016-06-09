@@ -5,7 +5,7 @@
 ---
 - hosts: digitalocean
   tasks:
-   - name: Manage "{{servername}}" droplet
+   - name: Manage "{{servername}}" droplet "{{state}}"
      digital_ocean:
        state: "{{state}}"
        command: droplet
@@ -38,4 +38,6 @@
    - debug: msg="IP {{ my_droplet.droplet.ip_address }}"
    - debug: msg="Hostname {{ my_droplet.droplet.name }}"
 
-     #add_host: name="{{my_droplet.droplet.ip_address:my_droplet.droplet.name}}"
+   - name: Add new host information to local hosts file
+     add_host: name="{{my_droplet.droplet.name}}"
+               IP="{{my_droplet.droplet.ip_address}}"
