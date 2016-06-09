@@ -1,0 +1,5 @@
+--- # Install Postfix and configure as a mail relay server
+- name: Install Post application
+  apt: pkg={{item}} update_cache=yes cache_valid_time=3600 state=latest
+  with_items:
+    - postfix
