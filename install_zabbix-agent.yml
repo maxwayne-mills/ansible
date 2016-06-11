@@ -11,7 +11,7 @@
       ignore_errors: yes
 
     - name: Install zabbix agent from repoository
-      apt: pkg=zabbix-agent state=present
+      apt: pkg=zabbix-agent update_cache=yes cache_valid_time=3600 state=present
 
     - name:  Configure zabbix agent
       lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present regexp="Server=127.0.0.1" line="Server={{zserver}}"
