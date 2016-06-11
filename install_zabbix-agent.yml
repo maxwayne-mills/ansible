@@ -10,13 +10,21 @@
       command: dpkg -i /tmp/zabbix-agent_2.2.4-1+precise_amd64.deb
       ignore_errors: yes
 
+    - name: Install zabbix agent from repoository
+      apt: pkg=zabbix-agent state=present
+
     - name:  Configure zabbix agent
       lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present regexp="Server=127.0.0.1" line="Server={{zserver}}"
+
+#### This allow the zabbix server to send configuration information to the agent as well to receive updated informaton
+#### example receiving inventory information.
+    - name: Configure zabbix to listen on port 10050
+      lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present insertafter="ListenPort=10050" line="ListenPort=10050"
 
     # Make sure zabbix agent is set to start after a restart
     - name:  Set zabbix agent to start automatically
       service: name=zabbix-agent enabled=yes
 
-    # zabbix agent needs to be restarted to resgiter changes made above
+    # zabbix agent needs to be restarted to register changes made above
     - name: Restart zabbix agent
       service: name=zabbix-agent state=restarted
