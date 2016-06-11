@@ -1,0 +1,19 @@
+---
+- hosts: '{{servername}}'
+  tasks:
+    - name: Create a new host or update an existing host's info
+      local_action:
+        module: zabbix_host
+        server_url: http://http://107.170.116.31/zabbix
+        login_user: cmills
+        login_password: gr33nz0n3
+        host_name: monitor
+        status: enabled
+        state: present
+        interfaces:
+          - type: 1
+            main: 1
+            useip: 1
+            ip: 107.170.128.116
+            dns: ""
+            port: 10050
