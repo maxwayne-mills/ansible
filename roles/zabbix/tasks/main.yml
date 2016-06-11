@@ -35,6 +35,9 @@
       - php5-cli
 
 ## Configure Apache2 for Zabbix
+  - name: Enable Apache2 to start automatically
+    service: name=apache2 enabled=yes
+
   - name: Copy zabbix virtualhost configuration file to web server
     copy: src=zabbix.conf dest=/etc/apache2/conf-available/
 
@@ -80,6 +83,10 @@
     apt: name=mariadb-server state=latest update_cache=yes cache_valid_time=120
     ignore_errors: yes
 
+  - name: Enable Mariadb to start automatically
+    service: name=mariadb enabled=yes
+
+
 ## MYSQL database installations steps are taken from /usr/share/doc/zabbix-server-mysql/README.debian   ###
 ###                                                                                                     ###
 
@@ -121,6 +128,9 @@
     lineinfile: dest=/etc/default/zabbix-server state=present regexp="START=no" line="START=yes"
     register: change
 
+  - name: Enable zabbix to start automatically
+    service: name=zabbix-server enabled=yes
+
   - name: Enable Zabbix to listen on port 10051
     lineinfile: dest=/etc/zabbix/zabbix_server.conf state=present insertafter="ListenPort=10051" line="ListenPort=10051"
 
@@ -134,7 +144,7 @@
     notify:
     - Start Zabbix
 
-  - name: Re load HTTPD configuration
+  - name: Reload HTTPD configuration
     command: cat /etc/resolv.conf
     notify:
     - Reload Apache2
