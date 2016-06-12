@@ -1,0 +1,8 @@
+---
+- hosts: '{{servername}}'
+  tasks:
+    - name: Backup remote mysql_db
+      mysql_db: state=dump name=all target=/tmp/zabbix_dump.sql
+
+    - name: Download zabbix Backup
+      fetch: src=/tmp/zabbix_dump.sql dest=/home/oss/Documents/personal/business/ flat=yes validate_checksum=yes
