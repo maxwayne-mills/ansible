@@ -1,15 +1,23 @@
 ---
 - hosts: '{{servername}}'
+  gather_facts: no
   tasks:
     - name: Create a new host or update an existing host's info
       local_action:
         module: zabbix_host
-        server_url: http://http://107.170.116.31/zabbix
+        server_url: http://107.170.116.31/zabbix
         login_user: cmills
         login_password: gr33nz0n3
         host_name: monitor
         status: enabled
         state: present
+        host_groups:
+          - oss
+        link_templates:
+        # You can find the name of the template under Configuration - Templates, select the template
+        # under the template column click on the template, use the 'Template name'
+          - templae_os_web
+        # inventory_mode: automatic
         interfaces:
           - type: 1
             main: 1
