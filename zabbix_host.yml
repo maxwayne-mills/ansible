@@ -6,6 +6,8 @@
   gather_facts: no
   tasks:
     - name: Create a new host or update an existing host's info
+      ## This playbook makes a local connection to the zabbix server and
+      ## executes the commands on the remote zabbix server.
       local_action:
         module: zabbix_host
         server_url: http://107.170.116.31/zabbix
@@ -13,7 +15,7 @@
         login_password: '{{pass}}'
         host_name: srv2.opensitesolutions.com
         status: enabled
-        state: present
+        state: absent
         host_groups:
           - oss
         link_templates:
