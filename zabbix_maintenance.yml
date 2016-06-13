@@ -1,0 +1,12 @@
+---
+- hosts: '{{servername}}'
+  tasks:
+    - name: Test
+      zabbix_maintenance: name="Add maintenance"
+                          host_name="srv3 at Scaleway ISP"
+                          state=absent
+                          minutes=90
+                          server_url=http://107.170.116.31/zabbix
+                          desc=
+                          login_user='{{user}}'
+                          login_password='{{pass}}'
