@@ -1,4 +1,7 @@
 ## This playbook will install on Debian based systems
+## the ansible control server needs to have zabbix-api installed
+## install zabbix api 'apt-get install python-pip' to allow ansible to
+## autocreate create, updates,deletes hosts, groups, maintenance and screens
 
 ---
   - name: Install Zabbix PPA in APT package list /etc/apt/sources.list
@@ -26,13 +29,14 @@
       - php5-mysql
       - zabbix-frontend-php
 
-  - name: Install Apache2
+  - name: Install Apache2, PHP modules
     apt: pkg={{item}}
     with_items:
       - apache2
       - libapache2-mod-php5
       - php5
       - php5-cli
+      - python-pip
 
 ## Configure Apache2 for Zabbix
   - name: Enable Apache2 to start automatically
@@ -85,6 +89,7 @@
 
   - name: Enable Mariadb to start automatically
     service: name=mariadb enabled=yes
+    ignore_errors: yes
 
 
 ## MYSQL database installations steps are taken from /usr/share/doc/zabbix-server-mysql/README.debian   ###
@@ -130,6 +135,7 @@
 
   - name: Enable zabbix to start automatically
     service: name=zabbix-server enabled=yes
+    ignore_errors: yes
 
   - name: Enable Zabbix to listen on port 10051
     lineinfile: dest=/etc/zabbix/zabbix_server.conf state=present insertafter="ListenPort=10051" line="ListenPort=10051"
