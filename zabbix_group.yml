@@ -1,0 +1,13 @@
+---
+- hosts: '{{servername}}'
+  gather_facts: no
+  tasks:
+  - name: Create zabbix group
+    local_action:
+      module: zabbix_group
+      server_url: http://107.170.116.31/zabbix
+      login_user: '{{user}}'
+      login_password: '{{pass}}'
+      state: present
+      host_groups:
+        - '{{groupname}}'
