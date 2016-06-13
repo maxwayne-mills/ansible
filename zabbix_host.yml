@@ -1,3 +1,6 @@
+## Variables passed in are servername,pass and user
+## servername is the URL of the zabbix server
+## User if the username and pass is the password for the user
 ---
 - hosts: '{{servername}}'
   gather_facts: no
@@ -6,9 +9,9 @@
       local_action:
         module: zabbix_host
         server_url: http://107.170.116.31/zabbix
-        login_user: cmills
-        login_password: gr33nz0n3
-        host_name: monitor
+        login_user: '{{user}}'
+        login_password: '{{pass}}'
+        host_name: srv2.opensitesolutions.com
         status: enabled
         state: present
         host_groups:
@@ -22,6 +25,6 @@
           - type: 1
             main: 1
             useip: 1
-            ip: 107.170.128.116
+            ip: 64.62.228.207
             dns: ""
             port: 10050
