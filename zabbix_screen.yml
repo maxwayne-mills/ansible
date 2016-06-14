@@ -1,0 +1,21 @@
+---
+- hosts: '{{servername}}'
+  gather_facts: yes
+  tasks:
+  - name: Set up screen
+    local_action:
+      module: zabbix_screen
+      server_url: http://107.170.116.31/zabbix
+      login_user: '{{user}}'
+      login_password: '{{pass}}'
+      screens:
+        - screen_name: Test screen_name
+          host_group: OSS
+          state: present
+          graph_names:
+            - CPU load
+            - Memory usage
+            - Network traffic on eth0
+            - Disk space usage
+          maps_names:
+            - Network map
