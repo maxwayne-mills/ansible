@@ -1,0 +1,27 @@
+## Playbook utilizing tags
+## to skip a tag use --skip-tag "tag name"
+## to run a specific tag use --tags "tag name"
+--- # Install sudo
+- hosts: '{{servername}}'
+  user: root
+  sudo: no
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: Install Sudo package on Debian systems
+      apt: pkg={{item}} state=latest
+      with_items:
+        - sudo
+      when: ansible_os_family == "Debian"
+      tags:
+        - debianos
+
+    - name: Install Sudo package on RHEL based systems
+      yum: pkg={{item}} state=latest
+      with_items:
+        - sudo
+      when: ansible_os_family == "RedHat"
+      tags:
+        - rhelos
+
+        
