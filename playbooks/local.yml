@@ -1,0 +1,10 @@
+--- #LOCAL PLAYBOOK
+- hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  tasks:
+    - name: Install telnet Client
+      apt: pkg=lynx state=present state=latest
+      register: result
+    - debug: var=result
+
