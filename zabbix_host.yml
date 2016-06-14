@@ -21,7 +21,7 @@
         link_templates:
         # You can find the name of the template under Configuration - Templates, select the template
         # under the template column click on the template, use the 'Template name'
-          - templae_os_web
+          - Template_OSS_web
         # inventory_mode: automatic
         interfaces:
           - type: 1
