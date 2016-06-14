@@ -2,8 +2,13 @@
 ## servername is the URL of the zabbix server
 ## User if the username and pass is the password for the user
 ---
-- hosts: '{{servername}}'
+- hosts: '{{servername}}' # Passed in from the commandline 
   gather_facts: no
+  vars_prompt:
+    - name: user
+      prompt: enter user name 
+    - name: pass
+      prompt: enter password
   tasks:
     - name: Create a new host or update an existing host's info
       ## This playbook makes a local connection to the zabbix server and
