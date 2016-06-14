@@ -2,11 +2,13 @@
 - hosts: '{{servername}}'
   tasks:
     - name: Test
-      zabbix_maintenance: name="Add maintenance"
+      zabbix_maintenance: name="Test maintenance"
                           host_name="srv3 at Scaleway ISP"
-                          state=absent
-                          minutes=90
+                          host_groups=oss
+                          minutes=10
                           server_url=http://107.170.116.31/zabbix
-                          desc=
+                          desc="Test maintenance"
+                          collect_data=yes
+                          state=absent
                           login_user='{{user}}'
                           login_password='{{pass}}'
