@@ -7,8 +7,10 @@
   vars_prompt:
     - name: user
       prompt: enter user name 
+      private: no
     - name: pass
       prompt: enter password
+      private: yes
   tasks:
     - name: Create a new host or update an existing host's info
       ## This playbook makes a local connection to the zabbix server and
