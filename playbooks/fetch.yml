@@ -1,0 +1,8 @@
+--- # Fetch remote file
+- hosts: srv2
+  user: root
+  connection: ssh
+  gather_facts: yes
+  tasks:
+   - name: Copy remote file to local host
+     fetch: src=/etc/hosts dest=./prefix-{{ansible_hostname}} flat=yes validate_checksum=yes
