@@ -12,7 +12,7 @@
       prompt: Enter the name of the server
       private: no
     - name: droplet_id
-      prompt: enter the dropletid
+      prompt: enter the dropletid (defaults to 000001)
       default: 000001
     - name: state
       prompt: enter state absent or present
@@ -52,5 +52,5 @@
    - debug: msg="Hostname {{ my_droplet.droplet.name }}"
 
    - name: Add new host information to local hosts file
-     add_host: name="{{my_droplet.droplet.name}}"
-               IP="{{my_droplet.droplet.ip_address}}"
+     add_host: hostname="{{my_droplet.droplet.ip_address}}"
+               groups=OSS
