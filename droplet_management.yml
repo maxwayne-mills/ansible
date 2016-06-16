@@ -4,6 +4,19 @@
 # If spinning up a new droplet use "localhost" as the servername and define the name within the inventory file.
 ---
 - hosts: digitalocean
+  vars_prompt:
+    - name: token
+      prompt: Digital Ocean Token
+      private: no
+    - name: servername
+      prompt: Enter the name of the server
+      private: no
+    - name: droplet_id
+      prompt: enter the dropletid
+      default: 000001
+    - name: state
+      prompt: enter state absent or present
+      private: no
   tasks:
    - name: Manage "{{servername}}" droplet "{{state}}"
      digital_ocean:
