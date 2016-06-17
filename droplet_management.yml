@@ -16,6 +16,7 @@
       default: 000001
     - name: state
       prompt: enter state absent or present
+      default: present
       private: no
   tasks:
    - name: Manage "{{servername}}" droplet "{{state}}"
@@ -51,6 +52,8 @@
    - debug: msg="IP {{ my_droplet.droplet.ip_address }}"
    - debug: msg="Hostname {{ my_droplet.droplet.name }}"
 
+   ## Add droplet hostname and IP to in memory host inventory management
+   ## THis allows other playbooks to inherit those variables.
    - name: Add new host information to local hosts file
      add_host: hostname="{{my_droplet.droplet.ip_address}}"
                groups=OSS
