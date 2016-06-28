@@ -2,5 +2,4 @@
 - hosts: '{{servername}}'
   roles:
   - common
-  - zabbix
-  - postfix
+  - postfix-relay
