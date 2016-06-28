@@ -1,3 +1,6 @@
 ---
-  - include: droplet_management.yml state=present name=jenkins
-  - include: build_jenkins.yml name=jenkins
+- hosts:"{{hostname}}"
+  - include: droplet_management.yml
+  - roles:
+     - common
+     - zabbix
