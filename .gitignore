@@ -3,3 +3,5 @@
 \.settings
 *.retry
 add-publickey-to-digitalocean.yml
+secure.yml
+hosts
