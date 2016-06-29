@@ -1,0 +1,15 @@
+---
+- hosts: '{{servername}}'
+  connection: ssh
+  tasks:
+   - name: Create 4GB swap file
+     command: fallocate -l 4G /swapfile
+  
+   - name: Set swap file permissions
+     file: path=/swapfile mode=600 
+
+   - name: Create swap file
+     command: mkswap /swapfile
+
+   - name: Enable swapfile
+     command: swapon /swapfile
