@@ -4,5 +4,5 @@
   connection: ssh
   gather_facts: yes
   tasks:
-   - name: Copy remote file to local host
+   - name: Copy remote file(hosts) to local host into a file labelled (prefix-srv2)
      fetch: src=/etc/hosts dest=./prefix-{{ansible_hostname}} flat=yes validate_checksum=yes
