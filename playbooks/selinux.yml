@@ -1,0 +1,10 @@
+---
+- hosts: '{{servername}}'
+  tasks:
+   - name: install python bindigns for SELinux
+     yum: name={{item}} state=present
+     with_items:
+      - libselinux-python
+      - libsemanage-python
+   - name: test to see if selinux is running
+     command: getenforce
