@@ -1,5 +1,5 @@
 ---
-- hosts: '{{ server }}'
+- hosts: '{{servername}}'
   tasks:
 
   - name: Update apache to the latest version when on Debian based systems
