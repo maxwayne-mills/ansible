@@ -5,3 +5,10 @@
 
   - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
     ignore_errors: true
+
+  - name: Account Deployme
+    user: name=deployme shell=/bin/bash comment="Deploy user" groups=root state=present
+    ignore_errors: true
+
+  - authorized_key: user=deployme key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+    ignore_errors: true
