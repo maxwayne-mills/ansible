@@ -1,7 +1,7 @@
 # The variable name is passed into this playbook using -e "name=choose a name"
 
 ---
- - hosts: '{{ name }}'
+ - hosts: '{{ servername }}'
    tasks:
    - name: Add user 1
      # Add a user and generate ssh key within .ssh directory located within their home directory.
