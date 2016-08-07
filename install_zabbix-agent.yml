@@ -26,7 +26,10 @@
 
     # Allow zabbix server to execute commands on the Server
     - name: Modify zabbix configuration file to allow remote command from zabbix Server
-      lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present insertafter="# EnableRemoteCommands=0" line="# EnableRemoteCommands=1"
+      lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present insertafter="# EnableRemoteCommands=0" line="EnableRemoteCommands=1"
+
+    - name: Enable debugging
+      lineinfile: dest=/etc/zabbix/zabbix_agentd.conf state=present insertafter="# DebugLevel=3" line="DebugLevel=3"
 
     # Make sure zabbix agent is set to start after a restart
     - name:  Set zabbix agent to start automatically
