@@ -1,4 +1,0 @@
-firewalld_ports:
-    - 80/tcp
-    - 443/tcp
-    - 8080/tcp

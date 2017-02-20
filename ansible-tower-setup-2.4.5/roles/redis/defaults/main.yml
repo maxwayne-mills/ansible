@@ -1,5 +1,0 @@
----
-# Default Redis settings for Ansible Tower.
-redis_host: localhost
-redis_port: 6379
-redis_password: ''

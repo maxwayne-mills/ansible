@@ -1,3 +1,0 @@
----
-sup_init_name: supervisord
-sup_conf_location: /etc/supervisord.d/awx.ini

@@ -1,7 +1,0 @@
----
-- include: init.yml
-- include: projects.yml
-- include: conf.yml
-- include: ui.yml
-- include: postgres.yml
-- include: mongo.yml

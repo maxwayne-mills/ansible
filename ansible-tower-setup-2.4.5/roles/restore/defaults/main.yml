@@ -1,5 +1,0 @@
----
-aw_home: /var/lib/awx
-backup_dir: /var/backups/tower/
-database: internal
-pg_database: awx
