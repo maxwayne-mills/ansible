@@ -1,12 +1,17 @@
 ---
-- hosts: websrv002
+- hosts: "{{ servername }}"
   tasks:
   - name: Check if web directory is present
-    file: state=directory path=/var/www/html
+    stat: path=/tmp
+    register: stat_status
+    tags: check
 
   - name: Create new directory if it doesn't exist
-    file: path=/var/www/html state=directory mode=0755
-    ignore_errors: true
+    file: path=/tmp/test state=directory
+    when: stat_status.stat.isdir
+    tags: create_dir
 
-  - name: 
-    file: state=directory path=/var/www/html/test
+  - name: Remove /tmp/test if it exist
+    file: path=/tmp/test state=absent
+    when: stat_status.stat.isdir is defined
+    tags: remove_dir
