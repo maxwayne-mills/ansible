@@ -1,17 +1,20 @@
 ---
 - hosts: "{{ servername }}"
+  vars:
+    - base_dir: /tmp
+    - dir: test
   tasks:
-  - name: Check if directory is present
+  - name: Check if "{{base_dir}}" directory is present
     stat: path=/tmp
     register: stat_status
     tags: check
 
-  - name: Create new directory if it doesn't exist
-    file: path=/tmp/test state=directory
-    when: stat_status.stat.isdir
+  - name: Create "{{dir}}" directory in "{{base_dir}}" if it doesn't exist
+    file: path="{{base_dir}}/{{dir}}" state=directory
+    when: stat_status.stat.isdir and stat_status.stat.isdir is defined
     tags: create_dir
 
-  - name: Remove /tmp/test if it exist
-    file: path=/tmp/test state=absent
-    when: stat_status.stat.isdir is defined
+  - name: Remove "{{base_dir}}/{{dir}}" if it exist
+    file: path="{{base_dir}}/{{dir}}" state=absent
+    when: stat_status.stat.isdir and stat_status.stat.isdir is defined
     tags: remove_dir
