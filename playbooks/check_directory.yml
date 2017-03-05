@@ -1,7 +1,7 @@
 ---
 - hosts: "{{ servername }}"
   tasks:
-  - name: Check if web directory is present
+  - name: Check if directory is present
     stat: path=/tmp
     register: stat_status
     tags: check
