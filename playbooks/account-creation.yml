@@ -1,23 +1,25 @@
 ## #!/usr/bin/ansible-playbook
-
 # http://docs.ansible.com/ansible/authorized_key_module.html
 
 ---
-- hosts: srv3 srv4 
+- hosts: "{{servername}}"
+  vars:
+    user: automata
   tasks:
   - name: Add user 1
     # Add a user and generate ssh key within .ssh directory located within their home directory.
     # can't seem to figure out how to add a key to the authorized_key file when you alread generated a key.
     #user: name=deployuser shell=/bin/bash comment="Deployment user" generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
-    user: name=deployuser comment=deployuser shell=/bin/bash comment="Admin user" state=present
+
+    user: name={{user}} comment=deployuser shell=/bin/bash comment="Admin user" state=present
     # If the user was removed and re-added their home directory permissions needed to adjusted 
-  - name: Change permissions on deployuser home directory
-    file: path=/home/deployuser owner=deployuser group=deployuser
+
+  - name: Change permissions on "{{user}}" home directory
+    file: path=/home/"{{user}}" owner="{{user}}" group="{{user}}"
     ignore_errors: true
-  - authorized_key: user=deployuser key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+  - authorized_key: user="{{user}}" key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
     
 
-  - name: Add user 2
-    user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
-  - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-    ignore_errors: true
+  - name: Add new user
+    user: name="{{user}}" comment=Automated user shell=/bin/bash comment="Admin user" groups=root state=present
+  - authorized_key: user="{{user}}" key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
