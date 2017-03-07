@@ -1,0 +1,15 @@
+---
+- hosts: "{{ servername }}"
+  vars_prompt:
+    - name: "name"
+      prompt: "Enter your first name"
+      private: no
+
+  tasks:
+   - name: Skip if variable is not defined
+     debug: msg="variable name.stdout_lines"
+     when: name is not defined
+
+   - name: print if variable is defined
+     debug: msg="variable "{{name}}".stdout_lines"
+     when: name is defined
