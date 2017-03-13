@@ -1,0 +1,23 @@
+---
+- hosts: "{{servername}}"
+  become: true
+  vars_prompt:
+    - name: username
+      prompt: Enter username
+      private: no
+    - name: grp
+      prompt: Enter group name
+      private: no
+    - name: user_info
+      prompt: Enter user informaton
+      private: no
+  tasks:
+
+  - name:  Account management
+    user: 
+      name: "{{username}}"
+      group: "{{grp}}"
+      comment: "{{user_info}}"
+      append: yes
+      state: "{{user_state}}"
+    changed_when: username is defined and grp is undefined and user_info is defined
