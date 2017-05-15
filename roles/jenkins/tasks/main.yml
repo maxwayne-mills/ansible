@@ -27,6 +27,8 @@
   yum:
     name: jenkins
     state: present
+  notify:
+    - start jenkins
 
 - name: Show password
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
