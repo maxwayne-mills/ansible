@@ -30,4 +30,5 @@
 
 - name: Show password
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-
+  notify: 
+    - start jenkins
