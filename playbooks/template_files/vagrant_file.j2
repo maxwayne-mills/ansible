@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "{{image}}"
+  config.vm.box_check_update = false
+  config.vm.hostname = "{{vagrant_machine_name}}"
+  config.vm.network "forwarded_port", guest: 8080, host: 8081
+  config.vm.network "forwarded_port", guest: 443, host: 4444,
+    auto_correct: true
+  config.vm.network "public_network", :bridge => "wlp4s0", :ip => "{{ip_address}}"
+  config.vm.provider "virtualbox" do |virt0|
+	virt0.memory = "512"
+	virt0.name = "{{vagrant_machine_name}}"
+	virt0.gui = false
+  end
+  config.vm.provision "ansible" do |ansible|
+	ansible.verbose = "v"
+	ansible.playbook = "setup.yml"
+  end
+
+end
