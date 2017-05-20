@@ -1,2 +1,3 @@
 ---
-- include: user_and_permissions.yml
+- include: base_pkg.yml
+- include: users_and_permissions.yml

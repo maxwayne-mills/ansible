@@ -16,11 +16,11 @@
   authorized_key:
     user: oss
     state: present
-    key: "{{ lookup('file','.ssh/id_rsa.pub') }}"
+    key: "{{ lookup('file','../../.ssh/id_rsa.pub') }}"
 
 - name: Copy private key to remote oss user
   copy: 
-    src: .ssh/id_rsa 
+    src: ../../.ssh/id_rsa 
     dest: /home/oss/.ssh/
     owner: oss
     group: oss
@@ -28,7 +28,7 @@
 
 - name: Copy public key to remote oss user
   copy: 
-    src: .ssh/id_rsa.pub
+    src: ../../.ssh/id_rsa.pub
     dest: /home/oss/.ssh/
     owner: oss
     group: oss
