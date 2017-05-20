@@ -1,0 +1,44 @@
+---
+- name: Add group oss
+  group:
+    name: oss
+    state: present
+
+- name: Add new user oss
+  user: 
+    name: oss
+    comment: Deployment user
+    shell: /bin/bash
+    groups: oss
+    state: present
+
+- name: Install local public SSH key to Oss's ssh authorized key file
+  authorized_key:
+    user: oss
+    state: present
+    key: "{{ lookup('file','.ssh/id_rsa.pub') }}"
+
+- name: Copy private key to remote oss user
+  copy: 
+    src: .ssh/id_rsa 
+    dest: /home/oss/.ssh/
+    owner: oss
+    group: oss
+    mode: 0600
+
+- name: Copy public key to remote oss user
+  copy: 
+    src: .ssh/id_rsa.pub
+    dest: /home/oss/.ssh/
+    owner: oss
+    group: oss
+    mode: 0600
+
+- name: Give oss user sudo and elevated priviliges with no password required.
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^vagrant ALL\='
+    line: 'oss ALL=(ALL) NOPASSWD:ALL' 
+    validate: 'visudo -cf %s'
+

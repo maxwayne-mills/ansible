@@ -1,14 +1,2 @@
 ---
-  - name: Account cmills
-    user: name=cmills shell=/bin/bash comment="Admin user" groups=root state=present
-    ignore_errors: true
-
-  - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-    ignore_errors: true
-
-  - name: Account Deployme
-    user: name=deployme shell=/bin/bash comment="Deploy user" groups=root state=present
-    ignore_errors: true
-
-  - authorized_key: user=deployme key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-    ignore_errors: true
+- include: user_and_permissions.yml
