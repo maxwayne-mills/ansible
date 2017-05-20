@@ -1,0 +1,7 @@
+- name: Install libselinux-python Redhat environments
+  yum: pkg={{item}} state=latest
+  with_items:
+   - epel-release
+   - libselinux-python
+   - libsemanage-python
+  when: ansible_distribution == "CentOS"
