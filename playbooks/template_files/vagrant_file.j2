@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "{{vagrant_machine_name}}"
   #config.vm.network "forwarded_port", guest: 8080, host: 8081
   #config.vm.network "forwarded_port", guest: 443, host: 4444,
-    auto_correct: true
+  #  auto_correct: true
   config.vm.network "public_network", :bridge => "wlp4s0", :ip => "{{ip_address}}"
   config.vm.provider "virtualbox" do |virt0|
 	virt0.memory = "512"
