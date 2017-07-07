@@ -7,5 +7,5 @@
   - name: Build Vagrant file
     template:
       src: template_files/vagrant_file.j2
-      dest: ./Vagrantfile
+      dest: /tmp/Vagrantfile
       
