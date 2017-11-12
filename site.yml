@@ -1,6 +1,0 @@
----
-- hosts:"{{hostname}}"
-  - include: droplet_management.yml
-  - roles:
-     - common
-     - zabbix
