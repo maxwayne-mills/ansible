@@ -1,4 +1,0 @@
----
-- hosts: "{{servername}}"
-  roles:
-    -  "{{role}}"
