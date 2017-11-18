@@ -5,10 +5,10 @@
   user:
     name: deployuser
     comment: "deployment user"
-    hell: /bin/bash
+    shell: /bin/bash
     state: present
 
 - name: Set authorized key
   authorized_key:
     user: deployuser
-    key: "{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
+    key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
