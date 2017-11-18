@@ -3,17 +3,21 @@
 
 ---
 - hosts: localhost
+  become: True
   vars:
-    user: automata
+    deploy_user: automata
   tasks:
+
   - name: Add Automat user
     user:
-      name: {{user}}
+      name: "{{deploy_user}}"
       comment: deployment user
       shell: /bin/bash
-      comment: "Admin user"
       state: present
 
-  - authorized_key:
-    user: "{{user}}"
+  - name: Create authorzed key file for atuomat user
+    authorized_key:
+      user: "{{deploy_user}}"
+      state: present
+      manage_dir: True
       key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"

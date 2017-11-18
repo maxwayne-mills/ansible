@@ -5,7 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 ### Ansible Files for provisiong environments ###
 
 * Plays and playbooks
-* Ansible Version 2.
+* Ansible Version 2.*
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###

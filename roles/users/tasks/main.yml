@@ -1,0 +1,14 @@
+---
+# tasks file for users
+
+- name: Add user 1
+  user:
+    name: deployuser
+    comment: "deployment user"
+    hell: /bin/bash
+    state: present
+
+- name: Set authorized key
+  authorized_key:
+    user: deployuser
+    key: "{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"

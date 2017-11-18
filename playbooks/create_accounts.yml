@@ -4,20 +4,13 @@
  - hosts: '{{ servername }}'
    tasks:
    - name: Add user 1
-     # Add a user and generate ssh key within .ssh directory located within their home directory.
-     # can't seem to figure out how to add a key to the authorized_key file when you alread generated a key.
-     #user: name=deployuser shell=/bin/bash comment="Deployment user" generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
-     user: name=deployuser comment=deployuser shell=/bin/bash comment="Admin user" state=present
+     user:
+       name: deployuser
+       comment: "deployment user"
+       hell: /bin/bash
+       state: present
 
-     # If the user was removed and re-added their home directory permissions need to be adjusted 
-   - name: Change permissions on deployuser home directory
-     file: path=/home/deployuser owner=deployuser group=deployuser
-     ignore_errors: true
-   - authorized_key: user=deployuser key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-
-   - name: Add user 2
-     user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
-
-     # Add cmills public key to cmills authorized key file to allow for passwordless authentication.
-   - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-     ignore_errors: true
+   - name: Set authorized key
+     authorized_key:
+       user: deployuser
+       key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
