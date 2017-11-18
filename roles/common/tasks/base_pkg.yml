@@ -7,3 +7,12 @@
     - epel-release
     - libselinux-python
     - libsemanage-python
+  when: ansible_distribution == RedHat
+
+- name: Copy motd to /etc
+  copy:
+    src: motd
+    dest: /etc
+    owner: root
+    group: root
+    mode: 0644
