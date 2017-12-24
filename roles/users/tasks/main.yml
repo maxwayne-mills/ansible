@@ -1,14 +1,24 @@
 ---
 # tasks file for users
 
-- name: Add user 1
+- name: Create deployuser
   user:
     name: deployuser
     comment: "deployment user"
     shell: /bin/bash
+    groups: sudo
     state: present
 
-- name: Set authorized key
+- name: Set authorized key for deployuser
   authorized_key:
     user: deployuser
     key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
+
+- name: Enalbe deployuser to use sudo without passwords
+  template:
+    src: sudo.j2
+    dest: /etc/sudoers.d/deployuser
+    owner: root
+    group: root
+    mode: 0600
+    validate: '/usr/sbin/visudo -cf %s'
