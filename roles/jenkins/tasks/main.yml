@@ -1,36 +1,19 @@
 ---
-- name: copy over jdk file
-  copy:
-    src: /home/oss/Downloads/jdk-8u131-linux-x64.rpm
-    dest: /tmp
+- name: Install jenkins key
+  apt_key:
+    url: https://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+    state: present
+    validate_certs: no
 
-- name: Install jdk
-  yum:
-    name: /tmp/jdk-8u131-linux-x64.rpm 
+- name: Install Debian jenkins repository
+  apt_repository:
+    repo: deb http://pkg.jenkins.io/debian-stable binary/
     state: present
 
-- name: Add jenkins repository
-  yum_repository:
-    name: epel
-    description: Jenkins 
-    baseurl: http://pkg.jenkins.io/redhat
-
-#- name: Install jenkins key
-#  rpm_key:
-#    state: present
-#    key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
-
-- name: install key
-  command: rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-
-- name: Install jenkins
-  yum:
-    name: jenkins
-    state: present
-  notify:
-    - start jenkins
-
-- name: Show password
-  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-  notify: 
-    - start jenkins
+- name: Install default-jre, default-jre-headless, jenkins
+  package:
+    name: "{{item}}"
+  with_items:
+    - default-jre
+    - default-jre-headless
+    - jenkins
