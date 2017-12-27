@@ -44,3 +44,15 @@
   with_items:
     - elasticsearch
     - kibana
+
+- name: Start elasticsearch
+  service:
+    name: elasticsearch
+    enabled: yes
+    state: started
+
+- name: Start kibana
+  service:
+    name: kibana
+    enabled: yes
+    state: started
