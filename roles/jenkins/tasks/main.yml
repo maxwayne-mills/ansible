@@ -18,6 +18,11 @@
     - default-jre-headless
     - jenkins
 
+- name: Wait for port 8080
+  wait_for:
+    port: 8080
+    delay: 10
+
 - name: Get jenkins default password
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
   regsiter: admin_pass
