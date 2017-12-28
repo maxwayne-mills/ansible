@@ -16,8 +16,10 @@
     owner: root
     group: root
 
-- name: Install elasticsearch repository key
-  shell: wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+- name: Install Elasticsearch application key
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    state: present
 
 - name: Update system
   package:
