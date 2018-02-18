@@ -1,0 +1,21 @@
+---
+dependency:
+  name: galaxy
+  enabled: false
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: ubuntu-elasticsearch
+    image: ubuntu:16.04
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: test1
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

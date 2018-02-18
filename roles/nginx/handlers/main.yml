@@ -1,6 +1,6 @@
 ---
 # handlers file for nginx
- - name: Start nginx
+ - name: Start Nginx
    service: name=nginx state=started
 
  - name: Reload Nginx

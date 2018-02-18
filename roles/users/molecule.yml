@@ -1,3 +1,0 @@
-platforms:
-  - name: ubuntu/xenial64
-    box: ubuntu/xenial64

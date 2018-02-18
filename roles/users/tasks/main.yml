@@ -14,7 +14,7 @@
     user: deployuser
     key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
 
-- name: Enalbe deployuser to use sudo without passwords
+- name: Enable deployuser to use sudo without passwords
   template:
     src: sudo.j2
     dest: /etc/sudoers.d/deployuser
