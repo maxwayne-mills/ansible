@@ -10,10 +10,12 @@
     state: present
 
 - name: Create cmills
-  comment: "Clarence Mills"
-  shell: /bin/bash
-  groups: sudo
-  state: present
+  user:
+    name: cmills
+    comment: "Clarence Mills"
+    shell: /bin/bash
+    groups: sudo
+    state: present
 
 - name: Set authorized key for deployuser
   authorized_key:
