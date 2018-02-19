@@ -16,6 +16,14 @@
     name: apt-transport-https
     state: present
 
+- name: Install logstash apt repository to systems source list
+  template:
+    src: kibana4.5.j2
+    dest: /etc/apt/sources.list.d/logstash5-x.j2
+    mode: 0600
+    owner: root
+    group: root
+
 - name: Install Java aplications default-jre, default-jre-headless
   package:
     name: "{{item}}"
