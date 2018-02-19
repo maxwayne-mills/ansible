@@ -29,7 +29,7 @@
 
 - name: Enable deployuser to use sudo without passwords
   template:
-    src: sudo.j2
+    src: sudo-0.j2
     dest: /etc/sudoers.d/deployuser
     owner: root
     group: root
@@ -37,7 +37,7 @@
 
 - name: Enable cmills to use sudo without passwords
   template:
-    src: sudo.j2
+    src: sudo-1.j2
     dest: /etc/sudoers.d/cmills
     owner: root
     group: root
