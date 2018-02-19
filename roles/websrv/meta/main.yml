@@ -55,4 +55,4 @@ galaxy_info:
 
 dependencies:
 - common
-- apache2
+- nginx
