@@ -1,0 +1,11 @@
+# Molecule managed
+
+---
+all:
+  hosts:
+    ubuntu-elasticsearch: &id001
+      ansible_connection: docker
+ungrouped:
+  hosts:
+    ubuntu-elasticsearch: *id001
+  vars: {}

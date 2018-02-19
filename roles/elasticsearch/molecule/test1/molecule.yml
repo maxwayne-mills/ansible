@@ -1,19 +1,20 @@
 ---
 dependency:
   name: galaxy
+  enabled: false
 driver:
   name: docker
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: ubuntu-elasticsearch
     image: ubuntu:16.04
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
 scenario:
-  name: default
+  name: test1
 verifier:
   name: testinfra
   lint:
