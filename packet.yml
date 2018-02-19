@@ -1,0 +1,21 @@
+# Creating devices
+---
+- name: create 1 device
+  hosts: localhost
+  connection: local
+  vars:
+    prescence: absent
+  tasks:
+
+  - packet_sshkey:
+      label: key from file
+      key_file: ~/.ssh/id_rsa.pub
+      state: "{{prescence}}"
+
+  - packet_device:
+      project_id: "{{proj_id}}" 
+      hostnames: myserver
+      operating_system: ubuntu_14_04
+      plan: baremetal_1
+      facility: sjc1
+      state: "{{prescence}}"
