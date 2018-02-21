@@ -5,3 +5,4 @@
 add-publickey-to-digitalocean.yml
 secure.yml
 hosts
+*.molecules/
