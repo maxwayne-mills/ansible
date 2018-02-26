@@ -23,4 +23,4 @@
 - name: Create starter Index file
   file:
     src: index.html.j2
-    dest: /usr/share/nginx/{{ domain }}
+    dest: /usr/share/nginx/index.html
