@@ -24,4 +24,4 @@
   file:
     src: index.html.j2
     dest: /usr/share/nginx/{{ domain }}/index.html
-    state: present
+    state: file
