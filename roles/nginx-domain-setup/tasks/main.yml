@@ -1,0 +1,16 @@
+---
+# tasks file for nginx-domain-setup
+
+- name: Add {{ domain }} config
+   template: src=domain.j2 dest=/etc/nginx/site-available/{{ domain }} owner=root group=root
+
+ - name: Enable {{ domain }} site config
+   file: src=/etc/nginx/sites-available/{{ domain }} dest=/etc/nginx/sites-enabled/{{ domain }} state=link force=yes
+
+ - name: Create DocumentRoot
+   file: path=/usr/share/nginx/{{ domain }} state=directory
+
+- name: Create starter Index file
+  file: 
+    src: index.html.j2
+    dest: usr/share/nginx/{{ domain }}
