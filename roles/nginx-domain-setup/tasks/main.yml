@@ -24,3 +24,5 @@
   template:
     src: index.html.j2
     dest: /usr/share/nginx/{{ domain }}/index.html
+  notify:
+   - Reload Nginx
