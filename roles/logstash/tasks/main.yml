@@ -9,7 +9,6 @@
   package:
     upgrade: yes
     update_cache: yes
-    cache_valid_time: 3600
 
 - name: Install apt-repository
   package:
@@ -18,11 +17,16 @@
 
 - name: Install logstash apt repository to systems source list
   template:
-    src: kibana4.5.j2
-    dest: /etc/apt/sources.list.d/logstash5-x.j2
+    src: logstash5-x.j2
+    dest: /etc/apt/sources.list.d/logstash5.x.list
     mode: 0600
     owner: root
     group: root
+
+- name: Update system
+  package:
+    upgrade: yes
+    update_cache: yes
 
 - name: Install Java aplications default-jre, default-jre-headless
   package:
