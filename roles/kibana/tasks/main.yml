@@ -1,6 +1,6 @@
 ---
 # tasks file for kibana
-- name: Install Public apt_key
+- name: Install Elasticsearch Public apt_key
   apt_key:
     url: https://packages.elastic.co/GPG-KEY-elasticsearch
     state: present
@@ -15,10 +15,8 @@
   apt_repository:
     repo: 'deb https://packages.elastic.co/kibana/4.6/debian stable main'
     state: present
-    filename:
 
 - name: Update repository cache and install kibana
   apt:
     name: kibana
     update_cache: yes
-    state: present
