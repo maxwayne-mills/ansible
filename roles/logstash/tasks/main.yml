@@ -1,42 +1,32 @@
 ---
 # tasks file for logstash
-- name: Install Elasticsearch application key
+- name: Install Elasticsearch public key
   apt_key:
     url: https://packages.elastic.co/GPG-KEY-elasticsearch
     state: present
 
-- name: Update system
-  package:
-    upgrade: yes
+- name: Update system 
+  apt:
     update_cache: yes
 
-- name: Install apt-repository
+# Required to install all elasticsearch products
+- name: Install apt-transport-https
   package:
     name: apt-transport-https
     state: present
 
-- name: Install logstash apt repository to systems source list
-  template:
-    src: logstash5-x.j2
-    dest: /etc/apt/sources.list.d/logstash5.x.list
-    mode: 0600
-    owner: root
-    group: root
-
-- name: Update system
-  package:
-    upgrade: yes
-    update_cache: yes
-
-- name: Install Java aplications default-jre, default-jre-headless
+- name: Install logstash apt repository
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
+    state: present
+ 
+# Order of application installation is important
+- name: Install Java aplications default-jre, default-jre-headless and logstash
   package:
     name: "{{item}}"
     state: present
+    update_cache: yes
   with_items:
-    - default-jre
     - default-jre-headless
-
-- name: Install logstash
-  package:
-    name: logstash
-    state: present
+    - default-jre
+    - logstash
