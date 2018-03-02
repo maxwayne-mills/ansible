@@ -1,2 +1,9 @@
 ---
 # handlers file for nginx-domain-setup
+# handlers file for nginx
+ - name: Start Nginx
+   service: name=nginx state=started
+
+ - name: Reload Nginx
+   service: name=nginx state=reloaded
+
