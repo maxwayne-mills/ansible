@@ -1,20 +1,14 @@
 ---
-# tasks file for elasticsearch
-- name: Install elasticsearch apt repository to system source list
-  template:
-    src: elasticsearch2.5.j2
-    dest: /etc/apt/sources.list.d/elasticsearch-2.x.list
-    mode: 0600
-    owner: root
-    group: root
+# Inatall elasticsearch
+- name: Install apt-transport-https
+  apt:
+    name: apt-transport-https
+    state: present
 
-- name: Install kibana apt reposiroty to systems source list
-  template:
-    src: kibana4.5.j2
-    dest: /etc/apt/sources.list.d/kibana.list
-    mode: 0600
-    owner: root
-    group: root
+- name: Install Elasticsearch apt apt_repository
+  apt_repository:
+    repo: 'deb https://packages.elastic.co/elasticsearch/2.x/debian stable main'
+    state: present
 
 - name: Install Elasticsearch application key
   apt_key:
@@ -22,39 +16,10 @@
     state: present
 
 - name: Update system
-  package:
-    upgrade: yes
+  apt:
     update_cache: yes
-    cache_valid_time: 3600
 
-- name: Install Java aplications default-jre, default-jre-headless
-  package:
-    name: "{{item}}"
-  with_items:
-    - default-jre
-    - default-jre-headless
-
-- name: Install apt-transport-https
-  package:
-    name: apt-transport-https
-    state: present
-
-- name: Install elasticsearch and kibana
-  package:
-    name: "{{item}}"
-    state: present
-  with_items:
-    - elasticsearch
-    - kibana
-
-- name: Start elasticsearch
-  service:
+- name: Install elasticsearch
+  apt:
     name: elasticsearch
-    enabled: yes
-    state: started
-
-- name: Start kibana
-  service:
-    name: kibana
-    enabled: yes
-    state: started
+    state: present
