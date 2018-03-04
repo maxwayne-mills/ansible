@@ -2,7 +2,7 @@
 # tasks file for logstash
 - name: Install Elasticsearch public key
   apt_key:
-    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    url: "{{ apt_key_url }}"
     state: present
 
 - name: Update system 
@@ -17,7 +17,7 @@
 
 - name: Install logstash apt repository
   apt_repository:
-    repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
+    repo: "{{ apt_repo_url }}"
     state: present
  
 # Order of application installation is important

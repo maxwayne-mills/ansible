@@ -1,2 +1,4 @@
 ---
 # vars file for logstash
+apt_key_url: https://packages.elastic.co/GPG-KEY-elasticsearch
+apt_repo_url: deb https://artifacts.elastic.co/packages/5.x/apt stable main
