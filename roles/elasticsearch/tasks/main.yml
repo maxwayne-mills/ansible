@@ -5,14 +5,14 @@
     name: apt-transport-https
     state: present
 
-- name: Install Elasticsearch apt apt_repository
-  apt_repository:
-    repo: "{{ elver2 }}"
-    state: present
-
 - name: Install Elasticsearch application key
   apt_key:
-    url: "{{ elapkey }}"
+    url: "{{ apt_key_url }}"
+    state: present
+
+- name: Install Elasticsearch apt apt_repository
+  apt_repository:
+    repo: "{{ apt_repo_url }}"
     state: present
 
 - name: Update system

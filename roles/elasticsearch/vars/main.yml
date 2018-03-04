@@ -3,8 +3,5 @@
 esearch: elasticsearch-2.4.5.deb
 esearchlink: https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.4.5/
 
-kibana: kibana-6.1.1-linux-x86_64.tar.gz
-kibanalink: https://artifacts.elastic.co/downloads/kibana/
-
-elver2: 'deb https://packages.elastic.co/elasticsearch/2.x/debian stable main'
-elapkey: https://packages.elastic.co/GPG-KEY-elasticsearch
+apt_repo_url: 'deb https://packages.elastic.co/elasticsearch/2.x/debian stable main'
+apt_key_url: https://packages.elastic.co/GPG-KEY-elasticsearch
