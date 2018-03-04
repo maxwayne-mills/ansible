@@ -5,3 +5,6 @@ esearchlink: https://download.elastic.co/elasticsearch/release/org/elasticsearch
 
 kibana: kibana-6.1.1-linux-x86_64.tar.gz
 kibanalink: https://artifacts.elastic.co/downloads/kibana/
+
+elver2: 'deb https://packages.elastic.co/elasticsearch/2.x/debian stable main'
+elapkey: https://packages.elastic.co/GPG-KEY-elasticsearch

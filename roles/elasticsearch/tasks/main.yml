@@ -7,12 +7,12 @@
 
 - name: Install Elasticsearch apt apt_repository
   apt_repository:
-    repo: 'deb https://packages.elastic.co/elasticsearch/2.x/debian stable main'
+    repo: "{{ elver2 }}"
     state: present
 
 - name: Install Elasticsearch application key
   apt_key:
-    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    url: "{{ elapkey }}"
     state: present
 
 - name: Update system
