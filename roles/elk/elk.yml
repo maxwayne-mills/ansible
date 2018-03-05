@@ -1,6 +1,6 @@
 ---
 - hosts: 127.0.0.1
   become: true
-  gather_facts: False
+  gather_facts: true
   roles:
     - elk
