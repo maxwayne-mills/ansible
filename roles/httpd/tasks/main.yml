@@ -1,10 +1,17 @@
 ---
+- name: Install libapache2 apt_repository
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+    state: present
+
+- name: Update packages
+  apt:
+   update_cache: yes 
+
 - name: Install Apache
   apt: pkg={{ item }}
   with_items:
    - apache2
-   - libapache2-mod-php5
-   - php5
-   - php5-cli
-   - php5-cgi
+   - php
+
    
