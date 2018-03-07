@@ -19,3 +19,14 @@
       plan: baremetal_1
       facility: sjc1
       state: "{{prescence}}"
+      wait_for_public_IPv: 4
+    register: newhosts
+
+  - name: wait for ssh
+    wait_for:
+      delay: 1
+      host: "{{ item.public_ipv4 }}"
+      port: 22
+      state: started
+      timeout: 500
+    with_items: "{{ newhosts.devices }}"
