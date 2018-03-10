@@ -30,6 +30,6 @@
 - name: Copy jenkins config in place
   copy:
     src: jenkins-config
-    dest: /var/lig/jenkins/config.xml
+    dest: /var/lib/jenkins/config.xml
     force: yes
   notify: restart jenkins
