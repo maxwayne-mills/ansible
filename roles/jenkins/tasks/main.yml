@@ -42,6 +42,9 @@
   file:
     path: "{{jenkins_dir}}/users/cmills"
     state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0644
 
 - name: Copy Cmills user config file in place
   copy:
