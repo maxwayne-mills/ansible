@@ -30,7 +30,7 @@
 - name: wait 
   wait_for:
     port: 8080
-    delay: 180
+    delay: 120
 
 - name: Copy jenkins config in place
   copy:
