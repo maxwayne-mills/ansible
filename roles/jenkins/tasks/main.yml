@@ -45,7 +45,7 @@
 
 - name: Copy Cmills user config file in place
   copy:
-    src: cmillls-config
+    src: cmills-config
     dest: /var/lib/jenkins/cmills/config.xml  
   notify: restart jenkins
 
