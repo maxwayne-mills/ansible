@@ -26,3 +26,10 @@
 - name: Get jenkins default password
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
   regsiter: admin_pass
+
+- name: Copy jenkins config in place
+  copy:
+    src: jenkins-config
+    dest: /var/lig/jenkins/config.xml
+    force: yes
+  notify: restart jenkins

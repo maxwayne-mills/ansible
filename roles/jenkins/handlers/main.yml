@@ -5,3 +5,8 @@
     name: jenkins
     enabled: yes
     state: started
+
+- name: restart jenkins
+  service:
+    name: jenkins
+    state: restarted
