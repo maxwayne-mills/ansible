@@ -27,6 +27,11 @@
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
   regsiter: admin_pass
 
+- name: wait 
+  wait_for:
+    port: 8080
+    delay: 180
+
 - name: Copy jenkins config in place
   copy:
     src: jenkins-config
