@@ -49,7 +49,9 @@
 - name: Copy Cmills user config file in place
   copy:
     src: cmills-config
-    dest: "{{jenkins_dir}}/users/cmills/config.xml"  
+    dest: "{{jenkins_dir}}/users/cmills/config.xml" 
+    owner: jenkins
+    group: jenkins
   notify: restart jenkins
 
 
