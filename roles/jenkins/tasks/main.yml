@@ -25,7 +25,7 @@
 
 - name: Get jenkins default password
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
-  regsiter: admin_pass
+  register: admin_pass
 
 - name: wait 
   wait_for:
@@ -35,6 +35,18 @@
 - name: Copy jenkins config in place
   copy:
     src: jenkins-config
-    dest: /var/lib/jenkins/config.xml
+    dest: "{{jenkins_dir}}/config.xml"
     force: yes
+
+- name: Ensure cmills user directory exists
+  file:
+    path: /var/lib/jenkins/users/cmills
+    state: directory
+
+- name: Copy Cmills user config file in place
+  copy:
+    src: cmillls-config
+    dest: /var/lib/jenkins/cmills/config.xml  
   notify: restart jenkins
+
+
