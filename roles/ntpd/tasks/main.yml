@@ -1,0 +1,6 @@
+---
+# tasks file for ntpd
+- name: Install NTPD
+  package:
+    name: ntpd 
+    state: present
