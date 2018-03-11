@@ -2,5 +2,5 @@
 # tasks file for ntpd
 - name: Install NTPD
   package:
-    name: ntpd 
+    name: ntp 
     state: present
