@@ -38,10 +38,17 @@
 
 - name: construct new jenkins config file step 1
   replace:
-    path: "{{jenkins_dir}}config.xml"
-    regexp: ''
-    replace:
+    path: "{{jenkins_dir}}/config.xml"
+    regexp: '<isSetupComplete>false</isSetupComplete>'
+    replace: '<isSetupComplete>true</isSetupComplete>'
     backup: yes
+
+- name: construct new jenkins config file set state to Running
+  replace:
+    path: "{{jenkins_dir}}/config.xml"
+    regexp: '<name>NEW</name>'
+    replace: '<name>RUNNING</name>'
+    after: '<isSetupComplete>true</isSetupComplete>'
     
 #- name: Copy jenkins config in place
 #  copy:
