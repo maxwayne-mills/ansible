@@ -73,15 +73,12 @@
     mode: 0755
   notify: restart jenkins
 
-- name: Replace admin password to generated ec2_win_password
+- name: Replace admin password to generated admin password
   replace:
     path: "{{ jenkins_dir }}/users/admin/config.xml"
     regexp: '<passwordHash>*</passwordHash>'
-    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }} </passwordHash>''
-
+    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }} </passwordHash>'
 
 - name: Show generated hashed_password
   debug:
     msg: "Hashed password is {{ hashed_password.stdout_lines }}"
-
-
