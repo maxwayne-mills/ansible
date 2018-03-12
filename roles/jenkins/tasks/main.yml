@@ -61,6 +61,6 @@
 
 - name: Show generated hashed_password
   debug:
-    msg: "Hashed password is {{hashed_password}}"
+    msg: "Hashed password is {{hashed_password.stdout_lines}}"
 
 
