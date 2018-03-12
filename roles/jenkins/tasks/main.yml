@@ -24,11 +24,11 @@
     delay: 10
 
 - name: Get jenkins default password
-  shell: cat "{{jenkins_dir}}/secrets/initialAdminPassword"
+  command: cat "{{jenkins_dir}}/secrets/initialAdminPassword"
   register: admin_pass
 
 - name: Generate hashed password
-  command: echo -n 'password{salt}' |sha256sum | tr -d ' ' | tr -d '-'
+  shell: echo -n 'password{salt}' |sha256sum | tr -d ' ' | tr -d '-'
   register: hashed_password
 
 - name: wait 
