@@ -36,14 +36,14 @@
     port: 8080
     delay: 60
 
-- name: construct new jenkins config file step 1
+- name: Modify jenkins config file set state to true
   replace:
     path: "{{ jenkins_dir }}/config.xml"
     regexp: '<isSetupComplete>false</isSetupComplete>'
     replace: '<isSetupComplete>true</isSetupComplete>'
     backup: yes
 
-- name: construct new jenkins config file set state to Running
+- name: Modify new jenkins config file set state to Running
   replace:
     path: "{{ jenkins_dir }}/config.xml"
     regexp: '<name>NEW</name>'
@@ -73,8 +73,15 @@
     mode: 0755
   notify: restart jenkins
 
+- name: Replace admin password to generated ec2_win_password
+  replace:
+    path: "{{ jenkins_dir }}/users/admin/config.xml"
+    regexp: '<passwordHash>*</passwordHash>'
+    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }} </passwordHash>''
+
+
 - name: Show generated hashed_password
   debug:
-    msg: "Hashed password is {{hashed_password.stdout_lines}}"
+    msg: "Hashed password is {{ hashed_password.stdout_lines }}"
 
 
