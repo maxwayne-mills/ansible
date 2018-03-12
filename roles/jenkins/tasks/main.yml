@@ -36,11 +36,18 @@
     port: 8080
     delay: 60
 
-- name: Copy jenkins config in place
-  copy:
-    src: jenkins-config
-    dest: "{{jenkins_dir}}/config.xml"
-    force: yes
+- name: construct new jenkins config file step 1
+  replace:
+    path: "{{jenkins_dir}}config.xml"
+    regexp: ''
+    replace:
+    backup: yes
+    
+#- name: Copy jenkins config in place
+#  copy:
+#    src: jenkins-config
+#    dest: "{{jenkins_dir}}/config.xml"
+#    force: yes
 
 - name: Ensure cmills user directory exists
   file:
