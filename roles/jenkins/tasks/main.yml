@@ -27,6 +27,10 @@
   command: cat "{{jenkins_dir}}/secrets/initialAdminPassword"
   register: admin_pass
 
+- name: Generate hashed password
+  command: echo -n 'password{salt}' |sha256sum | tr -d ' ' | tr -d '-'
+  register: hashed_password
+
 - name: wait 
   wait_for:
     port: 8080
@@ -54,5 +58,9 @@
     group: jenkins
     mode: 0755
   notify: restart jenkins
+
+- name: Show generated hashed_password
+  debug:
+    msg: "Hashed password is {{hashed_password}}"
 
 
