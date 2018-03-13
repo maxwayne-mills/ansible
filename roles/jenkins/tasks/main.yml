@@ -73,11 +73,11 @@
     mode: 0755
   notify: restart jenkins
 
-- name: Replace admin password to generated admin password
+- name: Replace admin password to generated password
   replace:
     path: "{{ jenkins_dir }}/users/admin/config.xml"
     regexp: '<passwordHash>*</passwordHash>'
-    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }} </passwordHash>'
+    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }}</passwordHash>'
 
 - name: Show generated hashed_password
   debug:
