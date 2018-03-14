@@ -1,2 +1,7 @@
 ---
 # handlers file for elasticsearch
+- name: start elasticsearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: true

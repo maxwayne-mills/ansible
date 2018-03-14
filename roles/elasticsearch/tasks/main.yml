@@ -23,3 +23,4 @@
   apt:
     name: elasticsearch
     state: present
+  notify: start elasticsearch
