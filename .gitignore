@@ -9,4 +9,4 @@ hosts
 .molecule/
 molecule
 molecule/\
-.yamlint
+.yamllint
