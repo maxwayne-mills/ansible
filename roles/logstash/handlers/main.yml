@@ -1,2 +1,7 @@
 ---
 # handlers file for logstash
+- name: start logstash
+  service:
+    name: logstash
+    state: started
+    enabled: true
