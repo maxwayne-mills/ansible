@@ -7,3 +7,6 @@ secure.yml
 hosts
 *.molecule*
 .molecule/
+molecule
+molecule/\
+.yamlint
