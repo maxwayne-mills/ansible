@@ -1,0 +1,6 @@
+---
+# handlers file for httpd-domain-setup
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted

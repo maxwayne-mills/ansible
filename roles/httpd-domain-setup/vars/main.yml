@@ -1,0 +1,5 @@
+---
+# vars file for httpd-domain-setup
+web_dir: /var/www
+virt_dir: /etc/apache2/sites-available
+domain_name: becomeonewiththecode.com

@@ -1,0 +1,17 @@
+---
+# tasks file for httpd-domain-setup
+- name: Create domain root directory
+  file:
+    src: "{{ web_dir }}"
+    path: "{{ web_dir }}/{{ domain_name }}"
+    state: directory
+
+- name: Create virtualhost file
+  template:
+    src: domain.j2
+    dest: "{{ virt_dir }}/{{ domain_name }}.conf"
+
+- name: Enable {{ domain_name }}
+  shell: a2ensite "{{ domain_name }}.conf"
+  notify:
+    - restart apache2
