@@ -9,7 +9,7 @@
 - name: Create virtualhost file
   template:
     src: domain.j2
-    dest: "{{ virt_dir }}/{{ domain_name }}.conf"
+    dest: "{{ web_dir }}/{{ domain_name }}.conf"
 
 - name: Enable {{ domain_name }}
   shell: a2ensite "{{ domain_name }}.conf"
