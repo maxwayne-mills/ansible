@@ -20,7 +20,6 @@
   apt:
     name: git
     state: present
-    enabled: true
 
 - name: Checkout {{ domain_name }} from git
   git:
