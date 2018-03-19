@@ -24,7 +24,7 @@
 - name: Checkout {{ domain_name }} from git
   git:
     repo: "{{ repo_dir }}"
-    dest: /tmp/
+    dest: "{{ web_dir }}/{{ domain_name }}"
      
 - name: Mv {{ domain_name }} checkout
   file:
