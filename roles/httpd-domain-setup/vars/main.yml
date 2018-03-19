@@ -2,4 +2,3 @@
 # vars file for httpd-domain-setup
 web_dir: /var/www
 virt_dir: /etc/apache2/sites-available
-repo_dir: https://github.com/clarencemills/becomeonewiththecode.com.git
