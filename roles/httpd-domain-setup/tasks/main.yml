@@ -16,6 +16,12 @@
   notify:
     - restart apache2
 
+- name: Install git
+  apt:
+    name: git
+    state: present
+    enabled: true
+
 - name: Checkout {{ domain_name }} from git
   git:
     repo: "{{ repo_dir }}"
