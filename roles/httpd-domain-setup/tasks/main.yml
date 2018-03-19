@@ -15,3 +15,13 @@
   shell: a2ensite "{{ domain_name }}.conf"
   notify:
     - restart apache2
+
+- name: Checkout {{ domain_name }} from git
+  git:
+    repo: "{{ repo_dir }}"
+    dest: /tmp/
+     
+- name: Mv {{ domain_name }} checkout
+  file:
+    src: "/tmp/{{ domain_name }}/*"
+    dest: "{{ web_dir }}/{{ domain_name }}/"
