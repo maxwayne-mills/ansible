@@ -25,6 +25,8 @@
   git:
     repo: "{{ repo_dir }}"
     dest: "{{ web_dir }}/{{ domain_name }}"
+    bare: yes
+    force: yes
      
 - name: Mv {{ domain_name }} checkout
   file:
