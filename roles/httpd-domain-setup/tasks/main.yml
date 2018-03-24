@@ -24,8 +24,8 @@
 - name: Checkout {{ domain_name }} from git
   git:
     repo: "{{ repo_dir }}"
-    dest: "{{ web_dir }}/{{ domain_name }}/"
-    bare: yes
+    dest: "/tmp"
+    depth: 1
     force: yes
      
 - name: Mv {{ domain_name }} checkout
