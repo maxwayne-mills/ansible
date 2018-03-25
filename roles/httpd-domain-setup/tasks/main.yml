@@ -35,7 +35,7 @@
 - name: Checkout {{ domain_name }} from git
   git:
     repo: "{{ repo_dir }}"
-    dest: "/tmp/"
+    dest: "/tmp/{{ domain_name }}"
     depth: 1
     force: yes
 
