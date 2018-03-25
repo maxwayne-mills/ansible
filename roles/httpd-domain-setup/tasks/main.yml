@@ -52,5 +52,5 @@
 
 - name: Clean up
   file:
-    src: "/tmp/{{domain_name }}"
+    path: "/tmp/{{domain_name }}"
     state: absent
