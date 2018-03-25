@@ -54,4 +54,4 @@ galaxy_info:
   #       Maximum 20 tags per role.
 
 dependencies:
-  - { role: httpd }
+  - { role: httpd tags: [ http_setup ]}
