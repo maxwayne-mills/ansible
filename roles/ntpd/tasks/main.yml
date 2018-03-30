@@ -1,7 +1,7 @@
 ---
 # tasks file for ntpd
 - name: Install NTPD
-  package:
+  apt:
     name: ntp 
     state: present
   tags:
