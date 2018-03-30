@@ -3,4 +3,4 @@
   become: true
   gather_facts: False
   roles:
-    - lentsencrypt
+    - letsencrypt
