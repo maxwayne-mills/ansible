@@ -1,0 +1,17 @@
+---
+# tasks file for letsencrypt
+
+# Install letsencrypt apt_repository
+- name: Install let's encrypt apt repository
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Update system
+  apt:
+   update_cache: yes
+
+- name: Install let's encrypt certbot
+  apt:
+    name: python-certbot-apache
+    state: present
+
