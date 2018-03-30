@@ -4,3 +4,12 @@
   package:
     name: ntp 
     state: present
+  tags:
+    - install_ntpd
+
+- name: Install ntp.conf file
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+  tags:
+    - install_ntp_conf

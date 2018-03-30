@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+
+driftfile /var/lib/ntp/ntp.drift
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+# Specify one or more NTP servers.
+
+# Use servers from the NTP Pool Project. 
+{% for item in ntp_servers %}
+server {{ item }}
+{% endfor %}
+
+# Use Ubuntu's ntp server as a fallback
+pool ntp.ubuntu.com
