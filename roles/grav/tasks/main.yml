@@ -9,14 +9,29 @@
    name: "{{ item }}"
   with_items: 
     - "{{ grav_dependencies }}"
+  tags:
+    - install_dependencies
+
+- name: Instal Utility applications
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - "{{ utilities }}"
+  tags:
+    - install_utilities
 
 - name: Download Grav core admin
   get_url:
     url: "{{ grav_package }}"
     dest: /tmp/grav-admin.zip
+  tags:
+    - download_grav
 
-- name: Install Grav
+- name: Install Grav to {{ domain_name }}
   unarchive:
     src: /tmp/grav-admin.zip
     dest: "/var/www/{{ domain_name }}"
     remote_src: yes
+  tags:
+    - install_grav
+  
