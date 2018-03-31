@@ -5,8 +5,9 @@
 add-publickey-to-digitalocean.yml
 secure.yml
 hosts
-*.molecule*
-.molecule/
-molecule
-molecule/\
-\.yamllint
+*\*\*\*\.molecule
+*.molecule/
+molecule\.molecule
+*\.yamllint
+.pytest_cache
+.yamllint
