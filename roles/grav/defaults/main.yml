@@ -7,6 +7,9 @@ grav_dependencies:
  - php-zip
  - php-mbstring
  - php-xml
+ - php56-php-mbstring.x86_64
+ - php56-php-gd.x86_64
+ - php-xml.x86_64
 
 grav_package: https://getgrav.org/download/core/grav-admin/1.4.2
 
