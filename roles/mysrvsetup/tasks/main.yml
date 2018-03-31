@@ -1,5 +1,0 @@
----
- - name: Add cmills
-   user: name=cmills comment=cmills shell=/bin/bash comment="Admin user" groups=root state=present
- - authorized_key: user=cmills key="{{ lookup('file', '/home/oss/.ssh/id_rsa.pub') }}"
-   ignore_errors: true
