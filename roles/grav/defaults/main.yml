@@ -1,0 +1,11 @@
+---
+# defaults file for grav
+grav_dependencies:
+ - php-fpm
+ - php-gd
+ - php-curl
+ - php-zip
+ - php-mbstring
+ - php-xml
+
+grav_package: https://getgrav.org/download/core/grav-admin/1.4.2

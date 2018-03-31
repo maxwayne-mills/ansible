@@ -1,0 +1,22 @@
+---
+# tasks file for grav
+- name: Update packages
+  apt:
+    update_cache: yes
+
+- name: Install GRAV dependencies
+  apt:
+   name: "{{ item }}"
+  with_items: 
+    - "{{ grav_dependencies }}"
+
+- name: Download Grav core admin
+  get_url:
+    url: "{{ grav_package }}"
+    dest: /tmp/grav-admin.zip
+
+- name: Install Grav
+  unarchive:
+    src: /tmp/grav-admin.zip
+    dest: /var/www/millsresidence/
+    remote_src: yes
