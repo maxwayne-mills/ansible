@@ -34,4 +34,10 @@
     remote_src: yes
   tags:
     - install_grav
+
+- name: Enable mod_rewrite
+  apache2_module:
+    name: rewrite
+    state: present
+  notify: restart apache
   
