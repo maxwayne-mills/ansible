@@ -1,7 +1,5 @@
 ---
 # tasks file for ntpd
-- name: Disable timesyncd
-  command: timedatectl set-ntp no
 
 - name: Install NTPD
   apt:
