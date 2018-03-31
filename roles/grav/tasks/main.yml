@@ -4,7 +4,7 @@
   apt:
     update_cache: yes
 
-- name: Install GRAV dependencies
+- name: Install Grav dependencies
   apt:
    name: "{{ item }}"
   with_items: 
