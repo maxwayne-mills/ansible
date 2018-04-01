@@ -35,9 +35,18 @@
   tags:
     - install_grav
 
-- name: Enable mod_rewrite
+- name: Grant access to web server user
+  file:
+  path: "/var/www/{{ domain_name }}"
+  state: directory
+  recurse: yes
+  mode: 0664
+
+- name: Enable apache modules
   apache2_module:
     name: "{{ http_modules }}"
     state: present
   notify: restart apache
+
+
   
