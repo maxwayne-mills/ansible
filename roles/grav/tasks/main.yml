@@ -37,10 +37,10 @@
 
 - name: Grant access to web server user
   file:
-  path: "/var/www/{{ domain_name }}"
-  state: directory
-  recurse: yes
-  mode: 0664
+    path: "/var/www/{{ domain_name }}"
+    state: directory
+    recurse: yes
+    mode: 0664
 
 - name: Enable apache modules
   apache2_module:
