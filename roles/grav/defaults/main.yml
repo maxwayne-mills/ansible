@@ -13,3 +13,7 @@ grav_package: https://getgrav.org/download/core/grav-admin/1.4.2
 
 utilities:
  - unzip
+
+http_modules:
+ - rewrite
+ - ssl
