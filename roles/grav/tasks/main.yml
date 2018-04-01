@@ -37,7 +37,7 @@
 
 - name: Enable mod_rewrite
   apache2_module:
-    name: rewrite
+    name: "{{ http_modules }}"
     state: present
   notify: restart apache
   
