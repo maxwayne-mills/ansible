@@ -40,6 +40,7 @@
     path: "/var/www/{{ domain_name }}"
     state: directory
     recurse: yes
+    group: www-data
     mode: 0664
 
 - name: Enable apache modules
