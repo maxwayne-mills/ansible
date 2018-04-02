@@ -6,6 +6,7 @@ grav_dependencies:
  - php-curl
  - php-zip
  - php-xml
+ - php-zip
  - php-mbstring
  - php7.2-mbstring
 
