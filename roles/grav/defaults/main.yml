@@ -1,14 +1,18 @@
 ---
 # defaults file for grav
 grav_dependencies:
- - php-fpm
- - php-gd
- - php-curl
- - php-zip
- - php-xml
- - php-zip
- - php-mbstring
+ - php7.2
+ - libapache2-mod-php7.2
+ - php7.2-common
  - php7.2-mbstring
+ - php7.2-xmlrpc
+ - php7.2-soap
+ - php7.2-gd
+ - php7.2-xml
+ - php7.2-cli
+ - php7.2-curl
+ - php7.2-zip
+ - php-fpm
 
 grav_package: https://getgrav.org/download/core/grav-admin/1.4.2
 
