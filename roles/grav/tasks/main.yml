@@ -35,7 +35,13 @@
   tags:
     - install_grav
 
-- name: Grant access to web server user
+- name: Enable apache modules
+  apache2_module:
+    name: "{{ http_modules }}"
+    state: present
+  notify: restart apache
+
+- name: Grant access to web server user www-data
   command: find "/var/www/{{ domain_name }}" -type f | xargs chmod 664
   tags:
     - grav_permissions
@@ -54,9 +60,3 @@
   command: cd "/var/www/{{ domain_name }}" && umask 0002
   tags:
     - grav_permissions
-
-- name: Enable apache modules
-  apache2_module:
-    name: "{{ http_modules }}"
-    state: present
-  notify: restart apache
