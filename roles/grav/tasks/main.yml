@@ -36,22 +36,22 @@
     - install_grav
 
 - name: Grant access to web server user
-  command: find "/var/www/{{ domain_name }}/" -type f | xargs chmod 664
+  command: find "/var/www/{{ domain_name }}" -type f | xargs chmod 664
   tags:
     - grav_permissions
 
 - name: Grant access to web server user
-  command: find "/var/www/{{ domain_name }}/" -type d | xargs chmod 775
+  command: find "/var/www/{{ domain_name }}" -type d | xargs chmod 775
   tags:
     - grav_permissions
 
 - name: Grant access to web server user
-  command: find "/var/www/{{ domain_name }}/" -type d | xargs chmod +s
+  command: find "/var/www/{{ domain_name }}" -type d | xargs chmod +s
   tags:
     - grav_permissions
 
 - name: Grant access to web server
-  command: cd "/var/www/{{ domain_name }}/" && umask 0002
+  command: cd "/var/www/{{ domain_name }}" && umask 0002
   tags:
     - grav_permissions
 
@@ -60,6 +60,3 @@
     name: "{{ http_modules }}"
     state: present
   notify: restart apache
-
-
-  
