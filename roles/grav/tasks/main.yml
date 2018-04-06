@@ -36,9 +36,9 @@
     - install_grav
 
 - name: Enable apache modules
-  apache2_module:
-    name: "{{ http_modules }}"
-    state: present
+  shell: a2enmod "{{ item }}"
+  with_items: 
+    - "{{ http_modules }}"
   notify: restart apache
 
 - name: Grant access to web server user www-data
