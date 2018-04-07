@@ -56,7 +56,10 @@
     - grav_permissions
 
 - name: Change file permissions on {{ domain_name }} to 0755
-  shell: chmod -R 755 "/var/ww/{{ domain_name }}/grav-admin"
+  file: 
+    path: "/var/www/{{ domain_name }}/grav-admin"
+    mode: 0755
+    recurse: yes
   tags:
     - grav_permissions
   
