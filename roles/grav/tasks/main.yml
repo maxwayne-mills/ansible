@@ -41,17 +41,23 @@
     - "{{ http_modules }}"
   notify: restart apache
 
-- name: Grant access to web server user www-data
+- name: Change domain {{ domain_name }} ownership to www-data
+  file:
+    path: "/var/www/{{ domain_name }}"
+    owner: www-data
+    group: www-data
+
+- name: Change file permissions to 664
   shell: find "/var/www/{{ domain_name }}" -type f | xargs chmod 664
   tags:
     - grav_permissions
 
-- name: Grant access to web server user
+- name: Change directory permission to 0755
   shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod 775
   tags:
     - grav_permissions
 
-- name: Grant access to web server user
+- name: Ensure secure file permission.
   shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod +s
   tags:
     - grav_permissions
