@@ -47,7 +47,7 @@
     - grav_permissions
 
 - name: Change file permissions to 664
-  shell: find "/var/www/{{ domain_name }}" -type f | xargs chmod 0664
+  command: find "/var/www/{{ domain_name }}" -type f | xargs chmod 0664
   tags:
     - grav_permissions
 
@@ -66,7 +66,7 @@
   tags:
     - grav_permissions
 
-- name: Template out virtual host file
+- name: Template virtual host file
   template:
     src: virtualhost.conf
     dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
