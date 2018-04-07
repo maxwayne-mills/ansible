@@ -24,3 +24,5 @@ http_modules:
  - ssl
  - proxy 
  - proxy_fcgi
+
+certbot_httpd: apache
