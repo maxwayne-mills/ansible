@@ -64,6 +64,8 @@
 - name: Template out virtualhost file
   template:
     src: virtualhost.conf
-    path: "/etc/apache2/sites-available/{{ domain_name }}.conf"
+    dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
   notify:
     - restart apache
+  tags:
+    - install_conf_file
