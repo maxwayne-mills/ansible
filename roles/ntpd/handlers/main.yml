@@ -1,2 +1,12 @@
 ---
 # handlers file for ntpd
+- name: start ntp
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+    
+- name: restart ntpd
+  service:
+    name: ntp
+    state: restarted
