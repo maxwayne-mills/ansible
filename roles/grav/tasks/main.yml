@@ -27,13 +27,22 @@
   tags:
     - download_grav
 
-- name: Install Grav to {{ domain_name }}
+- name: Install Grav to {{ domain_name }} directory
   unarchive:
     src: /tmp/grav-admin.zip
     dest: "/var/www/{{ domain_name }}"
     remote_src: yes
   tags:
     - install_grav
+
+- name: Template virtual host file to include grav
+  template:
+    src: virtualhost.conf
+    dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
+  notify:
+    - restart apache
+  tags:
+    - install_conf_file
 
 - name: Enable apache modules
   shell: a2enmod "{{ item }}"
@@ -46,31 +55,8 @@
   tags:
     - grav_permissions
 
-- name: Change file permissions to 664
-  command: find "/var/www/{{ domain_name }}" -type f | xargs chmod 0664
-  tags:
-    - grav_permissions
-
-- name: Change directory permission to 0755
-  shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod 0775
-  tags:
-    - grav_permissions
-
-- name: Ensure secure file permission.
-  shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod +s
-  tags:
-    - grav_permissions
-
 - name: Set umask to 0002
   shell: cd "/var/www/{{ domain_name }}" && umask 0002
   tags:
     - grav_permissions
 
-- name: Template virtual host file
-  template:
-    src: virtualhost.conf
-    dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
-  notify:
-    - restart apache
-  tags:
-    - install_conf_file
