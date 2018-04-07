@@ -46,6 +46,8 @@
     path: "/var/www/{{ domain_name }}"
     owner: www-data
     group: www-data
+  tags:
+    - grav_permissions
 
 - name: Change file permissions to 664
   shell: find "/var/www/{{ domain_name }}" -type f | xargs chmod 664
