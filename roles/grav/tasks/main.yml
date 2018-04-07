@@ -47,12 +47,12 @@
     - grav_permissions
 
 - name: Change file permissions to 664
-  shell: find "/var/www/{{ domain_name }}" -type f | xargs chmod 664
+  shell: find "/var/www/{{ domain_name }}" -type f | xargs chmod 0664
   tags:
     - grav_permissions
 
 - name: Change directory permission to 0755
-  shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod 775
+  shell: find "/var/www/{{ domain_name }}" -type d | xargs chmod 0775
   tags:
     - grav_permissions
 
