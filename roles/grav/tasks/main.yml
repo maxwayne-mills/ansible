@@ -43,9 +43,10 @@
 
 - name: Change domain {{ domain_name }} ownership to www-data
   file:
-    path: "/var/www/{{ domain_name }}"
+    path: "/var/www/{{ domain_name }}/"
     owner: www-data
     group: www-data
+    state: directory
     recurse: yes
   tags:
     - grav_permissions
