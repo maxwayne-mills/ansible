@@ -22,3 +22,5 @@ utilities:
 http_modules:
  - rewrite
  - ssl
+ - proxy 
+ - proxy_fcgi
