@@ -72,3 +72,5 @@
   shell: certbot "--{{ module_name }}" -m "admin@{{ domain_name }} -d "{{ domain_name }}" -d "www.{{ domain_name }}"
   tags:
     - enable_cert
+  notify:
+    - restart apache
