@@ -56,3 +56,4 @@ galaxy_info:
 dependencies:
 - { role: httpd }
 - { role: httpd-domain-setup }
+- { role: letsencrypt }
