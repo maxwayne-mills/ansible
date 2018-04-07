@@ -5,13 +5,19 @@
 - name: Install let's encrypt apt repository
   apt_repository:
     repo: ppa:certbot/certbot
+  tags:
+    - install_certbot
 
 - name: Update system
   apt:
    update_cache: yes
+  tags:
+    - install_certbot
 
 - name: Install let's encrypt certbot
   apt:
     name: python-certbot-apache
     state: present
+  tags: 
+    - install_certbot
 
