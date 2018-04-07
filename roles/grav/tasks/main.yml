@@ -46,6 +46,7 @@
     path: "/var/www/{{ domain_name }}"
     owner: www-data
     group: www-data
+    recurse: yes
   tags:
     - grav_permissions
 
