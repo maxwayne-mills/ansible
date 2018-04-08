@@ -2,6 +2,8 @@
 # defaults file for grav
 domain_name: html  # apache2 default domain.
 
+certbot_httpd: apache
+
 grav_dependencies:
  - php7.2
  - libapache2-mod-php7.2
