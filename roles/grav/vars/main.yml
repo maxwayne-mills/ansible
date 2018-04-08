@@ -1,2 +1,7 @@
 ---
 # vars file for grav
+certbot_httpd: apache
+certbot_user: cmills
+certbot_user_email: cmills@opensitesolutions.com
+certbot_user_fullname: "Clarence Mills"
+certbot_user_password: T3stuser
