@@ -1,5 +1,7 @@
 ---
 # defaults file for grav
+domain_name: html  # apache2 default domain.
+
 grav_dependencies:
  - php7.2
  - libapache2-mod-php7.2
@@ -24,5 +26,3 @@ http_modules:
  - ssl
  - proxy 
  - proxy_fcgi
-
-certbot_httpd: apache
