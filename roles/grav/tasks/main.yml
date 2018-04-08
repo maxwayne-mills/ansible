@@ -27,7 +27,7 @@
   tags:
     - download_grav
 
-- name: Install Grav to {{ domain_name }} directory
+- name: Install Grav to /var/www/{{ domain_name }} directory
   unarchive:
     src: /tmp/grav-admin.zip
     dest: "/var/www/{{ domain_name }}"
@@ -35,7 +35,7 @@
   tags:
     - install_grav
 
-- name: Template virtual host file to include grav
+- name: Template virtual host file to grav to proxy and redirects
   template:
     src: virtualhost.conf
     dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
@@ -76,6 +76,6 @@
     - restart apache
 
 - name: Create Grav default user
-  shell: cd "/var/www/{{ domain_name }}/grav-admin" && bin/plugin login newuser -u cmills -e cmills@opensitesolutions.com -P b -N "Clarence Mills" -t "Administrator" -p T3stuser
+  shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/plugin login newuser -u {{ certbot_user }} -e {{ certbot_user_email }}  -P b -N {{ certbot_user_fullname }} -t "Administrator" -p {{ certbot_user_password }}"
   tags:
     - create_grav_user
