@@ -74,3 +74,8 @@
     - enable_cert
   notify:
     - restart apache
+
+- name: Create Grav default user
+  shell: cd "/var/www/{{ domain_name }}/grav-admin" && bin/plugin login newuser -u cmills -e cmills@opensitesolutions.com -P b -N "Clarence Mills" -t "Administrator" -p T3stuser
+  tags:
+    - create_grav_user
