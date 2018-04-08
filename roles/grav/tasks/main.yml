@@ -77,7 +77,6 @@
   when: skip is defined and skip == 'yes'
 
 - name: Create Grav default user
-  shell: "bin/plugin login new-user -u {{ grav_user }} -e {{ grav_user_email }}  -Pb -N {{ grav_user_fullname }} -t {{ grav_title }} -p {{ grav_user_password }}"
-  chdir: "/var/www/{{ domain_name }}/grav-admin"
+  shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/plugin login new-user -u {{ grav_user }} -e {{ grav_user_email }}  -Pb -N {{ grav_user_fullname }} -t {{ grav_title }} -p {{ grav_user_password }}"
   tags:
     - create_grav_user
