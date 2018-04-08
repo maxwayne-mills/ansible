@@ -30,6 +30,6 @@ http_modules:
  - proxy 
  - proxy_fcgi
 
-theme_lists:
+theme_list:
   - g5_helium
   - bootgrav
