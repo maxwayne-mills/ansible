@@ -74,7 +74,7 @@
     - enable_cert
   notify:
     - restart apache
-  when: skip == {{ skip }}
+  when: skip == skip
 
 - name: Create Grav default user
   shell: "bin/plugin login newuser -u {{ grav_user }} -e {{ grav_user_email }}  -Pb -N {{ grav_user_fullname }} -t {{ grav_title }} -p {{ grav_user_password }}"
