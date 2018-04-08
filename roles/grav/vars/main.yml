@@ -6,3 +6,10 @@ grav_user_email: cmills@opensitesolutions.com
 grav_user_fullname: "\"Clarence Mills\""
 grav_user_password: T3stuser
 grav_title: "\"Site Admin\""
+
+theme_list:
+  - g5_helium
+  - bootgrav
+
+grav_plugins:
+  - gantry5

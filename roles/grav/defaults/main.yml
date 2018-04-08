@@ -29,7 +29,3 @@ http_modules:
  - ssl
  - proxy 
  - proxy_fcgi
-
-theme_list:
-  - g5_helium
-  - bootgrav
