@@ -30,10 +30,6 @@
   command: cat "{{jenkins_dir}}/secrets/initialAdminPassword"
   register: admin_pass
 
-- name: Generate hashed password
-  shell: echo -n 'password{salt}' |sha256sum | tr -d ' ' | tr -d '-'
-  register: hashed_password
-
 - name: wait 
   wait_for:
     port: 8080
@@ -52,35 +48,6 @@
     regexp: '<name>NEW</name>'
     replace: '<name>RUNNING</name>'
     after: '<isSetupComplete>true</isSetupComplete>'
-    
-#- name: Copy jenkins config in place
-#  copy:
-#    src: jenkins-config
-#    dest: "{{jenkins_dir}}/config.xml"
-#    force: yes
-
-- name: Ensure cmills user directory exists
-  file:
-    path: "{{jenkins_dir}}/users/cmills"
-    state: directory
-    owner: jenkins
-    group: jenkins
-    mode: 0755
-
-- name: Copy Cmills user config file in place
-  copy:
-    src: cmills-config
-    dest: "{{jenkins_dir}}/users/cmills/config.xml" 
-    owner: jenkins
-    group: jenkins
-    mode: 0755
-  notify: restart jenkins
-
-- name: Replace admin password to generated password
-  replace:
-    path: "{{ jenkins_dir }}/users/admin/config.xml"
-    regexp: '<passwordHash>*</passwordHash>'
-    replace: '<passwordHash>salt:{{ hashed_password.stdout_lines }}</passwordHash>'
 
 - name: Show generated hashed_password
   debug:
