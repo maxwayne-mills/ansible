@@ -1,7 +1,7 @@
 ---
 - name: Install jenkins key
   apt_key:
-    url: "{{ jekins_key }}"
+    url: "{{ jenkins_key }}"
     state: present
     validate_certs: no
   tags: install_jenkins
