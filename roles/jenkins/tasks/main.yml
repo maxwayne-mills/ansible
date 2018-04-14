@@ -10,13 +10,16 @@
     repo: deb http://pkg.jenkins.io/debian-stable binary/
     state: present
 
-- name: Install package applications default-jre, default-jre-headless, jenkins
+- name: Install jenkins dependencies applications default-jre, default-jre-headless
   package:
     name: "{{item}}"
   with_items:
     - default-jre
     - default-jre-headless
-    - jenkins
+
+- name: Install jenkins {{ jenkins_version }}
+  package:
+    name: jenkins={{ jenkins_version }}
 
 - name: Wait for port 8080
   wait_for:
