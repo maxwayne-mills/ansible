@@ -48,7 +48,3 @@
     regexp: '<name>NEW</name>'
     replace: '<name>RUNNING</name>'
     after: '<isSetupComplete>true</isSetupComplete>'
-
-- name: Show generated hashed_password
-  debug:
-    msg: "Hashed password is {{ hashed_password.stdout_lines }}"
