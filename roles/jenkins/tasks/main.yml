@@ -1,13 +1,14 @@
 ---
 - name: Install jenkins key
   apt_key:
-    url: https://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+    url: "{{ jekins_key }}"
     state: present
     validate_certs: no
+  tags: install_jenkins
 
 - name: Install Debian jenkins repository
   apt_repository:
-    repo: deb http://pkg.jenkins.io/debian-stable binary/
+    repo: "{{ jenkins_repo }}"
     state: present
 
 - name: Install jenkins dependencies applications default-jre, default-jre-headless
@@ -16,24 +17,31 @@
   with_items:
     - default-jre
     - default-jre-headless
+  tags: install_jenkins
 
 - name: Install jenkins {{ jenkins_version }}
   package:
     name: jenkins={{ jenkins_version }}
+  tags: install_jenkins
 
 - name: Wait for port 8080
   wait_for:
     port: 8080
     delay: 10
+  tags: install_jenkins
 
 - name: Get jenkins default password
   command: cat "{{jenkins_dir}}/secrets/initialAdminPassword"
   register: admin_pass
+  tags: 
+    - install_jenkins
+    - get_admin_password
 
 - name: wait 
   wait_for:
     port: 8080
     delay: 60
+  tags: install_jenkins
 
 - name: Modify jenkins config file set state to true
   replace:
@@ -41,6 +49,7 @@
     regexp: '<isSetupComplete>false</isSetupComplete>'
     replace: '<isSetupComplete>true</isSetupComplete>'
     backup: yes
+  tags: install_jenkins
 
 - name: Modify new jenkins config file set state to Running
   replace:
@@ -48,3 +57,4 @@
     regexp: '<name>NEW</name>'
     replace: '<name>RUNNING</name>'
     after: '<isSetupComplete>true</isSetupComplete>'
+  tags: install_jenkins
