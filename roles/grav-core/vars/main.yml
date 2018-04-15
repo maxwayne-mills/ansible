@@ -1,4 +1,5 @@
 ---
 # vars file for grav-core
 domain_name: clarencemills.com
+grav_name: grav-skeleton-
 skeleton_name: clean-blog-site/1.4.2
