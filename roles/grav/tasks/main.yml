@@ -63,7 +63,7 @@
   tags:
     - create_grav_user
 
-- name: Update all plugins automatically 
+- name: Update all plugins to the latest
   shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm update -f -y"
   tags:
     - update_grav
