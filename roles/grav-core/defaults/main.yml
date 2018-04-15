@@ -1,3 +1,3 @@
 ---
 # defaults file for grav-core
-grav-skeletton-site: https://getgrav.org/download/skeletons
+grav_skeleton_site: https://getgrav.org/download/skeletons
