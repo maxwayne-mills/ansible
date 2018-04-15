@@ -1,7 +1,6 @@
 ---
 # defaults file for grav
 domain_name: html  # apache2 default domain.
-skip: yes
 
 certbot_httpd: apache
 
