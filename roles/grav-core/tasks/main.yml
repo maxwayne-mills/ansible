@@ -1,0 +1,15 @@
+---
+# tasks file for grav-core
+- name: Download Grav skeleton {{ skeletion-name }} core 
+  get_url:
+    url: "{{ grav-skeleton-site }}/{{ skeleton-name }}"
+    dest: "/var/www/{{ domain_name }}/tmp"
+
+- name: Install Grav core skeleton {{ skeleton-name }}
+  unarchive:
+    src: "/var/www/{{ domain_name }}/tmp{{ skeleton-name }}"
+    dest: "/var/www/{{ domain_name }}"
+    remote_src: yes
+    owner: www-data
+    group: www-data
+    mode: 0755
