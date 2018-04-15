@@ -4,7 +4,7 @@
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
     dest: "/var/www/{{ domain_name }}/{{ skeleton_name }}.zip"
-    register: grav_name
+  tags: download_grav
 
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
@@ -14,3 +14,4 @@
     owner: www-data
     group: www-data
     mode: 0755
+  tags: install_grav
