@@ -3,7 +3,7 @@
 - name: Download Grav skeleton {{ skeleton_name }} core 
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
-    dest: "/var/www/{{ domain_name }}/tmp"
+    dest: "/var/www/{{ domain_name }}/tmp/"
 
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
