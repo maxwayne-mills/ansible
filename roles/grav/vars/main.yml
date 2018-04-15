@@ -13,3 +13,5 @@ theme_list:
 
 grav_plugins:
   - gantry5
+
+skip: yes
