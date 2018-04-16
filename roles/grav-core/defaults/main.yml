@@ -2,3 +2,23 @@
 # defaults file for grav-core
 apache_web_path: /var/www
 grav_skeleton_site: https://getgrav.org/download/skeletons
+
+grav_dependencies:
+ - php7.2
+ - libapache2-mod-php7.2
+ - php7.2-common
+ - php7.2-mbstring
+ - php7.2-xmlrpc
+ - php7.2-soap
+ - php7.2-gd
+ - php7.2-xml
+ - php7.2-cli
+ - php7.2-curl
+ - php7.2-zip
+ - php-fpm
+
+ http_modules:
+ - rewrite
+ - ssl
+ - proxy 
+ - proxy_fcgi

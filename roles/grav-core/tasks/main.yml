@@ -1,5 +1,19 @@
 ---
 # tasks file for grav-core
+- name: Install Grav dependencies
+  apt:
+   name: "{{ item }}"
+  with_items: 
+    - "{{ grav_dependencies }}"
+  tags:
+    - install_dependencies
+
+- name: Enable apache modules
+  shell: a2enmod "{{ item }}"
+  with_items: 
+    - "{{ http_modules }}"
+  notify: restart apache
+
 - name: Download Grav skeleton {{ skeleton_name }} core
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
