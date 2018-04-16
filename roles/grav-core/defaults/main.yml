@@ -17,8 +17,8 @@ grav_dependencies:
   - php7.2-zip
   - php-fpm
 
- http_modules:
-   - rewrite
-   - ssl
-   - proxy 
-   - proxy_fcgi
+http_modules:
+  - rewrite
+  - ssl
+  - proxy 
+  - proxy_fcgi
