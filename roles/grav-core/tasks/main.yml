@@ -13,7 +13,7 @@
 
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
-    src: "/var/www/{{ domain_name }}/{{ skeloton_name }}"
+    src: "/var/www/{{ domain_name }}/{{ skeleton_name }}"
     dest: "/var/www/{{ domain_name }}"
     remote_src: "yes"
     owner: www-data
