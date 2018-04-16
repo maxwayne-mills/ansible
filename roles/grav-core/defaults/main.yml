@@ -1,3 +1,4 @@
 ---
 # defaults file for grav-core
+apache_web_path: /var/www
 grav_skeleton_site: https://getgrav.org/download/skeletons

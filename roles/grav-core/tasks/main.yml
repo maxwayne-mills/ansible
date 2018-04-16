@@ -3,18 +3,18 @@
 - name: Download Grav skeleton {{ skeleton_name }} core
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
-    dest: "/var/www/{{ domain_name }}/"
+    dest: "{{ apache_web_path }}/{{ domain_name }}/"
   tags: download_grav
-  register: grav_download
+  register: grav_download_filename
 
 - name: Obtain download filename
   debug:
-    msg: grav_download.path
+    msg: "{{ grav_download_filename.dest }}"
 
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
-    src: "/var/www/{{ domain_name }}/{{ skeleton_name }}"
-    dest: "/var/www/{{ domain_name }}"
+    src: "{{ grav_download_filename.dest }}"
+    dest: "{{ apache_web_path }}/{{ domain_name }}"
     remote_src: "yes"
     owner: www-data
     group: www-data
