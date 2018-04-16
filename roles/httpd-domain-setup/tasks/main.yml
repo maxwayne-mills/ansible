@@ -22,10 +22,12 @@
   tags:
     - virt_setup
 
-- name: Install git
+- name: Install web utilities
   apt:
-    name: git
+    name: "{{ item }}"
     state: present
+  with_items:
+    - "{{ web_utilities }}"
 
 - name: Ensure current domain directory does not exist
   stat:
