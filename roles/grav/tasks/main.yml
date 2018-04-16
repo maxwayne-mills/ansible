@@ -68,7 +68,7 @@
   tags:
     - update_grav
 
-- name: Install Grav plugings
+- name: Install Grav plugins
   shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm -y install {{ item }}"
   with_items:
     - "{{ grav_plugins }}"
