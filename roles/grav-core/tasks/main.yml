@@ -14,6 +14,15 @@
     - "{{ http_modules }}"
   notify: restart apache
 
+- name: Template virtual host file to grav to proxy and redirects
+  template:
+    src: virtualhost.conf
+    dest: "/etc/apache2/sites-available/{{ domain_name }}.conf"
+  notify:
+    - restart apache
+  tags:
+    - install_conf_file
+
 - name: Download Grav skeleton {{ skeleton_name }} core
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
