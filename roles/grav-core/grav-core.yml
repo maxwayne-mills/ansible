@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  become: true
-  gather_facts: False
+  become: "true"
+  gather_facts: "False"
   roles:
     - grav-core
