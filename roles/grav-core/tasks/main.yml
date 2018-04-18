@@ -65,7 +65,7 @@
   shell: |
     cp -Rp * ../
     cp -Rp .* ../
-  chdir: "{{ grav_skel_dir.stdout_lines }}"
+    chdir: "{{ grav_skel_dir.stdout_lines }}"
   tags:
     - move
 
