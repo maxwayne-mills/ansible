@@ -30,7 +30,10 @@
   tags: download_grav
   register: grav_download_filename
 
-- name: Obtain download filename
+- debug:
+    var: grav_download_filename
+
+- name: Obtain downloaded filename
   debug:
     msg: "{{ grav_download_filename.dest }}"
 
@@ -43,3 +46,4 @@
     group: www-data
     mode: 0755
   tags: install_grav
+
