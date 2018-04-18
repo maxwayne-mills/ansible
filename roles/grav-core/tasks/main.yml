@@ -55,7 +55,7 @@
     - install_grav
 
 - name: test move 
-  shell: cp -Rp *.*" "{{ apache_web_path }}/{{ domain_name }}/"
+  shell: cp -Rp *.* "{{ apache_web_path }}/{{ domain_name }}"
   chdir: "{{ apache_web_path }}/{{ domain_name }}/{{ dir_name }}"
   tags:
    - move
