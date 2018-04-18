@@ -31,12 +31,15 @@
   register: grav_download_filename
 
 - debug:
-    var: grav_download_filename
+    var: grav_download_filename destination
 
 - name: Obtain downloaded filename
   debug:
     msg: "{{ grav_download_filename.dest }}"
 
+- set_fact: get directory name
+    dir_name: "{{ grav_download_filename.dest | basename }}"
+  
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
     src: "{{ grav_download_filename.dest }}"
