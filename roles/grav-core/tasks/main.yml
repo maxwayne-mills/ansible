@@ -30,20 +30,6 @@
   register: grav_download_filename
   tags: 
     - download_grav
-
-- debug:
-    var: grav_download_filename destination
-
-- name: Obtain downloaded filename
-  debug:
-    msg: "{{ grav_download_filename.dest }}"
-  tags:
-    - get_dir_dest
-
-- set_fact:
-    dir_name: "{{ grav_download_filename.dest | basename }}"
-  tags:
-    - get_file_name
   
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
@@ -68,8 +54,8 @@
   tags:
     - install_grav
 
-#- name: test move 
-#  shell: mv "{{ apache_web_path }}/{{ domain_name }}/{{ #grav_skel_dir.stdout_lines }}\*.*" "{{ apache_web_path }}/{{ domain_name }}/"
-#  tags:
-#    - move
+- name: test move 
+  shell: mv "{{ apache_web_path }}/{{ domain_name }}/{{ dir_name }}/*.*" "{{ apache_web_path }}/{{ domain_name }}/"
+  tags:
+   - move
 
