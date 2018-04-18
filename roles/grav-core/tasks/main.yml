@@ -44,12 +44,6 @@
     dir_name: "{{ grav_download_filename.dest | basename }}"
   tags:
     - get_file_name
-
-- name: Get directory name from set_fact
-  shell: basename "{{ grav_download_filename.dest }}" | awk 'BEGIN { FS = "." }; {print $1}'
-  register: grav_skel_dir
-  tags:
-    - get_dir_name
   
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
@@ -64,8 +58,13 @@
     - install_grav
   register: archive_list
 
+- set_fact:
+    dir_name: "{{ archive_list.files[0] }}"
+  tags:
+    - get_file_name
+
 - debug:
-    var: archive_list
+    var: archive_list.files[0]
   tags:
     - install_grav
 
