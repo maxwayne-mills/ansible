@@ -37,7 +37,7 @@
   debug:
     msg: "{{ grav_download_filename.dest }}"
 
-- set_fact: get directory name
+- set_fact:
     dir_name: "{{ grav_download_filename.dest | basename }}"
   
 - name: Install Grav core skeleton {{ skeleton_name }}
