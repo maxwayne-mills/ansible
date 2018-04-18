@@ -65,7 +65,7 @@
   register: archive_list
 
 - debug:
-    msg: var=archive_list
+    msg: archive_list
   tags:
     - install_grav
 
