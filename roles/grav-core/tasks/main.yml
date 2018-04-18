@@ -56,6 +56,7 @@
 
 - name: test move 
   shell: cp -Rp *.* "{{ apache_web_path }}/{{ domain_name }}"
+  args:
     chdir: "{{ apache_web_path }}/{{ domain_name }}/{{ dir_name }}"
   tags:
    - move
