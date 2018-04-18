@@ -27,8 +27,9 @@
   get_url:
     url: "{{ grav_skeleton_site }}/{{ skeleton_name }}"
     dest: "{{ apache_web_path }}/{{ domain_name }}/"
-  tags: download_grav
   register: grav_download_filename
+  tags: 
+    - download_grav
 
 - debug:
     var: grav_download_filename destination
@@ -36,9 +37,13 @@
 - name: Obtain downloaded filename
   debug:
     msg: "{{ grav_download_filename.dest }}"
+  tags:
+    - get_dir_dest
 
 - set_fact:
     dir_name: "{{ grav_download_filename.dest | basename }}"
+  tags:
+    - get_dir_name
   
 - name: Install Grav core skeleton {{ skeleton_name }}
   unarchive:
