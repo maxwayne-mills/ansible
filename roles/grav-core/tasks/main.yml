@@ -59,10 +59,15 @@
     owner: www-data
     group: www-data
     mode: 0755
+    list_files: "True"
   tags: install_grav
+  register: archive_list
 
-- name: test move 
-  shell: mv "{{ apache_web_path }}/{{ domain_name }}/{{ grav_skel_dir.stdout_lines }}\*.*" "{{ apache_web_path }}/{{ domain_name }}/"
-  tags:
-    - move
+- debug:
+    msg: var=archive_list
+
+#- name: test move 
+#  shell: mv "{{ apache_web_path }}/{{ domain_name }}/{{ #grav_skel_dir.stdout_lines }}\*.*" "{{ apache_web_path }}/{{ domain_name }}/"
+#  tags:
+#    - move
 
