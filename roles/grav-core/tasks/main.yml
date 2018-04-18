@@ -47,6 +47,7 @@
 
 - name: Get directory name from set_fact
   shell: basename "{{ grav_download_filename.dest }}" | awk 'BEGIN { FS = "." }; {print $1}'
+  register: grav_skel_dir
   tags:
     - get_dir_name
   
@@ -59,4 +60,12 @@
     group: www-data
     mode: 0755
   tags: install_grav
+
+- name: test move 
+  shell: |
+    cp -Rp * ../
+    cp -Rp .* ../
+  chdir: "{{ grav_skel_dir.stdout_lines }}"
+  tags:
+    - move
 
