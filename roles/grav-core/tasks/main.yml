@@ -43,6 +43,11 @@
 - set_fact:
     dir_name: "{{ grav_download_filename.dest | basename }}"
   tags:
+    - get_file_name
+
+- name: Get directory name from set_fact
+  shell: basename {{ dir_name }}
+  tags:
     - get_dir_name
   
 - name: Install Grav core skeleton {{ skeleton_name }}
