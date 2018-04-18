@@ -56,8 +56,7 @@
 
 - name: test move 
   shell: |
-    mv *.* "{{ apache_web_path }}/{{ domain_name }}"
-    mv .*  "{{ apache_web_path }}/{{ domain_name }}"
+    mv * "{{ apache_web_path }}/{{ domain_name }}"
   args:
     chdir: "{{ apache_web_path }}/{{ domain_name }}/{{ dir_name }}"
   tags:
