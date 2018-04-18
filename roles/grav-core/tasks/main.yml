@@ -46,7 +46,7 @@
     - get_file_name
 
 - name: Get directory name from set_fact
-  shell: basename {{ grav_download_filename.dest }}" | awk 'BEGIN { FS = "." }; {print $1}'
+  shell: basename "{{ grav_download_filename.dest }}" | awk 'BEGIN { FS = "." }; {print $1}'
   tags:
     - get_dir_name
   
