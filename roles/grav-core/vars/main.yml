@@ -2,4 +2,5 @@
 # vars file for grav-core
 domain_name: clarencemills.com
 grav_name: skeleton.zip
-skeleton_name: clean-blog-site/1.4.2
+#skeleton_name: clean-blog-site/1.4.2
+skeleton_name: halcyon-site/1.0.0
