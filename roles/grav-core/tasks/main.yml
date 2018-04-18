@@ -63,9 +63,8 @@
 
 - name: test move 
   shell: |
-    cp -Rp * "{{ apache_web_path }}/{{ domain_name }}"
-    cp -Rp .* "{{ apache_web_path }}/{{ domain_name }}"
-    chdir: "{{ grav_skel_dir.stdout_lines }}"
+    cp -Rp "{{ grav_skel_dir.stdout_lines }}\*" "{{ apache_web_path }}/{{ domain_name }}"
+    cp -Rp "{{ grav_skel_dir.stdout_lines }}\.*"" "{{ apache_web_path }}/{{ domain_name }}"
   tags:
     - move
 
