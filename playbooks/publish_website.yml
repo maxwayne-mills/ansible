@@ -1,12 +1,18 @@
+# pass in variables for server_name and domain_name and repo_name
+
 ---
 - hosts: "{{ server_name }}"  # Change this to the destination server name
   become: "true"
-  remote_user: root
+  remote_user: deployuser
+  vars:
+    - web_dir: /var/www
+    - web_user: www-data
+    - web_group: www-data
   tasks:
   
   - name: Delete remote {{ domain_name}}
     file:
-      path: "/var/www/{{ domain_name }}"
+      path: "{{ web_dir}}{{ domain_name }}"
       state: absent
 
   - name: Download git repository
@@ -14,15 +20,13 @@
       clone: "yes"
       depth: 1
       repo: "{{ repo_name }}"
-      dest: "/var/www/{{ domain_name }}"
+      dest: "{{ web_dir }}{{ domain_name }}"
       force: "yes"
       
-  
-  - name: Correct permission
+  - name: Assign permissions for www-data user
     file:
-      path: "/var/www/{{ domain_name }}"
-      mode: 0775
+      path: "{{ web_dir }}{{ domain_name }}"
       recurse: "yes"
-      owner: www-data
-      group: www-data
+      owner: "{{ web_user }}"
+      group: "{{ web_group }}"
       mode: 0775
