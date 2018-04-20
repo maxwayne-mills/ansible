@@ -9,7 +9,7 @@ grav_title: "\"Site Admin\""
 
 theme_list:
   #- g5_helium
-  - bootgrav
+  #- bootgrav
 
 grav_plugins:
   #- gantry5

@@ -71,18 +71,18 @@
 #- name: Install Grav plugins
  # shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm -y install {{ item }}"
   #with_items:
-   #S - "{{ grav_plugins }}"
+   # - "{{ grav_plugins }}"
   #tags:
    # - grav_plugins
     #- update_grav
 
-- name: Install Grav themes
-  shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm -y install {{ item }}"
-  with_items:
-    - "{{ theme_list }}"
-  tags:
-    - grav_themes
-    - update_grav
+#- name: Install Grav themes
+#  shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm -y install {{ item }}"
+ # with_items:
+  #  - "{{ theme_list }}"
+  #tags:
+  #  - grav_themes
+  #  - update_grav
 
 - name: Change {{ domain_name }} ownership to www-data
   shell: cd "/var/www/{{ domain_name }}" && chown -R www-data:www-data *
