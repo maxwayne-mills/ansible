@@ -28,31 +28,5 @@
     state: present
   with_items:
     - "{{ web_utilities }}"
-
-- name: Ensure current domain directory does not exist
-  stat:
-    path: "/tmp/{{domain_name}}"
-  register: domain_path
-
-- name: remove tmp directory path
-  file:
-    path: "/tmp/{{domain_name }}"
-    state: absent
-  when: domain_path.stat.exists
-  
-- name: Checkout {{ domain_name }} from git
-  git:
-    repo: "{{ repo_dir }}"
-    dest: "/tmp/{{ domain_name }}"
-    depth: 1
-    force: yes
-
-- name: Mv {{ domain_name }} to {{ web_dir }}
-  file:
-    src: "/tmp/{{ domain_name }}/*"
-    dest: "{{ web_dir }}/{{ domain_name }}/"
-
-- name: Clean up
-  file:
-    path: "/tmp/{{domain_name }}"
-    state: absent
+  tags:
+    - install_web_utils
