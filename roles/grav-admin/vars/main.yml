@@ -12,6 +12,6 @@ theme_list:
   - bootgrav
 
 grav_plugins:
-  - gantry5
+  #- gantry5
 
 skip: yes
