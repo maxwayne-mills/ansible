@@ -1,0 +1,28 @@
+---
+- hosts: "{{ server_name }}"  # Change this to the destination server name
+  become: "true"
+  remote_user: root
+  tasks:
+  
+  - name: Delete remote {{ domain_name}}
+    file:
+      path: "/var/www/{{ domain_name }}"
+      state: absent
+
+  - name: Download git repository
+    git:
+      clone: "yes"
+      depth: 1
+      repo: "{{ repo_name }}"
+      dest: "/var/www/{{ domain_name }}"
+      force: "yes"
+      
+  
+  - name: Correct permission
+    file:
+      path: "/var/www/{{ domain_name }}"
+      mode: 0775
+      recurse: "yes"
+      owner: www-data
+      group: www-data
+      mode: 0775
