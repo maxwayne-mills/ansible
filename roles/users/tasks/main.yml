@@ -1,45 +1,30 @@
 ---
 # tasks file for users
 
-- name: Create deployuser
+- name: Add users
   user:
-    name: deployuser
-    comment: "deployment user"
-    shell: /bin/bash
+    name: "{{ item.username }}"
+    comment: "{{ item.full_name }}"
+    shell: "{{ default_shell }}"
     groups: sudo
     state: present
+  with_items:
+    - "{{ users }}"
 
-- name: Create cmills
-  user:
-    name: cmills
-    comment: "Clarence Mills"
-    shell: /bin/bash
-    groups: sudo
-    state: present
-
-- name: Set authorized key for deployuser
+- name: Set authorized keys for users
   authorized_key:
-    user: deployuser
-    key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
-
-- name: Set authorized key for cmills
-  authorized_key:
-    user: cmills
-    key: "{{ lookup('file', '/home/cmills/.ssh/id_rsa.pub') }}"
+    user: "{{ item.username }}"
+    key: "{{ item.key }}"
+  with_items:
+    - "{{ users }}"
 
 - name: Enable deployuser to use sudo without passwords
   template:
-    src: sudo-0.j2
-    dest: /etc/sudoers.d/deployuser
-    owner: root
-    group: root
-    mode: 0600
-
-- name: Enable cmills to use sudo without passwords
-  template:
-    src: sudo-1.j2
-    dest: /etc/sudoers.d/cmills
+    src: sudo.j2
+    dest: "/etc/sudoers.d/{{ item.username }}"
     owner: root
     group: root
     mode: 0600
     validate: '/usr/sbin/visudo -cf %s'
+  with_items:
+     - "{{ users }}"

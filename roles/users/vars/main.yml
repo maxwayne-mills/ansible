@@ -1,2 +1,14 @@
 ---
 # vars file for users
+default_shell: /bin/bash
+users:
+  - clarence:
+    username: cmills
+    full_name: "Clarence Mills"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/32c+ZHLWjMYkgTzfAYUIkPA0BQSnNlad3prPAPyJ1xoaWBfPKprmS2VR202QAsjd2NeDl4PsIi+HfDue709Qag+tu35iUa4Mx9AhX+bXb0mkqKXx31HQVrE1XaO7btAWQzTU+HNPvhMH+G2gmR8tTOISEQ3z60iE4h57PMQOJ2fYtBtzWCu/1wfEnNBzElBcoHuBc5aX/p2Q2+Intv2n2gAMHo3p3/E5jVExn7tGkNozrkpv4FvQAfOa9PgZifWq+l0ALYNlQmuu3XXbe6HjXo5P/JHFVxqoiAV4BnGmY/usLVW1KrB3pqGopxpwLoroA9e8ySWrI0qeoqrNBXSD cmills@cmills-Kudu-Pro"
+  - deployuser:
+    username: deployuser
+    full_name: "OSS Deployment user"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/32c+ZHLWjMYkgTzfAYUIkPA0BQSnNlad3prPAPyJ1xoaWBfPKprmS2VR202QAsjd2NeDl4PsIi+HfDue709Qag+tu35iUa4Mx9AhX+bXb0mkqKXx31HQVrE1XaO7btAWQzTU+HNPvhMH+G2gmR8tTOISEQ3z60iE4h57PMQOJ2fYtBtzWCu/1wfEnNBzElBcoHuBc5aX/p2Q2+Intv2n2gAMHo3p3/E5jVExn7tGkNozrkpv4FvQAfOa9PgZifWq+l0ALYNlQmuu3XXbe6HjXo5P/JHFVxqoiAV4BnGmY/usLVW1KrB3pqGopxpwLoroA9e8ySWrI0qeoqrNBXSD cmills@cmills-Kudu-Pro"
+
+
