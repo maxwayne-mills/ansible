@@ -71,7 +71,7 @@
 #- name: Install Grav plugins
  # shell: "cd /var/www/{{ domain_name }}/grav-admin && bin/gpm -y install {{ item }}"
   #with_items:
-    - "{{ grav_plugins }}"
+   #S - "{{ grav_plugins }}"
   #tags:
    # - grav_plugins
     #- update_grav
