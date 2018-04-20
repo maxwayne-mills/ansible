@@ -8,7 +8,7 @@ grav_user_password: T3stuser
 grav_title: "\"Site Admin\""
 
 theme_list:
-  - g5_helium
+  #- g5_helium
   - bootgrav
 
 grav_plugins:
