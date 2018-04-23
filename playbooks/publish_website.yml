@@ -4,7 +4,7 @@
   become: "true"
   remote_user: deployuser
   vars:
-    - web_dir: /var/www
+    - web_dir: /var/www/
     - web_user: www-data
     - web_group: www-data
   tasks:
