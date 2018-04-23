@@ -18,7 +18,7 @@
   with_items:
     - "{{ users }}"
 
-- name: Enable deployuser to use sudo without passwords
+- name: Enable users to use sudo without passwords
   template:
     src: sudo.j2
     dest: "/etc/sudoers.d/{{ item.username }}"
