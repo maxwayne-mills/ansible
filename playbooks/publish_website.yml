@@ -16,7 +16,7 @@
   
   - name: Delete remote {{ domain_name}}
     file:
-      path: "{{ web_dir}}{{ domain_name }}"
+      path: "{{ web_dir }}{{ domain_name }}"
       state: absent
     tags: 
       - publish
