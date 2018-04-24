@@ -11,11 +11,15 @@
 
   - include_role:
       name: httpd-domain-setup
+    tags:
+      - domain_setup
   
   - name: Delete remote {{ domain_name}}
     file:
       path: "{{ web_dir}}{{ domain_name }}"
       state: absent
+    tags: 
+      - publish
 
   - name: Download git repository
     git:
@@ -24,6 +28,8 @@
       repo: "{{ repo_name }}"
       dest: "{{ web_dir }}{{ domain_name }}"
       force: "yes"
+    tags:
+      - publish
       
   - name: Assign permissions for www-data user
     file:
@@ -32,3 +38,5 @@
       owner: "{{ web_user }}"
       group: "{{ web_group }}"
       mode: 0775
+    tags:
+      - publish
