@@ -2,4 +2,5 @@
 - name: place motd file in place
   file:
     src: motd
-    path: /etc/motd.tail
+    dest: /etc/motd.tail
+    state: file
