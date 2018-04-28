@@ -3,3 +3,4 @@
   file:
     path: motd
     dest: /etc/motd.tail
+    state: present
