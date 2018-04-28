@@ -1,5 +1,5 @@
 ---
 - name: place motd file in place
   file:
-    - path: motd
-      dest: /etc/motd.tail
+    path: motd
+    dest: /etc/motd.tail
