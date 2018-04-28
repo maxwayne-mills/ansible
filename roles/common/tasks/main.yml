@@ -1,6 +1,7 @@
 ---
 - name: place motd file in place
-  file:
+  copy:
     src: motd
     dest: /etc/motd.tail
-    state: file
+    owner: root
+    group: root
