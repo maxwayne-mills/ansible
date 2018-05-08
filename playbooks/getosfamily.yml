@@ -1,6 +1,6 @@
 ---
 - name: Get OS family Name
-  hosts: srv1 srv3
+  hosts: all
   gather_facts: yes
 
   tasks:
