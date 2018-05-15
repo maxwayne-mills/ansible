@@ -12,36 +12,8 @@
     server_state: present       #options: absent, present, restarted, started
     os_type: "Ubuntu 18.04 x64"
     ssh_key_name: "cmills_key"
-    
-  vars_prompt:
-    - name: "username"
-      prompt: "Enter user name"
-      private: no
-
-    - name: "new_password"
-      prompt: "Enter password"
-      private: yes
-
-    - name: "email_address"
-      prompt: "Enter email address"
-      private: no
+    add_vulture_user: 'no'
   tasks:
-
-  - name: Manage user(s)
-    local_action:
-       module: vr_user
-       name: "{{ username }}"
-       email: "{{ email_address }}"
-       password: "{{ new_password }}"
-       acls:
-          - upgrade
-          - dns
-          - manage_users
-          - subscriptions
-          - upgrade
-       state: present
-    tags:
-      - user
 
   - name: Manage ssh key
     local_action:
