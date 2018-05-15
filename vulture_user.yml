@@ -1,0 +1,40 @@
+# May 11, 2018
+# Dependencies: ~/.vultr.ini file
+---
+- name: Manage Vulture PAAS environment
+  hosts: localhost
+  connection: local
+  gather_facts: false
+    
+  vars_prompt:
+    - name: "username"
+      prompt: "Enter user name"
+      private: no
+      when: add_vulture_user == "yes"
+
+    - name: "new_password"
+      prompt: "Enter password"
+      private: yes
+      when: add_vulture_user == "yes"
+
+    - name: "email_address"
+      prompt: "Enter email address"
+      private: no
+      when: add_vulture_user == "yes"
+  tasks:
+
+  - name: Manage user(s)
+    local_action:
+       module: vr_user
+       name: "{{ username }}"
+       email: "{{ email_address }}"
+       password: "{{ new_password }}"
+       acls:
+          - upgrade
+          - dns
+          - manage_users
+          - subscriptions
+          - upgrade
+       state: present
+    tags:
+      - user
