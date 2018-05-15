@@ -1,0 +1,79 @@
+# May 11, 2018
+# Dependencies: ~/.vultr.ini file
+---
+- name: Manage Vulture PAAS environment
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    server_name: "test.opensitesolutions.com"
+    plan_5: "1024 MB RAM,25 GB SSD,1.00 TB BW"
+    region: "New Jersey"
+    server_state: present       #options: absent, present, restarted, started
+    os_type: "Ubuntu 18.04 x64"
+    ssh_key_name: "cmills_key"
+    
+  vars_prompt:
+    - name: "username"
+      prompt: "Enter user name"
+      private: no
+
+    - name: "new_password"
+      prompt: "Enter password"
+      private: yes
+
+    - name: "email_address"
+      prompt: "Enter email address"
+      private: no
+  tasks:
+
+  - name: Manage user(s)
+    local_action:
+       module: vr_user
+       name: "{{ username }}"
+       email: "{{ email_address }}"
+       password: "{{ new_password }}"
+       acls:
+          - upgrade
+          - dns
+          - manage_users
+          - subscriptions
+          - upgrade
+       state: present
+    tags:
+      - user
+
+  - name: Manage ssh key
+    local_action:
+      module: vr_ssh_key
+      name: "{{ ssh_key_name }}"
+      ssh_key: "{{ lookup('file','~/.ssh/id_rsa.pub') }}"
+      state: "{{ server_state }}"
+    tags:
+      - add_ssh_key
+
+  - name: Manage new vulture server
+    local_action:
+      module: vr_server
+      name: "{{ server_name }}"
+      hostname: "{{ server_name }}"
+      ssh_keys: cmills-key
+      os: "{{ os_type }}"
+      plan: "{{ plan_5 }}"
+      region: "{{ region }}"
+      state: "{{ server_state }}"
+    tags:
+      - manage_server
+
+  - name: Gather Vultr account facts
+    local_action:
+      module: vr_account_facts
+    tags:
+      - show_account_info
+
+  - name: Vulture account Information
+    debug:
+      var: ansible_facts.vultr_account_facts
+    tags:
+      - show_account_info
+
