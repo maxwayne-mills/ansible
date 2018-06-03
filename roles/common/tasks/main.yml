@@ -5,3 +5,6 @@
     dest: /etc/motd.tail
     owner: root
     group: root
+
+- name: Configure system
+  include: config_system.yml
