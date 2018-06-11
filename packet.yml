@@ -1,4 +1,4 @@
-# Creating Packet devices
+# Manage Packet devices
 ---
 - name: create 1 device
   hosts: localhost
