@@ -1,4 +1,4 @@
-# Manage Packet devices
+# Manage Packet servers and ssh keys
 ---
 - name: create 1 device
   hosts: localhost
