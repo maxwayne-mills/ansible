@@ -3,25 +3,21 @@
 - hosts: "{{ server_name }}"  # Change this to the destination server name
   become: "true"
   remote_user: deployuser
+  gather_facts: False
   vars:
     - web_dir: /var/www/
     - web_user: www-data
     - web_group: www-data
   tasks:
 
-  - include_role:
-      name: httpd-domain-setup
-    tags:
-      - domain_setup
-  
-  - name: Delete remote {{ domain_name}}
+  - name: Delete remote {{ domain_name}} directory
     file:
       path: "{{ web_dir }}{{ domain_name }}"
       state: absent
     tags: 
       - publish
 
-  - name: Download git repository
+  - name: Download git repository from "(( repo_name }}"
     git:
       clone: "yes"
       depth: 1
