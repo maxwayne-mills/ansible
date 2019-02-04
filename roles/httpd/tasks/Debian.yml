@@ -1,0 +1,9 @@
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: present
+
+- name: Start apache2 service
+  service:
+    name: apache2
+    state: started

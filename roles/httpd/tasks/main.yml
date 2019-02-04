@@ -1,17 +1,9 @@
 ---
-- name: Install libapache2 apt_repository
-  apt_repository:
-    repo: 'ppa:ondrej/php'
-    state: present
+# tasks file for roles/httpd
+- name: Install Httpd on debian based system
+  include_tasks: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family == "Debian"
 
-- name: Update packages
-  apt:
-   update_cache: yes 
-
-- name: Install Apache
-  apt: pkg={{ item }}
-  with_items:
-   - apache2
-   - php
-
-   
+- name: Install Httpd on Redhat` based system
+  include_tasks: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == "CentOS"

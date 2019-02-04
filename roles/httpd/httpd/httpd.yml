@@ -1,0 +1,5 @@
+---
+- hosts: "{{ server_name }}"
+  become: yes
+  roles:
+    - httpd

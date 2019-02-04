@@ -1,0 +1,9 @@
+---
+# tasks file for wordpress
+
+- name: Download wordpress version "{{ wordpress_package }}"
+  get_url:
+    url: "{{ worpress_download }}"
+    dest: "{{ wordpress_dest_dir }}{{ wordpress_package }}"
+  register: wordpress_install  
+

@@ -1,0 +1,5 @@
+---
+# vars file for wordpress
+worpress_download: https://wordpress.org/download/
+wordpress_package: wordpress-4.9.8.tar.gz
+wordpress_dest_dir: /var/tmp/

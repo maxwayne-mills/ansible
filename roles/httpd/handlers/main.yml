@@ -1,4 +1,11 @@
 ---
-# handlers file for apache
+# handlers file for roles/httpd
 - name: restart apache2
-  service: name=apache2 state=restarted
+  service:
+    name: apache2
+    state: restarted
+
+- name: restart httpd
+  service:
+    name: httpd
+    state: restarted
