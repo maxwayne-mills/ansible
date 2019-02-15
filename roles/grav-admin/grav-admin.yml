@@ -1,6 +1,0 @@
----
-- hosts: all
-  become: true
-  gather_facts: False
-  roles:
-    - grav-admin
