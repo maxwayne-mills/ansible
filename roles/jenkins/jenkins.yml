@@ -1,6 +1,0 @@
----
-- hosts: "{{ server_name }}"
-  become: true
-  gather_facts: False
-  roles:
-    - jenkins
