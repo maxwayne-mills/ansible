@@ -3,6 +3,6 @@
     ServerName {{ domain_name }}
     ServerAlias www.{{ domain_name }}
     DocumentRoot {{ web_dir }}/{{ domain_name }}
-    ErrorLog ${APACHE_LOG_DIR}/{{ domain_name }}e-rror.log
+    ErrorLog ${APACHE_LOG_DIR}/{{ domain_name }}error.log
     CustomLog ${APACHE_LOG_DIR}/{{ domain_name }}-access.log combined
 </VirtualHost>
